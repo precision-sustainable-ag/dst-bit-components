@@ -34,15 +34,15 @@ const Map = ({
   initStartZoom = 12,
   initMinZoom = 5,
   initMaxZoom = 16,
-  hasSearchBar = true,
-  hasMarker = true,
-  hasNavigation = true,
-  hasCoordBar = true,
-  hasDrawing = true,
-  hasGeolocate = true,
-  hasFullScreen = true,
-  hasMarkerPopup = true,
-  hasMarkerMovable = true,
+  hasSearchBar = false,
+  hasMarker = false,
+  hasNavigation = false,
+  hasCoordBar = false,
+  hasDrawing = false,
+  hasGeolocate = false,
+  hasFullScreen = false,
+  hasMarkerPopup = false,
+  hasMarkerMovable = false,
   scrollZoom = true,
   dragRotate = true,
   dragPan = true,
@@ -82,7 +82,7 @@ const Map = ({
 
   // delete all shapes after geocode search
   useEffect(() => {
-    if (drawerRef.current) drawerRef.current.deleteAll();
+    if (hasDrawing && drawerRef.current) drawerRef.current.deleteAll();
   }, [geocodeResult]);
 
   // upon marker move, find the address of this new location and set the state
@@ -210,7 +210,8 @@ const Map = ({
       setFlyToOptions({});
 
       // clear all shapes after geolocating to user's location
-      if (drawerRef.current) {
+      if (hasDrawing && drawerRef.current) {
+        console.log('drawerRef ', drawerRef);
         drawerRef.current.deleteAll();
         setPolygonArea(0);
       }
