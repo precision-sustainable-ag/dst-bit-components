@@ -1,6 +1,9 @@
 # Bit Workspace for DST Projects
 
-To get started straight away run  `bit install` and then `bit start` and open [localhost:3000](http://localhost:3000). It may take a while to build the first time you run this command as it is building the whole User Interface for your development environment.
+To get started straight away:
+- install bit on your machine here https://bit.dev/docs/getting-started/installing-bit/installing-bit . this can take some time to install.
+- run `npm config set '@psa:registry' https://node.bit.cloud` in your terminal to add this remote repo to your global npm registry
+- run  `bit install` and then `bit start` and open [localhost:3000](http://localhost:3000). It may take a while to build the first time you run this command as it is building the whole User Interface for your development environment.
 
 ```bash
 bit start

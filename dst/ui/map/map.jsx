@@ -16,7 +16,7 @@ const MAPBOX_TOKEN =
   'pk.eyJ1IjoibWlsYWRueXUiLCJhIjoiY2xhNmhkZDVwMWxqODN4bWhkYXFnNjRrMCJ9.VWy3AxJ3ULhYNw8nmVdMew';
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
-const acreDiv = 4046.8564224;
+const acreDiv = 4046.856422;
 const fastFly = {
   bearing: 0,
   speed: 4, // Make the flying slow/fast.
