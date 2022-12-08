@@ -1,6 +1,6 @@
 # Bit Workspace for DST Projects
 
-To get started straight away:
+## Quick Start
 
 - install bit on your machine here https://bit.dev/docs/getting-started/installing-bit/installing-bit . this can take some time to install.
 - run 
