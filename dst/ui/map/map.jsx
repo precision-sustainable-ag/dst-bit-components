@@ -5,7 +5,7 @@ import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import area from '@turf/area';
 import centroid from '@turf/centroid';
-import { geocodeReverse } from './helpers';
+import { geocodeReverse, coordinatesGeocoder } from './helpers';
 
 import styles from './map.module.scss';
 import './mapbox-gl.css';
@@ -159,6 +159,7 @@ const Map = ({
     //// GEOCODER
     const Geocoder = new MapboxGeocoder({
       placeholder: 'Search Your Address ...',
+      localGeocoder: coordinatesGeocoder,
       marker: false,
       accessToken: MAPBOX_TOKEN,
       container: map.current,
@@ -260,13 +261,27 @@ const Map = ({
     //// EVENTS
     Geolocate.on('geolocate', handleGeolocate);
     Geocoder.on('result', (e) => {
+      var streetNum;
+      var zipCode;
       if (e && e.result) {
         setGeocodeResult(e.result);
-        const fullAddress = e.result.place_name;
-        const splitted = fullAddress.split(', ');
-        const streetNum = splitted[0];
-        const stateZip = splitted[splitted.length - 2].split(' ');
-        const zipCode = stateZip[stateZip.length - 1];
+        var fullAddress = e.result.place_name;
+        if (fullAddress.includes('Lat') && fullAddress.includes('Lng')) {
+          let longitude = e.result.geometry.coordinates[0];
+          let latitude = e.result.geometry.coordinates[1];
+          console.log(longitude, latitude)
+          geocodeReverse({
+            apiKey: MAPBOX_TOKEN,
+            setterFunc: setAddress,
+            longitude: longitude,
+            latitude: latitude,
+          });
+        } else {
+          const splitted = fullAddress.split(', ');
+          streetNum = splitted[0];
+          const stateZip = splitted[splitted.length - 2].split(' ');
+          zipCode = stateZip[stateZip.length - 1];
+        }
         if (fullAddress) {
           setViewport((prev) => ({
             ...prev,

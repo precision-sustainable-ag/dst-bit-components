@@ -19,7 +19,7 @@ and then
 and open [localhost:3000](http://localhost:3000). It may take a while to build the first time you run this command as it is building the whole User Interface for your development environment.
 
 
-## What's included
+##What's included
 
 - **dst/**
 
