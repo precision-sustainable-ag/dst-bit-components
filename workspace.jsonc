@@ -39,28 +39,42 @@
     "packageManager": "teambit.dependencies/pnpm",
     "policy": {
       "dependencies": {
+        "@babel/runtime": "7.20.6",
         "@teambit/eslint-config-bit-react": "~0.0.367",
-        "@typescript-eslint/eslint-plugin": "4.29.3",
+        "@teambit/harmony": "0.4.6",
+        // "@teambit/react": "0.0.935",
+        "@types/jest": "^29.2.4",
+        "@types/node": "18.11.17",
+        "@types/react": "^18.0.26",
+        "@types/react-dom": "^18.0.9",
+        "@types/testing-library__jest-dom": "5.14.5",
+        "@typescript-eslint/eslint-plugin": "5.46.1",
+        "core-js": "^3.26.1",
         "eslint-import-resolver-node": "0.3.6",
-        "eslint-plugin-import": "2.22.1",
-        "eslint-plugin-jest": "24.4.0",
-        "eslint-plugin-jsx-a11y": "6.4.1",
-        "eslint-plugin-mdx": "1.15.0",
-        "eslint-plugin-react": "7.25.1"
+        "eslint-plugin-import": "2.26.0",
+        "eslint-plugin-jest": "27.1.7",
+        "eslint-plugin-jsx-a11y": "6.6.1",
+        "eslint-plugin-mdx": "2.0.5",
+        "eslint-plugin-react": "7.31.11"
       },
       "peerDependencies": {
         "@mapbox/mapbox-gl-draw": "1.3.0",
         "@mapbox/mapbox-gl-geocoder": "5.0.1",
-        "@testing-library/react": "^12.1.5",
         "@turf/area": "6.5.0",
         "@turf/centroid": "6.5.0",
-        "mapbox-gl": "2.11.0",
-        "react": "17.0.2",
-        "react-dom": "17.0.2"
+        "mapbox-gl": "2.11.1",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "@testing-library/react": "13.4.0"
       }
     },
-    "linkCoreAspects": true,
-    "overrides": {}
+    "linkCoreAspects": false,
+    "strictPeerDependencies": true,
+    "overrides": {
+      "react": "18.2.0",
+      "react-dom": "18.2.0",
+      "@testing-library/react": "13.4.0"
+    }
   },
   /**
    * workspace variants allow to set different subsets of configuration for components in your

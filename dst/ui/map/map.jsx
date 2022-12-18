@@ -138,7 +138,7 @@ const Map = ({
     );
     popupRef.current = Popup;
 
-    //// MARKER
+    //// MARKER CONTROL
     const Marker = new mapboxgl.Marker({
       draggable: hasMarkerMovable,
       color: '#e63946',
@@ -149,14 +149,14 @@ const Map = ({
     markerRef.current = Marker;
     Marker.className = styles.marker;
 
-    //// DRAWER
+    //// DRAWER CONTROL
     const Draw = new MapboxDraw({
       displayControlsDefault: false,
       controls: { polygon: true, trash: true },
     });
     drawerRef.current = Draw;
 
-    //// GEOCODER
+    //// GEOCODER CONTROL
     const Geocoder = new MapboxGeocoder({
       placeholder: 'Search Your Address ...',
       localGeocoder: coordinatesGeocoder,
@@ -166,16 +166,16 @@ const Map = ({
       countries: 'us',
     });
 
-    //// GEOLOCATE
+    //// GEOLOCATE CONTROL
     const Geolocate = new mapboxgl.GeolocateControl({ container: map.current });
     Geolocate._updateCamera = () => {};
 
-    //// NAVIGATION
+    //// NAVIGATION CONTROL
     const Navigation = new mapboxgl.NavigationControl({
       container: map.current,
     });
 
-    //// FULLSCREEN
+    //// FULLSCREEN CONTROL
     const Fullscreen = new mapboxgl.FullscreenControl({
       container: map.current,
     });
