@@ -1,20 +1,20 @@
-import React, { useRef, useEffect, useState } from 'react';
-// import { useCursorLoc } from './hooks';
-import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import area from '@turf/area';
-import centroid from '@turf/centroid';
-import { geocodeReverse, coordinatesGeocoder } from './helpers';
+import React, { useRef, useEffect, useState } from "react";
+import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+import MapboxDraw from "@mapbox/mapbox-gl-draw";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import area from "@turf/area";
+import centroid from "@turf/centroid";
+import { geocodeReverse, coordinatesGeocoder } from "./helpers";
 
-import styles from './map.module.scss';
-import './mapbox-gl.css';
-import './mapbox-gl-draw.css';
-import './mapbox-gl-geocoder.css';
+import styles from "./map.module.scss";
+import "./mapbox-gl.css";
+import "./mapbox-gl-draw.css";
+import "./mapbox-gl-geocoder.css";
 
 const MAPBOX_TOKEN =
-  'pk.eyJ1IjoibWlsYWRueXUiLCJhIjoiY2xhNmhkZDVwMWxqODN4bWhkYXFnNjRrMCJ9.VWy3AxJ3ULhYNw8nmVdMew';
+  "pk.eyJ1IjoibWlsYWRueXUiLCJhIjoiY2xhNmhkZDVwMWxqODN4bWhkYXFnNjRrMCJ9.VWy3AxJ3ULhYNw8nmVdMew";
 mapboxgl.accessToken = MAPBOX_TOKEN;
+
 
 const acreDiv = 4046.856422;
 const fastFly = {
@@ -26,9 +26,10 @@ const fastFly = {
 
 const Map = ({
   setAddress = () => {},
-  setGeometry = () => {},
-  initWidth = '400px',
-  initHeight = '400px',
+  setFeatures = () => {},
+  initFeatures = [],
+  initWidth = "400px",
+  initHeight = "400px",
   initLon = -75,
   initLat = 40,
   initStartZoom = 12,
@@ -118,12 +119,13 @@ const Map = ({
   useEffect(() => {
     //// MAP CREATE
     if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
+    var Map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/satellite-streets-v12',
+      style: "mapbox://styles/mapbox/satellite-streets-v12",
       center: [initLon, initLat],
       zoom: initStartZoom,
     });
+    map.current = Map;
 
     //// MARKER POPUP
     // const popup = new mapboxgl.Popup({ offset: 25 }).setText(
@@ -141,7 +143,7 @@ const Map = ({
     //// MARKER CONTROL
     const Marker = new mapboxgl.Marker({
       draggable: hasMarkerMovable,
-      color: '#e63946',
+      color: "#e63946",
       scale: 1,
     })
       .setLngLat([marker.longitude, marker.latitude])
@@ -149,7 +151,7 @@ const Map = ({
     markerRef.current = Marker;
     Marker.className = styles.marker;
 
-    //// DRAWER CONTROL
+    // DRAWER CONTROL
     const Draw = new MapboxDraw({
       displayControlsDefault: false,
       controls: { polygon: true, trash: true },
@@ -158,12 +160,14 @@ const Map = ({
 
     //// GEOCODER CONTROL
     const Geocoder = new MapboxGeocoder({
-      placeholder: 'Search Your Address ...',
+      placeholder: "Search Your Address ...",
       localGeocoder: coordinatesGeocoder,
       marker: false,
       accessToken: MAPBOX_TOKEN,
       container: map.current,
-      countries: 'us',
+      proximity: "ip",
+      trackProximity: true,
+      countries: "us",
     });
 
     //// GEOLOCATE CONTROL
@@ -181,11 +185,11 @@ const Map = ({
     });
 
     //// ADD CONTROLS
-    if (hasFullScreen) map.current.addControl(Fullscreen, 'top-right');
-    if (hasNavigation) map.current.addControl(Navigation, 'top-right');
-    if (hasGeolocate) map.current.addControl(Geolocate, 'top-right');
-    if (hasDrawing) map.current.addControl(Draw, 'top-left');
-    if (hasSearchBar) map.current.addControl(Geocoder, 'top-left');
+    if (hasFullScreen) map.current.addControl(Fullscreen, "top-right");
+    if (hasNavigation) map.current.addControl(Navigation, "top-right");
+    if (hasGeolocate) map.current.addControl(Geolocate, "top-right");
+    if (hasDrawing) map.current.addControl(Draw, "top-left");
+    if (hasSearchBar) map.current.addControl(Geocoder, "top-left");
     if (hasMarker && !isDrawActive) Marker.addTo(map.current);
 
     //// FUNCTIONS
@@ -212,7 +216,6 @@ const Map = ({
 
       // clear all shapes after geolocating to user's location
       if (hasDrawing && drawerRef.current) {
-        console.log('drawerRef ', drawerRef);
         drawerRef.current.deleteAll();
         setPolygonArea(0);
       }
@@ -240,7 +243,7 @@ const Map = ({
       if (e.features.length > 0) {
         const a = area(e.features[0]) / acreDiv;
         setPolygonArea(a);
-        setGeometry(e.features);
+        setFeatures(e.features);
         handlePolyCentCalc(e);
       } else {
         setPolygonArea(0);
@@ -259,17 +262,16 @@ const Map = ({
     };
 
     //// EVENTS
-    Geolocate.on('geolocate', handleGeolocate);
-    Geocoder.on('result', (e) => {
+    Geolocate.on("geolocate", handleGeolocate);
+    Geocoder.on("result", (e) => {
       var streetNum;
       var zipCode;
       if (e && e.result) {
         setGeocodeResult(e.result);
         var fullAddress = e.result.place_name;
-        if (fullAddress.includes('Lat') && fullAddress.includes('Lng')) {
+        if (fullAddress.includes("Lat") && fullAddress.includes("Lng")) {
           let longitude = e.result.geometry.coordinates[0];
           let latitude = e.result.geometry.coordinates[1];
-          console.log(longitude, latitude)
           geocodeReverse({
             apiKey: MAPBOX_TOKEN,
             setterFunc: setAddress,
@@ -277,9 +279,9 @@ const Map = ({
             latitude: latitude,
           });
         } else {
-          const splitted = fullAddress.split(', ');
+          const splitted = fullAddress.split(", ");
           streetNum = splitted[0];
-          const stateZip = splitted[splitted.length - 2].split(' ');
+          const stateZip = splitted[splitted.length - 2].split(" ");
           zipCode = stateZip[stateZip.length - 1];
         }
         if (fullAddress) {
@@ -300,7 +302,7 @@ const Map = ({
       }
     });
     if (hasMarkerMovable) {
-      map.current.on('dblclick', (e) => {
+      map.current.on("dblclick", (e) => {
         setMarker((prev) => ({
           ...prev,
           longitude: e.lngLat.lng,
@@ -308,14 +310,15 @@ const Map = ({
         }));
       });
     }
-    map.current.on('mousemove', (e) => {
+    map.current.on("mousemove", (e) => {
       const lnglat = e.lngLat.wrap();
       setCursorLoc({
         longitude: lnglat.lng.toFixed(4),
         latitude: lnglat.lat.toFixed(4),
       });
     });
-    map.current.on('load', (e) => {
+
+    map.current.on("load", (e) => {
       if (!scrollZoom) map.current.scrollZoom.disable();
       if (!dragRotate) map.current.dragRotate.disable();
       if (!dragPan) map.current.dragPan.disable();
@@ -326,12 +329,20 @@ const Map = ({
         markerRef.current.togglePopup();
         setTimeout(() => markerRef.current.togglePopup(), 2000);
       }
+
+      if (drawerRef.current && hasDrawing && initFeatures.length > 0) {
+        drawerRef.current.add({
+          type: "FeatureCollection",
+          features: initFeatures,
+        });
+      }
     });
-    map.current.on('draw.create', handleDrawCreate);
-    map.current.on('draw.delete', handleDrawDelete);
-    map.current.on('draw.update', handleDrawUpdate);
-    map.current.on('draw.selectionchange', handleDrawSelection);
-    Marker.on('dragend', onDragEnd);
+
+    map.current.on("draw.create", handleDrawCreate);
+    map.current.on("draw.delete", handleDrawDelete);
+    map.current.on("draw.update", handleDrawUpdate);
+    map.current.on("draw.selectionchange", handleDrawSelection);
+    Marker.on("dragend", onDragEnd);
   }, [map]);
 
   return (
