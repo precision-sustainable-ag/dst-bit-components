@@ -52,12 +52,13 @@ const Map = ({
   touchZoomRotate = true,
 }) => {
   // eslint-disable-next-line no-unused-vars
+  const [lastZoom, setLastZoom] = useState(initStartZoom);
   const [viewport, setViewport] = useState({
     initWidth,
     initHeight,
     initLon,
     initLat,
-    initStartZoom,
+    lastZoom,
     initMinZoom,
     initMaxZoom,
   });
@@ -91,11 +92,13 @@ const Map = ({
     geocodeReverse({
       apiKey: MAPBOX_TOKEN,
       setterFunc: setAddress,
+      zoom: lastZoom,
       longitude: marker.longitude,
       latitude: marker.latitude,
     });
     setAddress((addr) => ({
       ...addr,
+      zoom: lastZoom,
       longitude: marker.longitude,
       latitude: marker.latitude,
     }));
@@ -114,7 +117,7 @@ const Map = ({
         ...flyToOptions,
       });
     }
-  }, [marker.longitude, marker.latitude]);
+  }, [marker.longitude, marker.latitude, lastZoom]);
 
   useEffect(() => {
     //// MAP CREATE
@@ -123,7 +126,7 @@ const Map = ({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/satellite-streets-v12",
       center: [initLon, initLat],
-      zoom: initStartZoom,
+      zoom: lastZoom,
     });
     map.current = Map;
 
@@ -275,6 +278,7 @@ const Map = ({
           geocodeReverse({
             apiKey: MAPBOX_TOKEN,
             setterFunc: setAddress,
+            zoom: lastZoom,
             longitude: longitude,
             latitude: latitude,
           });
@@ -336,6 +340,11 @@ const Map = ({
           features: initFeatures,
         });
       }
+    });
+
+    map.current.on('zoom', () => {
+      const currentZoom = map.current.getZoom();
+      setLastZoom(currentZoom);
     });
 
     map.current.on("draw.create", handleDrawCreate);
