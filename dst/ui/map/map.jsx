@@ -15,7 +15,6 @@ const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWlsYWRueXUiLCJhIjoiY2xhNmhkZDVwMWxqODN4bWhkYXFnNjRrMCJ9.VWy3AxJ3ULhYNw8nmVdMew";
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
-
 const acreDiv = 4046.856422;
 const fastFly = {
   bearing: 0,
@@ -87,6 +86,20 @@ const Map = ({
     if (hasDrawing && drawerRef.current) drawerRef.current.deleteAll();
   }, [geocodeResult]);
 
+  // keep zoom in 
+  useEffect(() => {
+    return () => {
+      const currentZoom = map.current.getZoom();
+      setLastZoom(currentZoom);
+      setAddress((prevVal) => {
+        return {
+          ...prevVal,
+          zoom: currentZoom,
+        };
+      });
+    };
+  }, []);
+
   // upon marker move, find the address of this new location and set the state
   useEffect(() => {
     geocodeReverse({
@@ -126,7 +139,7 @@ const Map = ({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/satellite-streets-v12",
       center: [initLon, initLat],
-      zoom: lastZoom,
+      zoom: initStartZoom,
     });
     map.current = Map;
 
@@ -342,10 +355,11 @@ const Map = ({
       }
     });
 
-    map.current.on('zoom', () => {
-      const currentZoom = map.current.getZoom();
-      setLastZoom(currentZoom);
-    });
+    // map.current.on("zoom", () => {
+    //   // const currentZoom = map.current.getZoom();
+    //   // setLastZoom(currentZoom);
+    //   console.log("zoom updated ", currentZoom);
+    // });
 
     map.current.on("draw.create", handleDrawCreate);
     map.current.on("draw.delete", handleDrawDelete);

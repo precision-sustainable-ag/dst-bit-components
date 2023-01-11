@@ -17,7 +17,7 @@
     },
     "ui/map": {
         "scope": "psa.dst",
-        "version": "0.0.33",
+        "version": "0.0.34",
         "mainFile": "index.js",
         "rootDir": "dst/ui/map"
     },
