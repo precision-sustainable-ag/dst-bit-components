@@ -15,13 +15,14 @@ async function geocodeReverse({ apiKey, setterFunc, zoom, latitude, longitude })
           const streetNum = splitted[0];
           const stateZip = splitted[splitted.length - 2].split(' ');
           const zipCode = stateZip[stateZip.length - 1];
-          return {
+          const newVal = {
             ...prevVal,
             address: streetNum,
             zipCode,
             fullAddress,
             zoom,
-          };
+          }
+          return newVal
         });
       }
     });
