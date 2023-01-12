@@ -27,6 +27,7 @@ const Map = ({
   setAddress = () => {},
   setFeatures = () => {},
   setZoom = () => {},
+  onDraw = () => {},
   initFeatures = [],
   initWidth = "400px",
   initHeight = "400px",
@@ -252,14 +253,19 @@ const Map = ({
       }
     };
 
-    const handleDrawCreate = () => {};
-    const handleDrawDelete = () => {
+    const handleDrawCreate = (e) => {
+      onDraw({mode: 'add', e: e})
+    };
+    const handleDrawDelete = (e) => {
       setIsDrawActive(false);
+      onDraw({mode: 'delete', e: e})
     };
     const handleDrawUpdate = (e) => {
+      onDraw({mode: 'update', e: e})
       handlePolyAreaCalc(e);
     };
     const handleDrawSelection = (e) => {
+      onDraw({mode: 'select', e: e})
       handlePolyAreaCalc(e);
     };
 

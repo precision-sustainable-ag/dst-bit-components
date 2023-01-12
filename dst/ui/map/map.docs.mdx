@@ -16,6 +16,7 @@ A Map component made using Mapbox GL.
 | `setAddress` | function | callback function to set the marker address text as its value |
 | `setFeatures` | function | callback function to set the drawn geometry as its value |
 | `setZoom` | function | callback function to set the map zoom level |
+| `onDraw` | function | callback function to handle draw events. Ex: {mode: 'delete', e: event}  |
 | `initFeatures` | array | initial features or polygons to draw on the map |
 | `initWidth` | string | map width in css format string |
 | `initHeight` | string | map height in css format string |
@@ -48,6 +49,7 @@ A Map component made using Mapbox GL.
   setAddress={() => {}}
   setFeatures={() => {}}
   setZoom={() => {}}
+  onDraw ={() => {}}
   initFeatures={[]}
   initWidth="400px"
   initHeight="300px"
@@ -83,6 +85,7 @@ Modify the text to see it change live:
   setAddress={() => {}}
   setFeatures={() => {}}
   setZoom={() => {}}
+  onDraw ={() => {}}
   initFeatures={[]}
   initWidth="400px"
   initHeight="500px"
