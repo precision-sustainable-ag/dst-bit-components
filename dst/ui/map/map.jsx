@@ -26,6 +26,7 @@ const fastFly = {
 const Map = ({
   setAddress = () => {},
   setFeatures = () => {},
+  setZoom = () => {},
   initFeatures = [],
   initWidth = "400px",
   initHeight = "400px",
@@ -69,6 +70,7 @@ const Map = ({
     longitude: undefined,
     latitude: undefined,
   });
+  const [featuresInitialized, setFeaturesInitialized] = useState(false);
   const [polygonArea, setPolygonArea] = useState(0);
   const [isDrawActive, setIsDrawActive] = useState(false);
   const [geocodeResult, setGeocodeResult] = useState(undefined);
@@ -86,32 +88,16 @@ const Map = ({
     if (hasDrawing && drawerRef.current) drawerRef.current.deleteAll();
   }, [geocodeResult]);
 
-  // keep zoom in 
-  useEffect(() => {
-    return () => {
-      const currentZoom = map.current.getZoom();
-      setLastZoom(currentZoom);
-      setAddress((prevVal) => {
-        return {
-          ...prevVal,
-          zoom: currentZoom,
-        };
-      });
-    };
-  }, []);
-
   // upon marker move, find the address of this new location and set the state
   useEffect(() => {
     geocodeReverse({
       apiKey: MAPBOX_TOKEN,
       setterFunc: setAddress,
-      zoom: lastZoom,
       longitude: marker.longitude,
       latitude: marker.latitude,
     });
     setAddress((addr) => ({
       ...addr,
-      zoom: lastZoom,
       longitude: marker.longitude,
       latitude: marker.latitude,
     }));
@@ -130,7 +116,7 @@ const Map = ({
         ...flyToOptions,
       });
     }
-  }, [marker.longitude, marker.latitude, lastZoom]);
+  }, [marker.longitude, marker.latitude]);
 
   useEffect(() => {
     //// MAP CREATE
@@ -291,7 +277,6 @@ const Map = ({
           geocodeReverse({
             apiKey: MAPBOX_TOKEN,
             setterFunc: setAddress,
-            zoom: lastZoom,
             longitude: longitude,
             latitude: latitude,
           });
@@ -346,20 +331,19 @@ const Map = ({
         markerRef.current.togglePopup();
         setTimeout(() => markerRef.current.togglePopup(), 2000);
       }
-
-      if (drawerRef.current && hasDrawing && initFeatures.length > 0) {
+      if (
+        drawerRef.current &&
+        hasDrawing &&
+        initFeatures.length > 0 &&
+        !featuresInitialized
+      ) {
         drawerRef.current.add({
           type: "FeatureCollection",
           features: initFeatures,
         });
+        setFeaturesInitialized(true);
       }
     });
-
-    // map.current.on("zoom", () => {
-    //   // const currentZoom = map.current.getZoom();
-    //   // setLastZoom(currentZoom);
-    //   console.log("zoom updated ", currentZoom);
-    // });
 
     map.current.on("draw.create", handleDrawCreate);
     map.current.on("draw.delete", handleDrawDelete);
@@ -367,6 +351,14 @@ const Map = ({
     map.current.on("draw.selectionchange", handleDrawSelection);
     Marker.on("dragend", onDragEnd);
   }, [map]);
+
+  useEffect(() => {
+    map.current.on("zoom", () => {
+      const currentZoom = map.current.getZoom();
+      setLastZoom(currentZoom);
+      setZoom(currentZoom);
+    });
+  }, []);
 
   return (
     <div className={styles.wrapper}>

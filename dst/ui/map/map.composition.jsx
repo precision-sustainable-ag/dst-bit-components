@@ -70,6 +70,7 @@ export const MapWithMarker = () => (
   <Map
     setAddress={() => {}}
     setFeatures={() => {}}
+    setZoom={() => {}}
     initWidth="400px"
     initHeight="300px"
     initLon={-80.16}
@@ -99,6 +100,7 @@ export const MapWithGeocoder = () => (
   <Map
     setAddress={() => {}}
     setFeatures={() => {}}
+    setZoom={() => {}}
     initWidth="400px"
     initHeight="300px"
     initLon={-80.16}
@@ -128,6 +130,7 @@ export const MapWithAllFeatures = () => (
   <Map
     setAddress={() => {}}
     setFeatures={() => {}}
+    setZoom={() => {}}
     initFeatures={featuresSample}
     initWidth="400px"
     initHeight="300px"
