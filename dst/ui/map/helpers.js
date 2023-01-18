@@ -1,7 +1,7 @@
 /*
   Handles reverse geocoding from lat lon to asci address
 */
-​
+
 async function geocodeReverse({ apiKey, setterFunc, zoom, latitude, longitude }) {
   await fetch(
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude}%2C%20${latitude}.json?access_token=${apiKey}`

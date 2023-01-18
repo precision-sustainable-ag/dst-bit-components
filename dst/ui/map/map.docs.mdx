@@ -20,6 +20,7 @@ A Map component made using Mapbox GL.
 | `initFeatures` | array | initial features or polygons to draw on the map |
 | `initWidth` | string | map width in css format string |
 | `initHeight` | string | map height in css format string |
+| `initAddress` | string | map initial address string shown in searchbar |
 | `initLon` | float | initial longitude of window center at the time of loading |
 | `initLat` | float | initial latitude of window center at the time of loading |
 | `initStartZoom` | float | initial zoom level at the time of loading. higher values are zoomed in and vise versa |
@@ -53,6 +54,7 @@ A Map component made using Mapbox GL.
   initFeatures={[]}
   initWidth="400px"
   initHeight="300px"
+  initAddress=""
   initLon={-80.16}
   initLat={37.75}
   initStartZoom={10}
@@ -89,6 +91,7 @@ Modify the text to see it change live:
   initFeatures={[]}
   initWidth="400px"
   initHeight="500px"
+  initAddress=""
   initLon={-80.16}
   initLat={37.75}
   initStartZoom={10}
