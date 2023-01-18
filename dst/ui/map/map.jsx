@@ -31,6 +31,7 @@ const Map = ({
   initFeatures = [],
   initWidth = "400px",
   initHeight = "400px",
+  initAddress = null,
   initLon = -75,
   initLat = 40,
   initStartZoom = 12,
@@ -83,7 +84,21 @@ const Map = ({
   const drawerRef = useRef();
   const markerRef = useRef();
   const popupRef = useRef();
+  const geocoderRef = useRef();
 
+  //// GEOCODER CONTROL
+  const Geocoder = new MapboxGeocoder({
+    placeholder: (initAddress || "Search Your Address ..."),
+    localGeocoder: coordinatesGeocoder,
+    marker: false,
+    accessToken: MAPBOX_TOKEN,
+    container: map.current,
+    proximity: "ip",
+    trackProximity: true,
+    countries: "us",
+  });
+  geocoderRef.current = Geocoder;
+    
   // delete all shapes after geocode search
   useEffect(() => {
     if (hasDrawing && drawerRef.current) drawerRef.current.deleteAll();
@@ -93,10 +108,16 @@ const Map = ({
   useEffect(() => {
     geocodeReverse({
       apiKey: MAPBOX_TOKEN,
-      setterFunc: setAddress,
+      setterFunc: (address) => {
+        console.log(address())
+        document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
+        // Geocoder.setPlaceholder(address().fullAddress);
+        setAddress(address);
+      },
       longitude: marker.longitude,
       latitude: marker.latitude,
     });
+
     setAddress((addr) => ({
       ...addr,
       longitude: marker.longitude,
@@ -154,24 +175,23 @@ const Map = ({
     markerRef.current = Marker;
     Marker.className = styles.marker;
 
+    const simpleSelect = MapboxDraw.modes.simple_select;
+    const directSelect = MapboxDraw.modes.direct_select;
+
+    simpleSelect.dragMove = () => {};
+    directSelect.dragFeature = () => {};
+
     // DRAWER CONTROL
     const Draw = new MapboxDraw({
       displayControlsDefault: false,
       controls: { polygon: true, trash: true },
+      modes: {
+        ...MapboxDraw.modes,
+        simple_select: simpleSelect,
+        direct_select: directSelect,
+      },      
     });
     drawerRef.current = Draw;
-
-    //// GEOCODER CONTROL
-    const Geocoder = new MapboxGeocoder({
-      placeholder: "Search Your Address ...",
-      localGeocoder: coordinatesGeocoder,
-      marker: false,
-      accessToken: MAPBOX_TOKEN,
-      container: map.current,
-      proximity: "ip",
-      trackProximity: true,
-      countries: "us",
-    });
 
     //// GEOLOCATE CONTROL
     const Geolocate = new mapboxgl.GeolocateControl({ container: map.current });
@@ -195,6 +215,12 @@ const Map = ({
     if (hasSearchBar) map.current.addControl(Geocoder, "top-left");
     if (hasMarker && !isDrawActive) Marker.addTo(map.current);
 
+    // if (!initAddress) {
+    //   Geocoder.setPlaceholder('Search Your Address ...');
+    // }
+
+    console.log(initAddress);
+
     //// FUNCTIONS
     function onDragEnd(e) {
       const lngLat = e.target.getLngLat();
@@ -210,6 +236,7 @@ const Map = ({
     const handleGeolocate = (e) => {
       const lngLat = e.target._userLocationDotMarker._lngLat;
       setFlyToOptions(fastFly);
+
       setMarker((prev) => ({
         ...prev,
         longitude: lngLat.lng,
@@ -228,6 +255,7 @@ const Map = ({
       if (geom) {
         if (geom.features.length > 0) {
           const coords = centroid(geom.features[0]).geometry.coordinates;
+
           setMarker((prev) => ({
             ...prev,
             longitude: coords[0],
@@ -282,7 +310,11 @@ const Map = ({
           let latitude = e.result.geometry.coordinates[1];
           geocodeReverse({
             apiKey: MAPBOX_TOKEN,
-            setterFunc: setAddress,
+            setterFunc: (address) => {
+              document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
+              // Geocoder.setPlaceholder(address().fullAddress);
+              setAddress(address);
+            },
             longitude: longitude,
             latitude: latitude,
           });
@@ -300,6 +332,7 @@ const Map = ({
             fullAddress,
           }));
           setFlyToOptions(fastFly);
+
           setMarker((prev) => ({
             ...prev,
             longitude: e.result.center[0],

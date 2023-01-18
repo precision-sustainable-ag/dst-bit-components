@@ -134,6 +134,7 @@ export const MapWithAllFeatures = () => (
     initFeatures={featuresSample}
     initWidth="400px"
     initHeight="300px"
+    initAddress="TEST ADDRESS"
     initLon={-80.16}
     initLat={37.75}
     initStartZoom={10}
