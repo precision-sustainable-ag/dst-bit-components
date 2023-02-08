@@ -102,8 +102,6 @@ const RegionSelectorMap = ({
         }
       });
 
-      // When the mouse leaves the state-fill layer, update the feature state of the
-      // previously hovered feature.
       map.current.on("mouseleave", "state-fills", (e) => {
         if (hoveredStateId !== null) {
           map.current.setFeatureState(

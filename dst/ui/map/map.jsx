@@ -109,7 +109,7 @@ const Map = ({
     geocodeReverse({
       apiKey: MAPBOX_TOKEN,
       setterFunc: (address) => {
-        console.log(address())
+        // console.log(address())
         document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
         // Geocoder.setPlaceholder(address().fullAddress);
         setAddress(address);
@@ -219,7 +219,7 @@ const Map = ({
     //   Geocoder.setPlaceholder('Search Your Address ...');
     // }
 
-    console.log(initAddress);
+    // console.log(initAddress);
 
     //// FUNCTIONS
     function onDragEnd(e) {

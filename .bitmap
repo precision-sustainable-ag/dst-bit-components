@@ -22,17 +22,10 @@
         "rootDir": "dst/ui/map"
     },
     "ui/region-selector-map": {
-        "scope": "",
-        "version": "",
-        "defaultScope": "psa.dst",
+        "scope": "psa.dst",
+        "version": "0.0.2",
         "mainFile": "index.js",
-        "rootDir": "dst/ui/region-selector-map",
-        "config": {
-            "teambit.react/react": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react"
-            }
-        }
+        "rootDir": "dst/ui/region-selector-map"
     },
     "$schema-version": "15.0.0"
 }
