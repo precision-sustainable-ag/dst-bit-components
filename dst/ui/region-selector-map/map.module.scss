@@ -1,19 +1,26 @@
-.wrapper {}
+.wrapper {
+    position: relative;
+    border: solid 1px #000;
+}
+
+.container {
+    position: relative;
+    border: solid 1px #fff;
+}
 
 .map {}
 
 .infobar {
     position: absolute;
-    display: block;
+    top: 5px;
+    right: 5px;
     background-color: rgba(35, 55, 75, 0.9);
     border-radius: 10px;
     color: #fff;
-    padding: 6px 12px;
+    padding: 4px 8px;
     font-family: monospace;
     font-size: medium;
     z-index: 3;
-    bottom: 5%;
-    left: 1vh;
     margin: 0px 0px;
     height: auto;
     ul {

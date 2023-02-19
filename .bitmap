@@ -17,13 +17,13 @@
     },
     "ui/map": {
         "scope": "psa.dst",
-        "version": "0.0.52",
+        "version": "0.0.53",
         "mainFile": "index.js",
         "rootDir": "dst/ui/map"
     },
     "ui/region-selector-map": {
         "scope": "psa.dst",
-        "version": "0.0.2",
+        "version": "0.0.4",
         "mainFile": "index.js",
         "rootDir": "dst/ui/region-selector-map"
     },
