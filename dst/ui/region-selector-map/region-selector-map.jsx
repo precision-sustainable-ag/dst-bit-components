@@ -65,7 +65,7 @@ const RegionSelectorMap = ({
 }) => {
   const [hoveredStateName, setHoveredStateName] = useState("");
   const [selectedRegionInit, setSelectedRegionInit] = useState(false);
-  // const [boundaryData, setBoundaryData] = useState(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const map = useRef();
   const mapContainer = useRef();
 
@@ -75,9 +75,7 @@ const RegionSelectorMap = ({
         .then((r) => r.text())
         .then((text) => {
           let json = JSON.parse(text);
-          // setBoundaryData(json);
           boundaryData = json;
-          console.log("BOUNDARY WAS SET");
         });
     }
     //// MAP CREATE
@@ -144,9 +142,6 @@ const RegionSelectorMap = ({
 
       // apply initial selected region as hoghlighted
       if (selectedRegion.id && !selectedRegionInit) {
-        console.log(selectedRegion)
-        console.log(selectedRegion.id)
-        console.log('selectedRegion was applied')
         selectedStateId = selectedRegion.id;
         setSelectedRegionInit(true);
         map.current.setFeatureState(
@@ -159,7 +154,6 @@ const RegionSelectorMap = ({
             (el) => el.id === selectedStateId
           );
           if (selectedFeature.length > 0) selectedFeature = selectedFeature[0];
-          console.log(selectedFeature);
           selectorFunc(selectedFeature);
         }
         map.current.setFeatureState(
@@ -167,7 +161,7 @@ const RegionSelectorMap = ({
           { click: true }
         );
       }
-      
+
       // When the user moves their mouse over the state-fill layer, we'll update the
       // feature state for the feature under the mouse.
       map.current.on("mousemove", "state-fills", (e) => {
@@ -210,7 +204,6 @@ const RegionSelectorMap = ({
             (el) => el.id === selectedStateId
           );
           if (selectedFeature.length > 0) selectedFeature = selectedFeature[0];
-          console.log(selectedFeature);
           selectorFunc(selectedFeature);
         }
         map.current.setFeatureState(
@@ -229,27 +222,36 @@ const RegionSelectorMap = ({
       map.current.on("mouseleave", "state-fills", () => {
         map.current.getCanvas().style.cursor = "";
       });
+      // set the map loaded status
+      if (!mapLoaded) setMapLoaded(true);
     });
   }, [hoveredStateId, selectedStateId, hoveredStateName, selectedRegion]);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div
-          id="map"
-          ref={mapContainer}
-          className={styles.map}
-          style={{ width: initWidth, height: initHeight }}
-        />
-      </div>
-      {hoveredStateId && (
-        <div className={styles.infobar}>
-          <ul>
-            <li>{`${hoveredStateName}`}</li>
-          </ul>
-        </div>
+    <>
+      {!mapLoaded && (
+          <div className={styles.loading}>
+            Loading . . .
+          </div>
       )}
-    </div>
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <div
+            id="map"
+            ref={mapContainer}
+            className={styles.map}
+            style={{ width: initWidth, height: initHeight }}
+          />
+        </div>
+        {hoveredStateId && (
+          <div className={styles.infobar}>
+            <ul>
+              <li>{`${hoveredStateName}`}</li>
+            </ul>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

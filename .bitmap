@@ -23,7 +23,7 @@
     },
     "ui/region-selector-map": {
         "scope": "psa.dst",
-        "version": "0.0.4",
+        "version": "0.0.7",
         "mainFile": "index.js",
         "rootDir": "dst/ui/region-selector-map"
     },
