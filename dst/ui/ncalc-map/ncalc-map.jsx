@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
@@ -23,10 +24,11 @@ const fastFly = {
   easing: (t) => t ** 2,
 };
 
-const Map = ({
+const NcalcMap = ({
   setAddress = () => {},
   setFeatures = () => {},
   setZoom = () => {},
+  setMap = () => {},
   onDraw = () => {},
   initFeatures = [],
   initWidth = "400px",
@@ -392,6 +394,87 @@ const Map = ({
         });
         setFeaturesInitialized(true);
       }
+
+      map.current.addPolygon = function(id, polygon, options = {}) {
+        const lineId = `${id}-line`;
+
+        const polygonStyle = {
+          'fill-color': options['fill-color'] ?? '#000',
+          'fill-opacity': options['fill-opacity'] ?? 1,
+        }
+
+        const lineStyle = {
+          'line-color': options['line-color'] ?? '#000',
+          'line-opacity': options['line-opacity'] ?? 1,
+          'line-width': options['line-width'] ?? 1,
+        }
+
+        if (map.current.getLayer(id)) {
+          map.current.removeLayer(id);
+        }
+  
+        if (map.current.getLayer(lineId)) {
+          map.current.removeLayer(lineId);
+        }
+
+        if (map.current.getSource(id)) {
+          map.current.removeSource(id);
+        }
+        
+        map.current.addSource(id, {
+          type: 'geojson',
+          data: {
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: polygon,
+            },
+          },
+        });
+  
+        map.current.addLayer({
+          id,
+          type: 'fill',
+          source: id,
+          paint: polygonStyle,
+        });
+  
+        map.current.addLayer({
+          id: lineId,
+          type: 'line',
+          source: id,
+          paint: lineStyle,
+        });
+  
+        map.current.on('mouseenter', id, () => {
+          map.current.setPaintProperty(lineId, 'line-width', 2);
+          map.current.setPaintProperty(lineId, 'line-color', '#aaa');
+
+          ['fill-color', 'fill-opacity'].forEach((prop) => {
+            if (options.hover?.[prop]) {
+              map.current.setPaintProperty(id, prop, options.hover[prop]);
+            }
+          });
+
+          ['line-width', 'line-color', 'line-opacity'].forEach((prop) => {
+            if (options.hover?.[prop]) {
+              map.current.setPaintProperty(lineId, prop, options.hover[prop]);
+            }
+          });
+        });
+  
+        map.current.on('mouseleave', id, () => {
+          Object.entries(polygonStyle).forEach(([property, value]) => {
+            map.current.setPaintProperty(id, property, value);
+          });
+
+          Object.entries(lineStyle).forEach(([property, value]) => {
+            map.current.setPaintProperty(lineId, property, value);
+          });
+        });
+      };
+
+      setMap(map.current);
     });
 
     map.current.on("draw.create", handleDrawCreate);
@@ -432,4 +515,4 @@ const Map = ({
   );
 };
 
-export { Map };
+export { NcalcMap };

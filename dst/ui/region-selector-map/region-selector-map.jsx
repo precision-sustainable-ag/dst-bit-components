@@ -230,9 +230,11 @@ const RegionSelectorMap = ({
   return (
     <>
       {!mapLoaded && (
+        <div className={styles.loadingContainer}>
           <div className={styles.loading}>
             Loading . . .
           </div>
+        </div>
       )}
       <div className={styles.wrapper}>
         <div className={styles.container}>
