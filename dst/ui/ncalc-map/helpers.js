@@ -11,18 +11,18 @@ async function geocodeReverse({ apiKey, setterFunc, zoom, latitude, longitude })
       if (data.features && data.features.length > 0) {
         setterFunc((prevVal) => {
           const value = (parm) => (
-            data.features.filter((feature) => feature.id.includes(parm))[0]?.text
+            data.features.filter((feature) => feature.id.includes(parm))[0]
           );
-          
+        
           const newVal = {
             ...prevVal,
             fullAddress: data.features[0].place_name,
             address: data.features[0].place_name.split(',')[0],
-            zipCode: value('postcode'),
-            city: value('place'),
-            county: value('district'),
-            state: value('region'),
-            zoom,
+            zipCode: value('postcode')?.text,
+            city: value('place')?.text,
+            county: value('district')?.text,
+            state: value('region')?.text,
+            stateAbbreviation: value('region')?.properties?.short_code.replace(/US-/, ''),
           }
           return newVal
         });
