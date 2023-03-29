@@ -1,5 +1,5 @@
 import React from "react";
-import { Map } from "./map";
+import { NcalcMap } from "./ncalc-map";
 
 var featuresSample = [
   {
@@ -38,9 +38,12 @@ var featuresSample = [
 ];
 
 export const PlainMapWithoutFeatures = () => (
-  <Map
+  <NcalcMap
     setAddress={() => {}}
     setFeatures={() => {}}
+    setZoom = {() => {}}
+    setMap = {() => {}}
+    onDraw = {() => {}}
     initWidth="400px"
     initHeight="300px"
     initLon={-80.16}
@@ -67,10 +70,12 @@ export const PlainMapWithoutFeatures = () => (
 );
 
 export const MapWithMarker = () => (
-  <Map
+  <NcalcMap
     setAddress={() => {}}
     setFeatures={() => {}}
-    setZoom={() => {}}
+    setZoom = {() => {}}
+    setMap = {() => {}}
+    onDraw = {() => {}}
     initWidth="400px"
     initHeight="300px"
     initLon={-80.16}
@@ -97,10 +102,12 @@ export const MapWithMarker = () => (
 );
 
 export const MapWithGeocoder = () => (
-  <Map
+  <NcalcMap
     setAddress={() => {}}
     setFeatures={() => {}}
-    setZoom={() => {}}
+    setZoom = {() => {}}
+    setMap = {() => {}}
+    onDraw = {() => {}}
     initWidth="400px"
     initHeight="300px"
     initLon={-80.16}
@@ -127,10 +134,12 @@ export const MapWithGeocoder = () => (
 );
 
 export const MapWithAllFeatures = () => (
-  <Map
+  <NcalcMap
     setAddress={() => {}}
     setFeatures={() => {}}
-    setZoom={() => {}}
+    setZoom = {() => {}}
+    setMap = {() => {}}
+    onDraw = {() => {}}
     initFeatures={featuresSample}
     initWidth="400px"
     initHeight="300px"

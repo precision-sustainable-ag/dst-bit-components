@@ -9,17 +9,23 @@
  */
 
 {
-    "envs/custom": {
-        "scope": "psa.dst",
-        "version": "0.0.2",
-        "mainFile": "index.ts",
-        "rootDir": "dst/envs/custom"
-    },
     "ui/map": {
         "scope": "psa.dst",
-        "version": "0.0.25",
+        "version": "0.0.55",
         "mainFile": "index.js",
         "rootDir": "dst/ui/map"
+    },
+    "ui/ncalc-map": {
+        "scope": "psa.dst",
+        "version": "0.0.2",
+        "mainFile": "index.js",
+        "rootDir": "dst/ui/ncalc-map"
+    },
+    "ui/region-selector-map": {
+        "scope": "psa.dst",
+        "version": "0.0.12",
+        "mainFile": "index.js",
+        "rootDir": "dst/ui/region-selector-map"
     },
     "$schema-version": "15.0.0"
 }

@@ -1,13 +1,15 @@
 ---
-description: 'A Map component.'
+description: 'A Map component for DST-NCALC.'
 labels: ['GIS', 'Geospatial', 'Map', 'Mapbox', 'Agriculture', 'DST']
 ---
 
-import { Map } from './map';
+import { NcalcMap } from './ncalc-map';
 
 ## React Component for rendering an interactive Map
 
-A Map component made using Mapbox GL.
+An Inherited Map component made using Mapbox GL from the Map component.
+This Map is tailored to dst-ncalc needs.
+
 
 ### List of component properties:
 
@@ -16,6 +18,7 @@ A Map component made using Mapbox GL.
 | `setAddress` | function | callback function to set the marker address text as its value |
 | `setFeatures` | function | callback function to set the drawn geometry as its value |
 | `setZoom` | function | callback function to set the map zoom level |
+| `setMap` | function | callback function to set the map object for manipulation |
 | `onDraw` | function | callback function to handle draw events. Ex: {mode: 'delete', e: event}  |
 | `initFeatures` | array | initial features or polygons to draw on the map |
 | `initWidth` | string | map width in css format string |
@@ -46,10 +49,11 @@ A Map component made using Mapbox GL.
 ### Component usage
 
 ```js
-<Map
+<NcalcMap
   setAddress={() => {}}
   setFeatures={() => {}}
   setZoom={() => {}}
+  setMap={() => {}}
   onDraw ={() => {}}
   initFeatures={[]}
   initWidth="400px"
@@ -83,10 +87,11 @@ A Map component made using Mapbox GL.
 Modify the text to see it change live:
 
 ```js live
-<Map
+<NcalcMap
   setAddress={() => {}}
   setFeatures={() => {}}
   setZoom={() => {}}
+  setMap={() => {}}
   onDraw ={() => {}}
   initFeatures={[]}
   initWidth="400px"
