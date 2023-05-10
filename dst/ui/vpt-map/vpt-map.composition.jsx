@@ -1,6 +1,5 @@
 import React from "react";
-import { NcalcMap } from "./ncalc-map";
-import sampleBiomassData from './response_1682931266838.json';
+import { VPTMap } from "./vpt-map";
 
 var featuresSample = [
   {
@@ -39,18 +38,16 @@ var featuresSample = [
 ];
 
 export const PlainMapWithoutFeatures = () => (
-  <NcalcMap
-    setAddress={() => { }}
-    setFeatures={() => { }}
-    setZoom={() => { }}
-    setMap={() => { }}
-    onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
-    initFeatures={[]}
+  <VPTMap
+    setAddress={() => {}}
+    setFeatures={() => {}}
+    setZoom = {() => {}}
+    setMap = {() => {}}
+    onDraw = {() => {}}
     initWidth="400px"
     initHeight="300px"
-    initLon={-101.6838}
-    initLat={41.0686}
+    initLon={-80.16}
+    initLat={37.75}
     initStartZoom={10}
     initMinZoom={5}
     initMaxZoom={16}
@@ -73,18 +70,16 @@ export const PlainMapWithoutFeatures = () => (
 );
 
 export const MapWithMarker = () => (
-  <NcalcMap
-    setAddress={() => { }}
-    setFeatures={() => { }}
-    setZoom={() => { }}
-    setMap={() => { }}
-    onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
-    initFeatures={[]}
+  <VPTMap
+    setAddress={() => {}}
+    setFeatures={() => {}}
+    setZoom = {() => {}}
+    setMap = {() => {}}
+    onDraw = {() => {}}
     initWidth="400px"
     initHeight="300px"
-    initLon={-101.6838}
-    initLat={41.0686}
+    initLon={-80.16}
+    initLat={37.75}
     initStartZoom={10}
     initMinZoom={5}
     initMaxZoom={16}
@@ -107,19 +102,17 @@ export const MapWithMarker = () => (
 );
 
 export const MapWithGeocoder = () => (
-  <NcalcMap
-    setAddress={() => { }}
-    setFeatures={() => { }}
-    setZoom={() => { }}
-    setMap={() => { }}
-    onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
-    initFeatures={[]}
+  <VPTMap
+    setAddress={() => {}}
+    setFeatures={() => {}}
+    setZoom = {() => {}}
+    setMap = {() => {}}
+    onDraw = {() => {}}
     initWidth="400px"
     initHeight="300px"
-    initLon={-101.6838}
-    initLat={41.0686}
-    initStartZoom={12}
+    initLon={-80.16}
+    initLat={37.75}
+    initStartZoom={10}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={true}
@@ -141,19 +134,18 @@ export const MapWithGeocoder = () => (
 );
 
 export const MapWithAllFeatures = () => (
-  <NcalcMap
-    setAddress={() => { }}
-    setFeatures={() => { }}
-    setZoom={() => { }}
-    setMap={() => { }}
-    onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
+  <VPTMap
+    setAddress={() => {}}
+    setFeatures={() => {}}
+    setZoom = {() => {}}
+    setMap = {() => {}}
+    onDraw = {() => {}}
     initFeatures={featuresSample}
     initWidth="400px"
     initHeight="300px"
     initAddress=""
-    initLon={-101.6838}
-    initLat={41.0686}
+    initLon={-80.16}
+    initLat={37.75}
     initStartZoom={10}
     initMinZoom={5}
     initMaxZoom={16}

@@ -24,6 +24,7 @@ importers:
       '@types/testing-library__jest-dom': 5.9.5
       '@typescript-eslint/eslint-plugin': 5.46.1
       babel: 6.23.0
+      chroma-js: 2.4.2
       core-js: ^3.0.0
       eslint-import-resolver-node: 0.3.6
       eslint-plugin-import: 2.26.0
@@ -32,8 +33,10 @@ importers:
       eslint-plugin-mdx: 2.0.5
       eslint-plugin-react: 7.31.11
       mapbox-gl: 2.11.1
+      proj4: 2.9.0
       react: latest
       react-dom: latest
+      turf: 3.0.14
     dependencies:
       '@mapbox/mapbox-gl-draw': registry.npmjs.org/@mapbox/mapbox-gl-draw/1.3.0
       '@mapbox/mapbox-gl-geocoder': registry.npmjs.org/@mapbox/mapbox-gl-geocoder/5.0.1_mapbox-gl@2.11.1
@@ -43,6 +46,7 @@ importers:
       '@turf/centroid': registry.npmjs.org/@turf/centroid/6.5.0
       '@typescript-eslint/eslint-plugin': registry.npmjs.org/@typescript-eslint/eslint-plugin/5.46.1
       babel: registry.npmjs.org/babel/6.23.0
+      chroma-js: registry.npmjs.org/chroma-js/2.4.2
       core-js: registry.npmjs.org/core-js/3.29.1
       eslint-import-resolver-node: registry.npmjs.org/eslint-import-resolver-node/0.3.6
       eslint-plugin-import: registry.npmjs.org/eslint-plugin-import/2.26.0
@@ -51,8 +55,10 @@ importers:
       eslint-plugin-mdx: registry.npmjs.org/eslint-plugin-mdx/2.0.5
       eslint-plugin-react: registry.npmjs.org/eslint-plugin-react/7.31.11
       mapbox-gl: registry.npmjs.org/mapbox-gl/2.11.1
+      proj4: registry.npmjs.org/proj4/2.9.0
       react: registry.npmjs.org/react/18.2.0
       react-dom: registry.npmjs.org/react-dom/18.2.0_react@18.2.0
+      turf: registry.npmjs.org/turf/3.0.14
     devDependencies:
       '@babel/runtime': registry.npmjs.org/@babel/runtime/7.12.18
       '@psa/dst.envs.custom': 0.0.2_biqbaboplfbrettd7655fr4n2y
@@ -69,6 +75,9 @@ importers:
     specifiers: {}
 
   dst/ui/region-selector-map:
+    specifiers: {}
+
+  dst/ui/vpt-map:
     specifiers: {}
 
 packages:
@@ -947,6 +956,14 @@ packages:
     hasBin: true
     dev: false
 
+  registry.npmjs.org/affine-hull/1.0.0:
+    resolution: {integrity: sha512-3QNG6+vFAwJvSZHsJYDJ/mt1Cxx9n5ffA+1Ohmj7udw0JuRgUVIXK0P9N9pCMuEdS3jCNt8GFX5q2fChq+GO3Q==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/affine-hull/-/affine-hull-1.0.0.tgz}
+    name: affine-hull
+    version: 1.0.0
+    dependencies:
+      robust-orientation: registry.npmjs.org/robust-orientation/1.2.1
+    dev: false
+
   registry.npmjs.org/ansi-regex/5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz}
     name: ansi-regex
@@ -1125,6 +1142,12 @@ packages:
     version: 0.1.0
     dev: false
 
+  registry.npmjs.org/bit-twiddle/1.0.2:
+    resolution: {integrity: sha512-B9UhK0DKFZhoTFcfvAzhqsjStvGJp9vYWf3+6SNTtdSQnvIgfkHbgHrg/e4+TH71N2GDu8tpmCVoyfrL1d7ntA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/bit-twiddle/-/bit-twiddle-1.0.2.tgz}
+    name: bit-twiddle
+    version: 1.0.2
+    dev: false
+
   registry.npmjs.org/brace-expansion/1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz}
     name: brace-expansion
@@ -1267,6 +1290,12 @@ packages:
     version: 2.0.1
     dev: false
 
+  registry.npmjs.org/chroma-js/2.4.2:
+    resolution: {integrity: sha512-U9eDw6+wt7V8z5NncY2jJfZa+hUH8XEj8FQHgFJTrUFnJfXYf4Ml4adI2vXZOjqRDpFWtYVWypDfZwnJ+HIR4A==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/chroma-js/-/chroma-js-2.4.2.tgz}
+    name: chroma-js
+    version: 2.4.2
+    dev: false
+
   registry.npmjs.org/cleargraph/5.8.0:
     resolution: {integrity: sha512-72ZcdfWOwa1w3IfvKQFBp9lbgeZVlx9VFzUEKuGebaWprKIRs+kLIz48cNPAE8A6ZhuIbDsdFbYPQBH85+viRw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/cleargraph/-/cleargraph-5.8.0.tgz}
     name: cleargraph
@@ -1334,6 +1363,16 @@ packages:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz}
     name: concat-map
     version: 0.0.1
+    dev: false
+
+  registry.npmjs.org/convex-hull/1.0.3:
+    resolution: {integrity: sha512-24rZAoh81t41GHPLAxcsokgjH9XNoVqU2OiSi8iMHUn6HUURfiefcEWAPt1AfwZjBBWTKadOm1xUcUMnfFukhQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/convex-hull/-/convex-hull-1.0.3.tgz}
+    name: convex-hull
+    version: 1.0.3
+    dependencies:
+      affine-hull: registry.npmjs.org/affine-hull/1.0.0
+      incremental-convex-hull: registry.npmjs.org/incremental-convex-hull/1.0.1
+      monotone-convex-hull-2d: registry.npmjs.org/monotone-convex-hull-2d/1.0.1
     dev: false
 
   registry.npmjs.org/core-js-pure/3.29.1:
@@ -2133,10 +2172,33 @@ packages:
     engines: {node: '>= 0.6.0'}
     dev: false
 
+  registry.npmjs.org/geojson-area/0.2.1:
+    resolution: {integrity: sha512-I+cht30/CFFObh8GgEa/1o9Kd7RwQTHmotYp3ToyCpxxDFNcuX5SlErKkvoy3otnrsWzODN8yscSTGOAkQ3tKQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/geojson-area/-/geojson-area-0.2.1.tgz}
+    name: geojson-area
+    version: 0.2.1
+    deprecated: 'This module is now under the @mapbox namespace: install @mapbox/geojson-area instead'
+    dependencies:
+      wgs84: registry.npmjs.org/wgs84/0.0.0
+    dev: false
+
   registry.npmjs.org/geojson-flatten/1.1.1:
     resolution: {integrity: sha512-k/6BCd0qAt7vdqdM1LkLfAy72EsLDy0laNwX0x2h49vfYCiQkRc4PSra8DNEdJ10EKRpwEvDXMb0dBknTJuWpQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/geojson-flatten/-/geojson-flatten-1.1.1.tgz}
     name: geojson-flatten
     version: 1.1.1
+    dev: false
+
+  registry.npmjs.org/geojson-normalize/0.0.0:
+    resolution: {integrity: sha512-h/ldgc7C2DrYDIn+F/o+AgZLxmeC+O4q3wvGwiuBjTTRnhxvxaGz6cE6cRTeMH89jIJM3BiP+R6Yiht7f3PBuA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/geojson-normalize/-/geojson-normalize-0.0.0.tgz}
+    name: geojson-normalize
+    version: 0.0.0
+    deprecated: 'This module is now under the @mapbox namespace: install @mapbox/geojson-normalize instead'
+    dev: false
+
+  registry.npmjs.org/geojson-random/0.2.2:
+    resolution: {integrity: sha512-/vZQ14mjKPG3LJ7bpyXsJ0aoz8NzvwpwwP//uBgbzIu2BCFd4uRagp1QvY3RAzRQsHOHyVh33dbYUYws7vOCkg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/geojson-random/-/geojson-random-0.2.2.tgz}
+    name: geojson-random
+    version: 0.2.2
+    hasBin: true
     dev: false
 
   registry.npmjs.org/geojson-vt/3.2.1:
@@ -2397,6 +2459,15 @@ packages:
     dependencies:
       parent-module: registry.npmjs.org/parent-module/1.0.1
       resolve-from: registry.npmjs.org/resolve-from/4.0.0
+    dev: false
+
+  registry.npmjs.org/incremental-convex-hull/1.0.1:
+    resolution: {integrity: sha512-mKRJDXtzo1R9LxCuB1TdwZXHaPaIEldoGPsXy2jrJc/kufyqp8y/VAQQxThSxM2aroLoh6uObexPk1ASJ7FB7Q==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/incremental-convex-hull/-/incremental-convex-hull-1.0.1.tgz}
+    name: incremental-convex-hull
+    version: 1.0.1
+    dependencies:
+      robust-orientation: registry.npmjs.org/robust-orientation/1.2.1
+      simplicial-complex: registry.npmjs.org/simplicial-complex/1.0.0
     dev: false
 
   registry.npmjs.org/indent-string/4.0.0:
@@ -2764,6 +2835,13 @@ packages:
     optionalDependencies:
       graceful-fs: registry.npmjs.org/graceful-fs/4.2.11
 
+  registry.npmjs.org/jsts/1.1.2:
+    resolution: {integrity: sha512-4qWAI9gR72HcGWCl7bej9/2dCM6Nv6dh5Zn1G+wzJYW9wsFL/2bPA3kdR8IAPObmF4gb56l5EGlXxErmB+9GOw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/jsts/-/jsts-1.1.2.tgz}
+    name: jsts
+    version: 1.1.2
+    engines: {node: '>= 4'}
+    dev: false
+
   registry.npmjs.org/jsx-ast-utils/3.3.3:
     resolution: {integrity: sha512-fYQHZTZ8jSfmWZ0iyzfwiU4WDX4HpHbMCZ3gPlWYiCl3BoeOTsqKBqnTVfH2rYT7eP5c3sVbeSPHnnJOaTrWiw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/jsx-ast-utils/-/jsx-ast-utils-3.3.3.tgz}
     name: jsx-ast-utils
@@ -3087,6 +3165,12 @@ packages:
     name: merge2
     version: 1.4.1
     engines: {node: '>= 8'}
+    dev: false
+
+  registry.npmjs.org/mgrs/1.0.0:
+    resolution: {integrity: sha512-awNbTOqCxK1DBGjalK3xqWIstBZgN6fxsMSiXLs9/spqWkF2pAhb2rrYCFSsr1/tT7PhcDGjZndG8SWYn0byYA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/mgrs/-/mgrs-1.0.0.tgz}
+    name: mgrs
+    version: 1.0.0
     dev: false
 
   registry.npmjs.org/micromark-core-commonmark/1.0.6:
@@ -3487,6 +3571,14 @@ packages:
     version: 1.2.8
     dev: false
 
+  registry.npmjs.org/monotone-convex-hull-2d/1.0.1:
+    resolution: {integrity: sha512-ixQ3qdXTVHvR7eAoOjKY8kGxl9YjOFtzi7qOjwmFFPfBqZHVOjUFOBy/Dk9dusamRSPJe9ggyfSypRbs0Bl8BA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/monotone-convex-hull-2d/-/monotone-convex-hull-2d-1.0.1.tgz}
+    name: monotone-convex-hull-2d
+    version: 1.0.1
+    dependencies:
+      robust-orientation: registry.npmjs.org/robust-orientation/1.2.1
+    dev: false
+
   registry.npmjs.org/mri/1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/mri/-/mri-1.2.0.tgz}
     name: mri
@@ -3819,6 +3911,15 @@ packages:
       react-is: registry.npmjs.org/react-is/17.0.2
     dev: false
 
+  registry.npmjs.org/proj4/2.9.0:
+    resolution: {integrity: sha512-BoDXEzCVnRJVZoOKA0QHTFtYoE8lUxtX1jST38DJ8U+v1ixY70Kpwi0Llu6YqSWEH2xqu4XMEBNGcgeRIEywoA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/proj4/-/proj4-2.9.0.tgz}
+    name: proj4
+    version: 2.9.0
+    dependencies:
+      mgrs: registry.npmjs.org/mgrs/1.0.0
+      wkt-parser: registry.npmjs.org/wkt-parser/1.3.2
+    dev: false
+
   registry.npmjs.org/prop-types/15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz}
     name: prop-types
@@ -4062,6 +4163,38 @@ packages:
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
     dev: false
 
+  registry.npmjs.org/robust-orientation/1.2.1:
+    resolution: {integrity: sha512-FuTptgKwY6iNuU15nrIJDLjXzCChWB+T4AvksRtwPS/WZ3HuP1CElCm1t+OBfgQKfWbtZIawip+61k7+buRKAg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/robust-orientation/-/robust-orientation-1.2.1.tgz}
+    name: robust-orientation
+    version: 1.2.1
+    dependencies:
+      robust-scale: registry.npmjs.org/robust-scale/1.0.2
+      robust-subtract: registry.npmjs.org/robust-subtract/1.0.0
+      robust-sum: registry.npmjs.org/robust-sum/1.0.0
+      two-product: registry.npmjs.org/two-product/1.0.2
+    dev: false
+
+  registry.npmjs.org/robust-scale/1.0.2:
+    resolution: {integrity: sha512-jBR91a/vomMAzazwpsPTPeuTPPmWBacwA+WYGNKcRGSh6xweuQ2ZbjRZ4v792/bZOhRKXRiQH0F48AvuajY0tQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/robust-scale/-/robust-scale-1.0.2.tgz}
+    name: robust-scale
+    version: 1.0.2
+    dependencies:
+      two-product: registry.npmjs.org/two-product/1.0.2
+      two-sum: registry.npmjs.org/two-sum/1.0.0
+    dev: false
+
+  registry.npmjs.org/robust-subtract/1.0.0:
+    resolution: {integrity: sha512-xhKUno+Rl+trmxAIVwjQMiVdpF5llxytozXJOdoT4eTIqmqsndQqFb1A0oiW3sZGlhMRhOi6pAD4MF1YYW6o/A==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/robust-subtract/-/robust-subtract-1.0.0.tgz}
+    name: robust-subtract
+    version: 1.0.0
+    dev: false
+
+  registry.npmjs.org/robust-sum/1.0.0:
+    resolution: {integrity: sha512-AvLExwpaqUqD1uwLU6MwzzfRdaI6VEZsyvQ3IAQ0ZJ08v1H+DTyqskrf2ZJyh0BDduFVLN7H04Zmc+qTiahhAw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/robust-sum/-/robust-sum-1.0.0.tgz}
+    name: robust-sum
+    version: 1.0.0
+    dev: false
+
   registry.npmjs.org/run-parallel/1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/run-parallel/-/run-parallel-1.2.0.tgz}
     name: run-parallel
@@ -4156,6 +4289,21 @@ packages:
       call-bind: registry.npmjs.org/call-bind/1.0.2
       get-intrinsic: registry.npmjs.org/get-intrinsic/1.2.0
       object-inspect: registry.npmjs.org/object-inspect/1.12.3
+    dev: false
+
+  registry.npmjs.org/simplicial-complex/1.0.0:
+    resolution: {integrity: sha512-mHauIKSOy3GquM5VnYEiu7eP5y4A8BiaN9ezUUgyYFz1k68PqDYcyaH3kenp2cyvWZE96QKE3nrxYw65Allqiw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/simplicial-complex/-/simplicial-complex-1.0.0.tgz}
+    name: simplicial-complex
+    version: 1.0.0
+    dependencies:
+      bit-twiddle: registry.npmjs.org/bit-twiddle/1.0.2
+      union-find: registry.npmjs.org/union-find/1.0.2
+    dev: false
+
+  registry.npmjs.org/simplify-js/1.2.4:
+    resolution: {integrity: sha512-vITfSlwt7h/oyrU42R83mtzFpwYk3+mkH9bOHqq/Qw6n8rtR7aE3NZQ5fbcyCUVVmuMJR6ynsAhOfK2qoah8Jg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/simplify-js/-/simplify-js-1.2.4.tgz}
+    name: simplify-js
+    version: 1.2.4
     dev: false
 
   registry.npmjs.org/slash/3.0.0:
@@ -4412,6 +4560,551 @@ packages:
       tslib: registry.npmjs.org/tslib/1.14.1
     dev: false
 
+  registry.npmjs.org/turf-along/3.0.12:
+    resolution: {integrity: sha512-9wHa3LiqsdEExCuPgw8O5fJzqeL4lf8srBBfjGid2Tjh2nwuqgkcFZxzbnLE0Y8oFh60iNJUdccGuJSTJ3YGyg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-along/-/turf-along-3.0.12.tgz}
+    name: turf-along
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/along instead'
+    dependencies:
+      turf-bearing: registry.npmjs.org/turf-bearing/3.0.12
+      turf-destination: registry.npmjs.org/turf-destination/3.0.12
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-area/3.0.12:
+    resolution: {integrity: sha512-62Rc1UD8b1yv+AkfhjQ6LSvzxnuJi+jj6q4EkginZxPMJh8HACyQkeNy6VI9WucUULXzoPs8IqeqNwltpMpZVw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-area/-/turf-area-3.0.12.tgz}
+    name: turf-area
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/area instead'
+    dependencies:
+      geojson-area: registry.npmjs.org/geojson-area/0.2.1
+    dev: false
+
+  registry.npmjs.org/turf-bbox-polygon/3.0.12:
+    resolution: {integrity: sha512-9wuTI5eFBBe0bXNK8c5wk/zHbSne28KmUQVX66QhTRvUc34v+NUIzn4bzi3rZXpJvLSLyPVltPnYfn+YsuCkAQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-bbox-polygon/-/turf-bbox-polygon-3.0.12.tgz}
+    name: turf-bbox-polygon
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/bbox-polygon instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-bbox/3.0.12:
+    resolution: {integrity: sha512-ztNkTvRQ3ezArAQB2ZLLtJur9BiuWkwVv5u+aviC+3y0/mU5ITuoArOTUs4kLU+gNOjdpPwD0Ea/gqBR0lh2hw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-bbox/-/turf-bbox-3.0.12.tgz}
+    name: turf-bbox
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/bbox instead'
+    dependencies:
+      turf-meta: registry.npmjs.org/turf-meta/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-bearing/3.0.12:
+    resolution: {integrity: sha512-oWAFtgpQwR78xWZn53BzdwHhd4uT5OtuvwEgzFkZWSa6kp+UpdJ39lDAcvdR0H8dCszuGB4KguaGCZLG+iyUvg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-bearing/-/turf-bearing-3.0.12.tgz}
+    name: turf-bearing
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/bearing instead'
+    dependencies:
+      turf-invariant: registry.npmjs.org/turf-invariant/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-bezier/3.0.12:
+    resolution: {integrity: sha512-8B4frrRtir9VJ6DTgGG5e81f7faPBnxTR2uJzWGd3bQkUaOBBX7rLQTBTBv1iFZVTU07QnWYgznm3c06FrtX2w==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-bezier/-/turf-bezier-3.0.12.tgz}
+    name: turf-bezier
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/bezier instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-buffer/3.0.12:
+    resolution: {integrity: sha512-2wy66sAd0EXX13ql2KeA1bFOtecqDCWmaayLueEaM7HOxY6i/VvroDIHZrFzuwPAa/4ZwMZPaTPiFQ6kh7VSGw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-buffer/-/turf-buffer-3.0.12.tgz}
+    name: turf-buffer
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/buffer instead'
+    dependencies:
+      geojson-normalize: registry.npmjs.org/geojson-normalize/0.0.0
+      jsts: registry.npmjs.org/jsts/1.1.2
+      turf-combine: registry.npmjs.org/turf-combine/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-center/3.0.12:
+    resolution: {integrity: sha512-H2okrDla22kawwXsPvazV09mHr26/51sKONL52HTBeqiD2sK0WWRQkpdLfJdia0FT47wVk9mBiLXsKeIzDUi7Q==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-center/-/turf-center-3.0.12.tgz}
+    name: turf-center
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/center instead'
+    dependencies:
+      turf-bbox: registry.npmjs.org/turf-bbox/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-centroid/3.0.12:
+    resolution: {integrity: sha512-OuH8ZZjnxiNETZ8vZkb+dC6C+fit+LdRBolLGDQzBKDLXV2z1nQX2+w/qTNKV9XP5ZZLeEpJPmP0z1MDSz+YRA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-centroid/-/turf-centroid-3.0.12.tgz}
+    name: turf-centroid
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/centroid instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-meta: registry.npmjs.org/turf-meta/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-circle/3.0.12:
+    resolution: {integrity: sha512-dOGg9yQXA21SpgI1qjU+Kgq0esvBU+ZTqoM5A2fWmoa0458YUoB85hnbxFtnmsFB3qXDsrW9RBuC4kyNCcn9KQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-circle/-/turf-circle-3.0.12.tgz}
+    name: turf-circle
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/circle instead'
+    dependencies:
+      turf-destination: registry.npmjs.org/turf-destination/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-collect/3.0.12:
+    resolution: {integrity: sha512-V36Hz03VmMXn0BUAZNY+w1bpCX6Ks2JzfvHdiWHh5MccziroaKOfOeC1odJcXSDrhoR14/0oSC4tHDKJslbcPA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-collect/-/turf-collect-3.0.12.tgz}
+    name: turf-collect
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/collect instead'
+    dependencies:
+      turf-inside: registry.npmjs.org/turf-inside/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-combine/3.0.12:
+    resolution: {integrity: sha512-j99I2ydmO4AzQQqzh+DBbxRr+a//DNbXJFcvBSy88G7vlKByPzr0ONVDNcvS/a1JRTl11C2vfrWxRtHwwmzzDg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-combine/-/turf-combine-3.0.12.tgz}
+    name: turf-combine
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/combine instead'
+    dependencies:
+      turf-meta: registry.npmjs.org/turf-meta/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-concave/3.0.12:
+    resolution: {integrity: sha512-0KQfAk1f7TRUtuNbIDsRcbi4ONMhtrQg0Y/uY/QM5wVIKMj5T5ZuSApqEfs4cDXcfWu//hwe2bgHJzu1GlUn4w==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-concave/-/turf-concave-3.0.12.tgz}
+    name: turf-concave
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/concave instead'
+    dependencies:
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-meta: registry.npmjs.org/turf-meta/3.0.12
+      turf-tin: registry.npmjs.org/turf-tin/3.0.12
+      turf-union: registry.npmjs.org/turf-union/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-convex/3.0.12:
+    resolution: {integrity: sha512-xfwhxDQKygFsdbEK8503/N+B4JZZB6i58lE39DTMcf97xCCLyv7zxGlalsKU4j+qywV3nbO6yhKHScv4t6t5bg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-convex/-/turf-convex-3.0.12.tgz}
+    name: turf-convex
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/convex instead'
+    dependencies:
+      convex-hull: registry.npmjs.org/convex-hull/1.0.3
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-meta: registry.npmjs.org/turf-meta/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-destination/3.0.12:
+    resolution: {integrity: sha512-nXKJfH5qv+eoNbw5ggLZNsUokgmaHnGD8Woauc8+7C36JRPSEm1Y3wcjAdJX0VadJJdL8AjNP65QOiWOLdVe1Q==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-destination/-/turf-destination-3.0.12.tgz}
+    name: turf-destination
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/destination instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-invariant: registry.npmjs.org/turf-invariant/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-difference/3.0.12:
+    resolution: {integrity: sha512-YRMUspic52qdwZZxuVp0LB2QG39q4Ps5ZTfZq+QIGsqdKK7FxvbJTxsb/a+n4xHe/K4zCcWo/AXUw1pOFLrNbA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-difference/-/turf-difference-3.0.12.tgz}
+    name: turf-difference
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/difference instead'
+    dependencies:
+      jsts: registry.npmjs.org/jsts/1.1.2
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-distance/3.0.12:
+    resolution: {integrity: sha512-dy2TguSbcCKJK7ZPwCZuG9+mK2DBKZ4g0wlmbKa7iGPFG18X1nPWJRzUkmNF3kdUe9K6+7SViTnbH6xQYCNpiw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-distance/-/turf-distance-3.0.12.tgz}
+    name: turf-distance
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/distance instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-invariant: registry.npmjs.org/turf-invariant/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-envelope/3.0.12:
+    resolution: {integrity: sha512-2ahLojIP000MUhk7JC/ILASwiP074sFD5nc1HTYyHRhqkb8ukwFMHrR3haEmQdf7sJE3nexBELY9PMGyTQmBiQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-envelope/-/turf-envelope-3.0.12.tgz}
+    name: turf-envelope
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/envelope instead'
+    dependencies:
+      turf-bbox: registry.npmjs.org/turf-bbox/3.0.12
+      turf-bbox-polygon: registry.npmjs.org/turf-bbox-polygon/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-explode/3.0.12:
+    resolution: {integrity: sha512-cBUdQl2RBbu5YdL+mBNOcou8OlHLF6F9s6Rwz4EuOOGG0Urs0NE2CmascINB1+TgbxJozb29ZKNXezgwhwnrpg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-explode/-/turf-explode-3.0.12.tgz}
+    name: turf-explode
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/explode instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-meta: registry.npmjs.org/turf-meta/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-flip/3.0.12:
+    resolution: {integrity: sha512-SV/DI8I/dczRlqBMcAZyyQq1rlkrFZigFUKhtDIBqEJJvqKy70kDxbHrAkJdeAZ20caflkaTV2K40x4UTUpNgg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-flip/-/turf-flip-3.0.12.tgz}
+    name: turf-flip
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/flip instead'
+    dependencies:
+      turf-meta: registry.npmjs.org/turf-meta/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-grid/1.0.1:
+    resolution: {integrity: sha512-T2jHZ2HOgvkZZQjMmtl9lexeY6Xk1POF6wbYE7aYLjBO43MQqYNEFDf3JQ1gJymrYEaNy7yDSDYDyiYSsK6sQw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-grid/-/turf-grid-1.0.1.tgz}
+    name: turf-grid
+    version: 1.0.1
+    dependencies:
+      turf-point: registry.npmjs.org/turf-point/2.0.1
+    dev: false
+
+  registry.npmjs.org/turf-helpers/3.0.12:
+    resolution: {integrity: sha512-e0Oic1RVdTq3PAd5XlPgdtE3eZlN4kSd+Sr4iwayeeBRCMns60j9t6helyHxvbjLLy1uP28IiNfnm30BF+YThw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-helpers/-/turf-helpers-3.0.12.tgz}
+    name: turf-helpers
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/helpers instead'
+    dev: false
+
+  registry.npmjs.org/turf-hex-grid/3.0.12:
+    resolution: {integrity: sha512-3O580ujUHbAEi8vk38uyxvIQN3yjyeQEJtJppB2sYO7zcNORIcao68DlXQW29nSy1pUAYCbNkghDcumNL3A58A==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-hex-grid/-/turf-hex-grid-3.0.12.tgz}
+    name: turf-hex-grid
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/hex-grid instead'
+    dependencies:
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-inside/3.0.12:
+    resolution: {integrity: sha512-QjRDeSgDwf1hIEATsYgbYMB1GnnfwEqjapskOIojICeUBfKA+NMExjaBtMc2V1SY5jNqja6tVPH+ek0d+WO7Vg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-inside/-/turf-inside-3.0.12.tgz}
+    name: turf-inside
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/inside instead'
+    dependencies:
+      turf-invariant: registry.npmjs.org/turf-invariant/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-intersect/3.0.12:
+    resolution: {integrity: sha512-eXDksaYFakN6BFcfiyqgH1PDizfkfhPUU2Axd+I5zjVEHgECplK+z8LYA/RqvQ59aWQ2MfNRqxwW12T07c4gMw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-intersect/-/turf-intersect-3.0.12.tgz}
+    name: turf-intersect
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/intersect instead'
+    dependencies:
+      jsts: registry.npmjs.org/jsts/1.1.2
+    dev: false
+
+  registry.npmjs.org/turf-invariant/3.0.12:
+    resolution: {integrity: sha512-6BAyAupdij6X8gTlpGHCG/zpqXXaTi7kjMAbQrepTpnPhIEQJtlGsiZCQu4EckCZS5Rzj5/b8Xw4gaxNpadihw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-invariant/-/turf-invariant-3.0.12.tgz}
+    name: turf-invariant
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/invariant instead'
+    dev: false
+
+  registry.npmjs.org/turf-isolines/3.0.12:
+    resolution: {integrity: sha512-b4TY6fKYWvToxiYjYTiURUlljls8jG1oKFaBulu5pz0q6rxmpxkCGOA8t9AXQkNXzHBrDE+vjXashMtYEN9Tsw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-isolines/-/turf-isolines-3.0.12.tgz}
+    name: turf-isolines
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/isolines instead'
+    dependencies:
+      turf-bbox: registry.npmjs.org/turf-bbox/3.0.12
+      turf-grid: registry.npmjs.org/turf-grid/1.0.1
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-inside: registry.npmjs.org/turf-inside/3.0.12
+      turf-planepoint: registry.npmjs.org/turf-planepoint/3.0.12
+      turf-square: registry.npmjs.org/turf-square/3.0.12
+      turf-tin: registry.npmjs.org/turf-tin/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-kinks/3.0.12:
+    resolution: {integrity: sha512-gzLqDKPqq9rSWIPy6NDZMspDqk1wvP1sg+jaSqdKnW3mPTDn32IbHLxihjGzZoaW0YlIZmnrZlVBLqId6kCZ5w==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-kinks/-/turf-kinks-3.0.12.tgz}
+    name: turf-kinks
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/kinks instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-line-distance/3.0.12:
+    resolution: {integrity: sha512-HzrxOEKdUgl1vdqIBLmaA99B0cg3+41kamQ650wn26BFUdMrrtkt+x2FT3Y7DifYTNljQ2fblbylqtMAAS0jag==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-line-distance/-/turf-line-distance-3.0.12.tgz}
+    name: turf-line-distance
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/line-distance instead'
+    dependencies:
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-line-slice/3.0.12:
+    resolution: {integrity: sha512-1ecV3DCTRkv2azoaN/ZFcKxLBrw3l4SRSP/dVAk1Gwn83vBYJ9XtjmUiMLE2WbzTzuzuDxLb6fMvyGyteXBUeg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-line-slice/-/turf-line-slice-3.0.12.tgz}
+    name: turf-line-slice
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/line-slice instead'
+    dependencies:
+      turf-bearing: registry.npmjs.org/turf-bearing/3.0.12
+      turf-destination: registry.npmjs.org/turf-destination/3.0.12
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-point-on-line: registry.npmjs.org/turf-point-on-line/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-meta/3.0.12:
+    resolution: {integrity: sha512-B3YSKMpWGx1WYE8IM62pzOA0kqjrGjd/ZkSyrD5WXnrrpPfAUl0yBoZCJYL5IQcOwLqfd5xZt3HJnNH9cFiG7A==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-meta/-/turf-meta-3.0.12.tgz}
+    name: turf-meta
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/meta instead'
+    dev: false
+
+  registry.npmjs.org/turf-midpoint/3.0.12:
+    resolution: {integrity: sha512-Q1fZWQzc4SSF09hY+tJvgnDGBmVqTgBkIzOg0I0hy+ti0b9bSJ5P3+KY6wkVcC+zgDa8jzp8GZETijAV4WUAqw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-midpoint/-/turf-midpoint-3.0.12.tgz}
+    name: turf-midpoint
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/midpoint instead'
+    dependencies:
+      turf-bearing: registry.npmjs.org/turf-bearing/3.0.12
+      turf-destination: registry.npmjs.org/turf-destination/3.0.12
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-invariant: registry.npmjs.org/turf-invariant/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-nearest/3.0.12:
+    resolution: {integrity: sha512-4jyHgtpxVSM2LXh+lz4z47lketEXMKlcIpCJplHFpT1ZddIUoKvT6RJDhTUN8a+mohE8HAPgvcUA53vmjxxNEg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-nearest/-/turf-nearest-3.0.12.tgz}
+    name: turf-nearest
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/nearest instead'
+    dependencies:
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-planepoint/3.0.12:
+    resolution: {integrity: sha512-2okyqSAjC00QWEyr1vi04Vgug6OaYfBRtvtzHs16IxBN5xhAuwtCnUICb/1ugbOgCiBFV6TzIle/vA0EUVuRxQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-planepoint/-/turf-planepoint-3.0.12.tgz}
+    name: turf-planepoint
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/planepoint instead'
+    dev: false
+
+  registry.npmjs.org/turf-point-grid/3.0.12:
+    resolution: {integrity: sha512-5keUPz8j0VWilANaX3bP1evAm/u1u8v10HfUjtoenvWAC5dTGMUVCskgFqX9XitwmsPtaFiCuakM8s3HQzydSQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-point-grid/-/turf-point-grid-3.0.12.tgz}
+    name: turf-point-grid
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/point-grid instead'
+    dependencies:
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-point-on-line/3.0.12:
+    resolution: {integrity: sha512-0+gqSE3pK//ylzQZoc+tLpLUa1/14vvqbMvteFu2bl9NP6oudzZqTWoY9dBfyD9rLQtFOCf/IdkIk+IIwTn1cg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-point-on-line/-/turf-point-on-line-3.0.12.tgz}
+    name: turf-point-on-line
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/point-on-line instead'
+    dependencies:
+      turf-bearing: registry.npmjs.org/turf-bearing/3.0.12
+      turf-destination: registry.npmjs.org/turf-destination/3.0.12
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-point-on-surface/3.0.12:
+    resolution: {integrity: sha512-8/CXalHx672E2gR5FIZlazrx2Gj8HJW9JHb7UF/SH2CGDt/DUQKynz3/rn2fj4PyGtXGG7JoS/XuBwEdH99gAw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-point-on-surface/-/turf-point-on-surface-3.0.12.tgz}
+    name: turf-point-on-surface
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/point-on-surface instead'
+    dependencies:
+      turf-center: registry.npmjs.org/turf-center/3.0.12
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-explode: registry.npmjs.org/turf-explode/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-inside: registry.npmjs.org/turf-inside/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-point/2.0.1:
+    resolution: {integrity: sha512-DkzYiE8Gc7G6XNW3FsBEwKAMz7jVZ/cw+PqLLkiSR1bde0vRZumF26UDQrspyQNih/oShQ0i4mSfa/dw3tqzsA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-point/-/turf-point-2.0.1.tgz}
+    name: turf-point
+    version: 2.0.1
+    hasBin: true
+    dependencies:
+      minimist: registry.npmjs.org/minimist/1.2.8
+    dev: false
+
+  registry.npmjs.org/turf-random/3.0.12:
+    resolution: {integrity: sha512-y0bRhHUfTQJBdEigLpS0+y8ReagylBlAgSKhCanMkw2WtQBj4y5MNOT+dgwX6iOCiWrzCsgPvDm/2hRxdYzmTQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-random/-/turf-random-3.0.12.tgz}
+    name: turf-random
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/random instead'
+    dependencies:
+      geojson-random: registry.npmjs.org/geojson-random/0.2.2
+    dev: false
+
+  registry.npmjs.org/turf-sample/3.0.12:
+    resolution: {integrity: sha512-aDwiE4kjSHt60hYdIhCFQp7xTauIPUVufbfJSVR2+Xrq6KdK8IPIkUAjDKNIo7iSetEsK9uHNHCFTTvW1emGMQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-sample/-/turf-sample-3.0.12.tgz}
+    name: turf-sample
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/sample instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-simplify/3.0.12:
+    resolution: {integrity: sha512-g+kLtFhZaQD+OZwcl2KZ8RVWGQdsCJBT3/ZQiP6K8RYdD3d3QbruKIQdLgEZhK0lL0/EUCgzQz3/mhpxTA3RMw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-simplify/-/turf-simplify-3.0.12.tgz}
+    name: turf-simplify
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/simplify instead'
+    dependencies:
+      simplify-js: registry.npmjs.org/simplify-js/1.2.4
+    dev: false
+
+  registry.npmjs.org/turf-square-grid/3.0.12:
+    resolution: {integrity: sha512-L8Bd3/YNYMqIYqWJDmGMJ7itSO7VMrbU1Vubt1f+GOHGnNcf789YXe1poNa6VdONw7spuRlgbQA94VMI5vzZUQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-square-grid/-/turf-square-grid-3.0.12.tgz}
+    name: turf-square-grid
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/square-grid instead'
+    dependencies:
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-square/3.0.12:
+    resolution: {integrity: sha512-jBxMU+9ZO8WAEwFBC2AsBpwV/vmqdBFn73ONEYDb8n+LiOAMbwsDM+75pxg6kt5l3ugQJGbgfxVucVl3SUTJaQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-square/-/turf-square-3.0.12.tgz}
+    name: turf-square
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/square instead'
+    dependencies:
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-tag/3.0.12:
+    resolution: {integrity: sha512-tNC7FkAMdFjePrqZqjrxE5IXGdkrZcBjWbRmCSwy0DMKhLgPuXfWNACXt4FFC5dgQ3jc3NbDvfsML6gs1es1zA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-tag/-/turf-tag-3.0.12.tgz}
+    name: turf-tag
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/tag instead'
+    dependencies:
+      turf-inside: registry.npmjs.org/turf-inside/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-tesselate/3.0.12:
+    resolution: {integrity: sha512-LWalgrdZGqXoqxkqlD/uV7xpIbuhNJviLw1ANdiST6F6laz8qoi8C2hfHIyzcQB7T/0LeWsuWzHtJ1MotYhpuA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-tesselate/-/turf-tesselate-3.0.12.tgz}
+    name: turf-tesselate
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/tesselate instead'
+    dependencies:
+      earcut: registry.npmjs.org/earcut/2.2.4
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-tin/3.0.12:
+    resolution: {integrity: sha512-uqadTFrAE3pdVzAQN5CMGzZZtZMrirjRYL2iJRaHAXy9lDaVT+TlDe9gt+8SIwiPI1hVHq9NHHrEn6Cyn+xXxg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-tin/-/turf-tin-3.0.12.tgz}
+    name: turf-tin
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/tin instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-triangle-grid/3.0.12:
+    resolution: {integrity: sha512-hL17vUzp85YoQeqRs4zIKEZloLGt8DWie39j2EK1S8I030L2A60aznZzagnxgo2JnReS25tDSRA4JdrorrECOw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-triangle-grid/-/turf-triangle-grid-3.0.12.tgz}
+    name: turf-triangle-grid
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/triangle-grid instead'
+    dependencies:
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf-union/3.0.12:
+    resolution: {integrity: sha512-9R3/SccBa6Qpqn1CYUU1n7gv1E1f+pNiLZmf1tEqPq0QQQE8jY3B03YrsIBK1bP6RI8N6wx/2hfX7h9LgFQvmw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-union/-/turf-union-3.0.12.tgz}
+    name: turf-union
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/union instead'
+    dependencies:
+      jsts: registry.npmjs.org/jsts/1.1.2
+    dev: false
+
+  registry.npmjs.org/turf-within/3.0.12:
+    resolution: {integrity: sha512-RgVeZ8LBZjcUSX8OvVW/nk2hJ1Vp+RPD+axOWaRf+zMbIiiBBAxmE8FxJSm6EINUuOR8zkvWIt+pyeltRYtG8A==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf-within/-/turf-within-3.0.12.tgz}
+    name: turf-within
+    version: 3.0.12
+    deprecated: 'Turf packages are now namespaced: please use @turf/within instead'
+    dependencies:
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-inside: registry.npmjs.org/turf-inside/3.0.12
+    dev: false
+
+  registry.npmjs.org/turf/3.0.14:
+    resolution: {integrity: sha512-YKaS5wvijcTkGr1p6YQXh2xHWojhC6PMPo8pUFqphgJhq4DCtRBDc0UfbfbS/SD3ozzRFcGDrO3jrQqNBi3VAw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/turf/-/turf-3.0.14.tgz}
+    name: turf
+    version: 3.0.14
+    deprecated: 'This package has moved: use @turf/turf instead'
+    dependencies:
+      turf-along: registry.npmjs.org/turf-along/3.0.12
+      turf-area: registry.npmjs.org/turf-area/3.0.12
+      turf-bbox: registry.npmjs.org/turf-bbox/3.0.12
+      turf-bbox-polygon: registry.npmjs.org/turf-bbox-polygon/3.0.12
+      turf-bearing: registry.npmjs.org/turf-bearing/3.0.12
+      turf-bezier: registry.npmjs.org/turf-bezier/3.0.12
+      turf-buffer: registry.npmjs.org/turf-buffer/3.0.12
+      turf-center: registry.npmjs.org/turf-center/3.0.12
+      turf-centroid: registry.npmjs.org/turf-centroid/3.0.12
+      turf-circle: registry.npmjs.org/turf-circle/3.0.12
+      turf-collect: registry.npmjs.org/turf-collect/3.0.12
+      turf-combine: registry.npmjs.org/turf-combine/3.0.12
+      turf-concave: registry.npmjs.org/turf-concave/3.0.12
+      turf-convex: registry.npmjs.org/turf-convex/3.0.12
+      turf-destination: registry.npmjs.org/turf-destination/3.0.12
+      turf-difference: registry.npmjs.org/turf-difference/3.0.12
+      turf-distance: registry.npmjs.org/turf-distance/3.0.12
+      turf-envelope: registry.npmjs.org/turf-envelope/3.0.12
+      turf-explode: registry.npmjs.org/turf-explode/3.0.12
+      turf-flip: registry.npmjs.org/turf-flip/3.0.12
+      turf-helpers: registry.npmjs.org/turf-helpers/3.0.12
+      turf-hex-grid: registry.npmjs.org/turf-hex-grid/3.0.12
+      turf-inside: registry.npmjs.org/turf-inside/3.0.12
+      turf-intersect: registry.npmjs.org/turf-intersect/3.0.12
+      turf-isolines: registry.npmjs.org/turf-isolines/3.0.12
+      turf-kinks: registry.npmjs.org/turf-kinks/3.0.12
+      turf-line-distance: registry.npmjs.org/turf-line-distance/3.0.12
+      turf-line-slice: registry.npmjs.org/turf-line-slice/3.0.12
+      turf-meta: registry.npmjs.org/turf-meta/3.0.12
+      turf-midpoint: registry.npmjs.org/turf-midpoint/3.0.12
+      turf-nearest: registry.npmjs.org/turf-nearest/3.0.12
+      turf-planepoint: registry.npmjs.org/turf-planepoint/3.0.12
+      turf-point-grid: registry.npmjs.org/turf-point-grid/3.0.12
+      turf-point-on-line: registry.npmjs.org/turf-point-on-line/3.0.12
+      turf-point-on-surface: registry.npmjs.org/turf-point-on-surface/3.0.12
+      turf-random: registry.npmjs.org/turf-random/3.0.12
+      turf-sample: registry.npmjs.org/turf-sample/3.0.12
+      turf-simplify: registry.npmjs.org/turf-simplify/3.0.12
+      turf-square: registry.npmjs.org/turf-square/3.0.12
+      turf-square-grid: registry.npmjs.org/turf-square-grid/3.0.12
+      turf-tag: registry.npmjs.org/turf-tag/3.0.12
+      turf-tesselate: registry.npmjs.org/turf-tesselate/3.0.12
+      turf-tin: registry.npmjs.org/turf-tin/3.0.12
+      turf-triangle-grid: registry.npmjs.org/turf-triangle-grid/3.0.12
+      turf-union: registry.npmjs.org/turf-union/3.0.12
+      turf-within: registry.npmjs.org/turf-within/3.0.12
+    dev: false
+
+  registry.npmjs.org/two-product/1.0.2:
+    resolution: {integrity: sha512-vOyrqmeYvzjToVM08iU52OFocWT6eB/I5LUWYnxeAPGXAhAxXYU/Yr/R2uY5/5n4bvJQL9AQulIuxpIsMoT8XQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/two-product/-/two-product-1.0.2.tgz}
+    name: two-product
+    version: 1.0.2
+    dev: false
+
+  registry.npmjs.org/two-sum/1.0.0:
+    resolution: {integrity: sha512-phP48e8AawgsNUjEY2WvoIWqdie8PoiDZGxTDv70LDr01uX5wLEQbOgSP7Z/B6+SW5oLtbe8qaYX2fKJs3CGTw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/two-sum/-/two-sum-1.0.0.tgz}
+    name: two-sum
+    version: 1.0.0
+    dev: false
+
   registry.npmjs.org/type-fest/0.13.1:
     resolution: {integrity: sha512-34R7HTnG0XIJcBSn5XhDd7nNFPRcXYRZrBB2O2jdKqYODldSzBAqzsWoZYYvduky73toYS/ESqxPvkDf/F0XMg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/type-fest/-/type-fest-0.13.1.tgz}
     name: type-fest
@@ -4466,6 +5159,12 @@ packages:
       is-plain-obj: registry.npmjs.org/is-plain-obj/4.1.0
       trough: registry.npmjs.org/trough/2.1.0
       vfile: registry.npmjs.org/vfile/5.3.7
+    dev: false
+
+  registry.npmjs.org/union-find/1.0.2:
+    resolution: {integrity: sha512-wFA9bMD/40k7ZcpKVXfu6X1qD3ri5ryO8HUsuA1RnxPCQl66Mu6DgkxyR+XNnd+osD0aLENixcJVFj+uf+O4gw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/union-find/-/union-find-1.0.2.tgz}
+    name: union-find
+    version: 1.0.2
     dev: false
 
   registry.npmjs.org/unist-util-is/5.2.1:
@@ -4654,6 +5353,12 @@ packages:
     hasBin: true
     dependencies:
       isexe: registry.npmjs.org/isexe/2.0.0
+    dev: false
+
+  registry.npmjs.org/wkt-parser/1.3.2:
+    resolution: {integrity: sha512-A26BOOo7sHAagyxG7iuRhnKMO7Q3mEOiOT4oGUmohtN/Li5wameeU4S6f8vWw6NADTVKljBs8bzA8JPQgSEMVQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/wkt-parser/-/wkt-parser-1.3.2.tgz}
+    name: wkt-parser
+    version: 1.3.2
     dev: false
 
   registry.npmjs.org/wrappy/1.0.2:

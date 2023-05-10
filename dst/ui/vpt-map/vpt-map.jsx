@@ -5,8 +5,6 @@ import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import area from "@turf/area";
 import centroid from "@turf/centroid";
-import turf from "turf";
-import chroma from "chroma-js";
 import { geocodeReverse, coordinatesGeocoder } from "./helpers";
 
 import styles from "./map.module.scss";
@@ -18,12 +16,6 @@ const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWlsYWRueXUiLCJhIjoiY2xhNmhkZDVwMWxqODN4bWhkYXFnNjRrMCJ9.VWy3AxJ3ULhYNw8nmVdMew";
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
-// const bbox = [275370, 4547430, 277050, 4549110];
-// const bbox = [-80.25, 37.78, -80.0, 37.68];
-// const bbox = [-80.25, 37.7, -80.2, 37.68];
-const polygons = turf.featureCollection([]);
-let bbox, ndviData;
-
 const acreDiv = 4046.856422;
 const fastFly = {
   bearing: 0,
@@ -32,13 +24,12 @@ const fastFly = {
   easing: (t) => t ** 2,
 };
 
-const NcalcMap = ({
-  setAddress = () => { },
-  setFeatures = () => { },
-  setZoom = () => { },
-  setMap = () => { },
-  onDraw = () => { },
-  initRasterObject = {},
+const VPTMap = ({
+  setAddress = () => {},
+  setFeatures = () => {},
+  setZoom = () => {},
+  setMap = () => {},
+  onDraw = () => {},
   initFeatures = [],
   initWidth = "400px",
   initHeight = "400px",
@@ -99,7 +90,7 @@ const NcalcMap = ({
 
   //// GEOCODER CONTROL
   const Geocoder = new MapboxGeocoder({
-    placeholder: initAddress || "Search Your Address ...",
+    placeholder: (initAddress || "Search Your Address ..."),
     localGeocoder: coordinatesGeocoder,
     marker: false,
     accessToken: MAPBOX_TOKEN,
@@ -109,56 +100,14 @@ const NcalcMap = ({
     countries: "us",
   });
   geocoderRef.current = Geocoder;
-  // const bbox = [-80.35, 37.7895, -80.0, 40.6895];
-
-  useEffect(() => {
-    if (initRasterObject && Object.keys(initRasterObject).length > 0) {
-      const taskResults = JSON.parse(initRasterObject)
-      if (taskResults.data_array && taskResults.data_array.length > 0) {
-        ndviData = taskResults.data_array[0];
-        bbox = taskResults.bbox;
-      }
-    }
-    if (ndviData && ndviData.length > 0) {
-      let scale = chroma.scale(["white", "red"]);
-      const w = ndviData.length;
-      const h = ndviData[0].length;
-      const lon = bbox[0];
-      const lat = bbox[1];
-      const dLon = (bbox[0] - bbox[2]) / w;
-      const dLat = (bbox[1] - bbox[3]) / h;
-      for (let i = 0; i < h; i++) {
-        for (let j = 0; j < w; j++) {
-          const topLeftCorner = { lon: lon + i * dLon, lat: lat + j * dLat };
-          let ndviVal = ndviData[i][j] != -9999 ? ndviData[i][j] : null;
-          ndviVal &&
-            ndviVal > -9998 &&
-            polygons.features.push(
-              turf.polygon([[
-                [topLeftCorner.lon, topLeftCorner.lat],
-                [topLeftCorner.lon + dLon, topLeftCorner.lat],
-                [topLeftCorner.lon + dLon, topLeftCorner.lat - dLat],
-                [topLeftCorner.lon, topLeftCorner.lat - dLat],
-                [topLeftCorner.lon, topLeftCorner.lat],
-              ]], {
-                value: ndviVal,
-              })
-            );
-
-        }
-      }
-      map.current && map.current.getSource("biomassPolygons").setData(polygons);
-    }
-
-  }, []);
-
+    
   // handle empty initFeature
   useEffect(() => {
     if (hasDrawing && drawerRef.current && initFeatures.length) {
-      drawerRef.current.add({
-        type: "FeatureCollection",
-        features: initFeatures,
-      });
+        drawerRef.current.add({
+            type: "FeatureCollection",
+            features: initFeatures,
+        });
     }
   }, [initFeatures]);
 
@@ -172,8 +121,8 @@ const NcalcMap = ({
     geocodeReverse({
       apiKey: MAPBOX_TOKEN,
       setterFunc: (address) => {
-        document.querySelector(".mapboxgl-ctrl-geocoder--input").placeholder =
-          address().fullAddress;
+        // console.log(address())
+        document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
         // Geocoder.setPlaceholder(address().fullAddress);
         setAddress(address);
       },
@@ -227,12 +176,6 @@ const NcalcMap = ({
     );
     popupRef.current = Popup;
 
-    // Create a popup, but don't add it to the map yet.
-    const overlayPopup = new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: true
-    });
-
     //// MARKER CONTROL
     const Marker = new mapboxgl.Marker({
       draggable: hasMarkerMovable,
@@ -247,8 +190,8 @@ const NcalcMap = ({
     const simpleSelect = MapboxDraw.modes.simple_select;
     const directSelect = MapboxDraw.modes.direct_select;
 
-    simpleSelect.dragMove = () => { };
-    directSelect.dragFeature = () => { };
+    simpleSelect.dragMove = () => {};
+    directSelect.dragFeature = () => {};
 
     // DRAWER CONTROL
     const Draw = new MapboxDraw({
@@ -258,13 +201,13 @@ const NcalcMap = ({
         ...MapboxDraw.modes,
         simple_select: simpleSelect,
         direct_select: directSelect,
-      },
+      },      
     });
     drawerRef.current = Draw;
 
     //// GEOLOCATE CONTROL
     const Geolocate = new mapboxgl.GeolocateControl({ container: map.current });
-    Geolocate._updateCamera = () => { };
+    Geolocate._updateCamera = () => {};
 
     //// NAVIGATION CONTROL
     const Navigation = new mapboxgl.NavigationControl({
@@ -287,6 +230,8 @@ const NcalcMap = ({
     // if (!initAddress) {
     //   Geocoder.setPlaceholder('Search Your Address ...');
     // }
+
+    // console.log(initAddress);
 
     //// FUNCTIONS
     function onDragEnd(e) {
@@ -349,18 +294,18 @@ const NcalcMap = ({
     };
 
     const handleDrawCreate = (e) => {
-      onDraw({ mode: "add", e: e });
+      onDraw({mode: 'add', e: e})
     };
     const handleDrawDelete = (e) => {
       setIsDrawActive(false);
-      onDraw({ mode: "delete", e: e });
+      onDraw({mode: 'delete', e: e})
     };
     const handleDrawUpdate = (e) => {
-      onDraw({ mode: "update", e: e });
+      onDraw({mode: 'update', e: e})
       handlePolyAreaCalc(e);
     };
     const handleDrawSelection = (e) => {
-      onDraw({ mode: "select", e: e });
+      onDraw({mode: 'select', e: e})
       handlePolyAreaCalc(e);
     };
 
@@ -378,9 +323,7 @@ const NcalcMap = ({
           geocodeReverse({
             apiKey: MAPBOX_TOKEN,
             setterFunc: (address) => {
-              document.querySelector(
-                ".mapboxgl-ctrl-geocoder--input"
-              ).placeholder = address().fullAddress;
+              document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
               // Geocoder.setPlaceholder(address().fullAddress);
               setAddress(address);
             },
@@ -429,38 +372,6 @@ const NcalcMap = ({
     });
 
     map.current.on("load", (e) => {
-
-      map.current.addSource("biomassPolygons", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: [],
-        },
-      });
-      map.current.getSource("biomassPolygons").setData(polygons);
-      // add a layer that displays the data
-      if (map.current.getLayer("biomassPolygons")) {
-        map.removeLayer("biomassPolygons");
-      }
-      map.current.addLayer({
-        id: "biomassPolygons",
-        type: "fill",
-        source: "biomassPolygons",
-        paint: {
-          "fill-opacity": 0.1,
-          "fill-color": {
-            property: "value",
-            stops: [
-              [0, "#f3722c"],
-              [1000, "#f8961e"],
-              [2000, "#f9c74f"],
-              [3000, "#90be6d"],
-              [4000, "#43aa8b"],
-            ],
-          },
-        },
-      });
-
       if (!scrollZoom) map.current.scrollZoom.disable();
       if (!dragRotate) map.current.dragRotate.disable();
       if (!dragPan) map.current.dragPan.disable();
@@ -484,24 +395,24 @@ const NcalcMap = ({
         setFeaturesInitialized(true);
       }
 
-      map.current.addPolygon = function (id, polygon, options = {}) {
+      map.current.addPolygon = function(id, polygon, options = {}) {
         const lineId = `${id}-line`;
 
         const polygonStyle = {
-          "fill-color": options["fill-color"] ?? "#000",
-          "fill-opacity": options["fill-opacity"] ?? 1,
-        };
+          'fill-color': options['fill-color'] ?? '#000',
+          'fill-opacity': options['fill-opacity'] ?? 1,
+        }
 
         const lineStyle = {
-          "line-color": options["line-color"] ?? "#000",
-          "line-opacity": options["line-opacity"] ?? 1,
-          "line-width": options["line-width"] ?? 1,
-        };
+          'line-color': options['line-color'] ?? '#000',
+          'line-opacity': options['line-opacity'] ?? 1,
+          'line-width': options['line-width'] ?? 1,
+        }
 
         if (map.current.getLayer(id)) {
           map.current.removeLayer(id);
         }
-
+  
         if (map.current.getLayer(lineId)) {
           map.current.removeLayer(lineId);
         }
@@ -509,51 +420,50 @@ const NcalcMap = ({
         if (map.current.getSource(id)) {
           map.current.removeSource(id);
         }
-
+        
         map.current.addSource(id, {
-          type: "geojson",
+          type: 'geojson',
           data: {
-            type: "Feature",
+            type: 'Feature',
             geometry: {
-              type: "Polygon",
+              type: 'Polygon',
               coordinates: polygon,
             },
           },
         });
-
+  
         map.current.addLayer({
           id,
-          type: "fill",
+          type: 'fill',
           source: id,
           paint: polygonStyle,
         });
-
+  
         map.current.addLayer({
           id: lineId,
-          type: "line",
+          type: 'line',
           source: id,
           paint: lineStyle,
         });
+  
+        map.current.on('mouseenter', id, () => {
+          map.current.setPaintProperty(lineId, 'line-width', 2);
+          map.current.setPaintProperty(lineId, 'line-color', '#aaa');
 
-        map.current.on("mouseenter", id, () => {
-
-          map.current.setPaintProperty(lineId, "line-width", 2);
-          map.current.setPaintProperty(lineId, "line-color", "#aaa");
-
-          ["fill-color", "fill-opacity"].forEach((prop) => {
+          ['fill-color', 'fill-opacity'].forEach((prop) => {
             if (options.hover?.[prop]) {
               map.current.setPaintProperty(id, prop, options.hover[prop]);
             }
           });
 
-          ["line-width", "line-color", "line-opacity"].forEach((prop) => {
+          ['line-width', 'line-color', 'line-opacity'].forEach((prop) => {
             if (options.hover?.[prop]) {
               map.current.setPaintProperty(lineId, prop, options.hover[prop]);
             }
           });
         });
-
-        map.current.on("mouseleave", id, () => {
+  
+        map.current.on('mouseleave', id, () => {
           Object.entries(polygonStyle).forEach(([property, value]) => {
             map.current.setPaintProperty(id, property, value);
           });
@@ -572,35 +482,6 @@ const NcalcMap = ({
     map.current.on("draw.update", handleDrawUpdate);
     map.current.on("draw.selectionchange", handleDrawSelection);
     Marker.on("dragend", onDragEnd);
-
-    // Biomass layer listeners
-    map.current.on("click", "biomassPolygons", (e) => {
-      e.preventDefault();
-      // // Map overlay (Biomass) popup
-      map.current.getCanvas().style.cursor = 'pointer';
-      // Copy coordinates array.
-      const coordinates = e.features[0].geometry.coordinates.slice();
-      const description = `<div>value: ${e.features[0].properties.value}</div>`
-
-      // Ensure that if the map is zoomed out such that multiple
-      // copies of the feature are visible, the popup appears
-      // over the copy being pointed to.
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-      }
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-      overlayPopup.setLngLat([
-        (coordinates[0][0][0] + coordinates[0][2][0]) / 2,
-        (coordinates[0][0][1] + coordinates[0][2][1]) / 2]
-      ).setHTML(description).addTo(map.current);
-    })
-
-    // map.current.on("mouseleave", "biomassPolygonsData", (e) => {
-    //   map.current.getCanvas().style.cursor = '';
-    //   overlayPopup.remove();
-    // })
-
   }, [map]);
 
   useEffect(() => {
@@ -634,4 +515,4 @@ const NcalcMap = ({
   );
 };
 
-export { NcalcMap };
+export { VPTMap };

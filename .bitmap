@@ -17,7 +17,7 @@
     },
     "ui/ncalc-map": {
         "scope": "psa.dst",
-        "version": "0.0.2",
+        "version": "0.0.5",
         "mainFile": "index.js",
         "rootDir": "dst/ui/ncalc-map"
     },
@@ -26,6 +26,12 @@
         "version": "0.0.12",
         "mainFile": "index.js",
         "rootDir": "dst/ui/region-selector-map"
+    },
+    "ui/vpt-map": {
+        "scope": "psa.dst",
+        "version": "0.0.2",
+        "mainFile": "index.js",
+        "rootDir": "dst/ui/vpt-map"
     },
     "$schema-version": "15.0.0"
 }
