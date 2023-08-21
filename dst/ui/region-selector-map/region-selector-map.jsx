@@ -16,8 +16,8 @@ let selectedStateId = null;
 let boundaryData = null;
 
 const RegionSelectorMap = ({
-  selectorFunc = () => {},
-  selectedRegion = 'North Carolina',
+  selectorFunction = () => {},
+  selectedState = 'North Carolina',
   initWidth = "400px",
   initHeight = "400px",
   initLon = -95,
@@ -25,7 +25,7 @@ const RegionSelectorMap = ({
   initStartZoom = 2,
 }) => {
   const [hoveredStateName, setHoveredStateName] = useState("");
-  const [selectedRegionInit, setSelectedRegionInit] = useState(false);
+  const [selectedStateInit, setselectedStateInit] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
   const map = useRef();
   const mapContainer = useRef();
@@ -101,15 +101,15 @@ const RegionSelectorMap = ({
         },
       });
 
-      // apply initial selected region as hoghlighted
-      if (selectedRegion && !selectedRegionInit) {
-        setSelectedRegionInit(true);
+      // apply initial selected state as hoghlighted
+      if (selectedState && !selectedStateInit) {
+        setselectedStateInit(true);
         if (boundaryData && boundaryData.features) {
           let selectedFeature = boundaryData.features.filter(
-            (el) => el.properties.STATE_NAME === selectedRegion
+            (el) => el.properties.STATE_NAME === selectedState
           );
           if (selectedFeature.length > 0) selectedStateId = selectedFeature[0].id;
-          selectorFunc(selectedFeature);
+          selectorFunction(selectedFeature);
         }
         map.current.setFeatureState(
           { source: "states", id: selectedStateId },
@@ -159,7 +159,7 @@ const RegionSelectorMap = ({
             (el) => el.id === selectedStateId
           );
           if (selectedFeature.length > 0) selectedFeature = selectedFeature[0];
-          selectorFunc(selectedFeature);
+          selectorFunction(selectedFeature);
         }
         map.current.setFeatureState(
           { source: "states", id: selectedStateId },
@@ -180,7 +180,7 @@ const RegionSelectorMap = ({
       // set the map loaded status
       if (!mapLoaded) setMapLoaded(true);
     });
-  }, [hoveredStateId, selectedStateId, hoveredStateName, selectedRegion]);
+  }, [hoveredStateId, selectedStateId, hoveredStateName, selectedState]);
 
   return (
     <>
