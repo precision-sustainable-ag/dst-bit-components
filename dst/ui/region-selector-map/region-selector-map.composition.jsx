@@ -3,8 +3,8 @@ import { RegionSelectorMap } from "./region-selector-map";
 
 export const BasicRegionSelectorMap = () => (
   <RegionSelectorMap
-    selectorFunc={() => {}}
-    selectedRegion=""
+    selectorFunction={() => {}}
+    selectedState=""
     initWidth="700px"
     initHeight="300px"
     initLon={-95}
@@ -16,8 +16,8 @@ export const BasicRegionSelectorMap = () => (
 
 export const WithInitRegionMap = () => (
   <RegionSelectorMap
-    selectorFunc={() => {}}
-    selectedRegion="Texas"
+    selectorFunction={() => {}}
+    selectedState="Texas"
     initWidth="700px"
     initHeight="300px"
     initLon={-95}

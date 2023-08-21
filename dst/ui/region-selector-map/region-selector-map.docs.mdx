@@ -13,8 +13,8 @@ A Map component made using Mapbox GL.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| `selectorFunc` | function | callback function to set the selected region's object as its value |
-| `selectedRegion` | string | initial selected state to highlight on the map |
+| `selectorFunction` | function | callback function to set the selected region's object as its value |
+| `selectedState` | string | initial selected state to highlight on the map |
 | `initWidth` | string | map width in css format string |
 | `initHeight` | string | map height in css format string |
 | `initLon` | float | initial longitude of window center at the time of loading |
@@ -26,8 +26,8 @@ A Map component made using Mapbox GL.
 
 ```js
 <RegionSelectorMap
-  selectorFunc={() => {}}
-  selectedRegion="North Carolina"
+  selectorFunction={() => {}}
+  selectedState="North Carolina"
   initWidth="400px"
   initHeight="300px"
   initLon={-80.16}
@@ -42,8 +42,8 @@ Modify the text to see it change live:
 
 ```js live
 <RegionSelectorMap
-  selectorFunc={() => {}}
-  selectedRegion=""
+  selectorFunction={() => {}}
+  selectedState=""
   initWidth="400px"
   initHeight="300px"
   initLon={-95}
