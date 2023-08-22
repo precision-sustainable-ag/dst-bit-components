@@ -32,15 +32,17 @@ const RegionSelectorMap = ({
   const mapContainer = useRef();
 
   useEffect(() => {
-    fetch(boundaries)
-    .then((r) => r.text())
-    .then((text) => {
-      let json = JSON.parse(text);
-      boundaryData = {...json, 
-        features: json.features.filter((data) => 
-          availableStates.indexOf(data.properties.STATE_NAME) !== -1)
-        };
-    });
+    if (!boundaryData) {
+      fetch(boundaries)
+        .then((r) => r.text())
+        .then((text) => {
+          let json = JSON.parse(text);
+          boundaryData = { ...json, 
+            features: json.features.filter((data) => 
+              availableStates.indexOf(data.properties.STATE_NAME) !== -1)
+            };
+        });
+    }
     //// MAP CREATE
     if (map.current) return; // initialize map only once
     var Map = new mapboxgl.Map({
