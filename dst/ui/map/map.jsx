@@ -102,10 +102,11 @@ const Map = ({
   // handle empty initFeature
   useEffect(() => {
     if (hasDrawing && drawerRef.current && initFeatures.length) {
-        drawerRef.current.add({
-            type: "FeatureCollection",
-            features: initFeatures,
-        });
+      drawerRef.current.deleteAll()
+      drawerRef.current.add({
+          type: "FeatureCollection",
+          features: initFeatures,
+      });
     }
   }, [initFeatures]);
 
@@ -284,7 +285,11 @@ const Map = ({
       if (e.features.length > 0) {
         const a = area(e.features[0]) / acreDiv;
         setPolygonArea(a);
-        setFeatures(e.features);
+        drawerRef.current.add({
+          type: "FeatureCollection",
+          features: e.features,
+        });
+        setFeatures(drawerRef.current.getAll());
         handlePolyCentCalc(e);
       } else {
         setPolygonArea(0);
