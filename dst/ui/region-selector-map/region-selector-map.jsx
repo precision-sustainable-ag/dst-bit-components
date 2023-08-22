@@ -17,7 +17,8 @@ let boundaryData = null;
 
 const RegionSelectorMap = ({
   selectorFunction = () => {},
-  selectedState = 'North Carolina',
+  selectedState = '',
+  availableStates = [],
   initWidth = "400px",
   initHeight = "400px",
   initLon = -95,
@@ -31,14 +32,15 @@ const RegionSelectorMap = ({
   const mapContainer = useRef();
 
   useEffect(() => {
-    if (!boundaryData) {
-      fetch(boundaries)
-        .then((r) => r.text())
-        .then((text) => {
-          let json = JSON.parse(text);
-          boundaryData = json;
-        });
-    }
+    fetch(boundaries)
+    .then((r) => r.text())
+    .then((text) => {
+      let json = JSON.parse(text);
+      boundaryData = {...json, 
+        features: json.features.filter((data) => 
+          availableStates.indexOf(data.properties.STATE_NAME) !== -1)
+        };
+    });
     //// MAP CREATE
     if (map.current) return; // initialize map only once
     var Map = new mapboxgl.Map({
@@ -65,7 +67,7 @@ const RegionSelectorMap = ({
       // Add a data source containing GeoJSON data.
       map.current.addSource("states", {
         type: "geojson",
-        data: boundaries,
+        data: boundaryData,
       });
 
       // The feature-state dependent fill-opacity expression will render the hover effect
