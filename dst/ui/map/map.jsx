@@ -129,22 +129,28 @@ const Map = ({
     }
   };
 
+  const handlePointFocus = (coords) => {
+    if (coords) {
+      setMarker((prev) => ({
+        ...prev,
+        longitude: coords[0],
+        latitude: coords[1],
+      }));
+  
+      setViewport((prev) => ({
+        ...prev,
+        longitude: coords[0],
+        latitude: coords[1],
+      }));
+    }
+  }
+
   const handlePolyCentCalc = (geom) => {
     if (geom) {
       if (geom.features.length > 0) {
         const coords = centroid(geom.features[0]).geometry.coordinates;
 
-        setMarker((prev) => ({
-          ...prev,
-          longitude: coords[0],
-          latitude: coords[1],
-        }));
-
-        setViewport((prev) => ({
-          ...prev,
-          longitude: coords[0],
-          latitude: coords[1],
-        }));
+        handlePointFocus(coords);
       }
     }
   };
@@ -364,8 +370,12 @@ const Map = ({
           features: initFeatures,
       });
 
-      if (initFeatures.length === 1 && initFeatures[0]?.geometry?.type === 'Polygon') {
-        handlePolyAreaCalc({features: initFeatures})
+      if (initFeatures.length === 1) {
+        if (initFeatures[0]?.geometry?.type === 'Polygon') {
+          handlePolyAreaCalc({features: initFeatures});
+        } else if (initFeatures[0]?.geometry?.type === 'Point') {
+          handlePointFocus(initFeatures[0]?.geometry?.coordinates);
+        }
       }
     }
   }, [initFeatures]);
