@@ -159,7 +159,7 @@ const Map = ({
     }
   };
 
-  const handleNewPolyDraw = (e) => {
+  const handlePolyChange = (e) => {
     if (e.features.length > 0) {
       drawerRef.current.add({
         type: "FeatureCollection",
@@ -179,11 +179,11 @@ const Map = ({
   };
   const handleDrawUpdate = (e) => {
     onDraw({mode: 'update', e: e})
-    handleNewPolyDraw(e);
+    handlePolyChange(e);
   };
   const handleDrawSelection = (e) => {
     onDraw({mode: 'select', e: e})
-    handleNewPolyDraw(e);
+    handlePolyChange(e);
   };
 
   useEffect(() => {
