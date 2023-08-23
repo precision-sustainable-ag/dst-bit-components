@@ -37,6 +37,55 @@ var featuresSample = [
   },
 ];
 
+const singlePolygonFeatures = [
+  {
+    type: "Feature",
+    geometry: {
+      type: "Polygon",
+      coordinates: [
+        [
+          [
+            -78.79385987583387,
+            35.80028988840564
+          ],
+          [
+            -78.76806746757245,
+            35.801754219806
+          ],
+          [
+            -78.7636827581682,
+            35.769323421139845
+          ],
+          [
+            -78.77890027904223,
+            35.769741967319945
+          ],
+          [
+            -78.8013396742299,
+            35.77183466518218
+          ],
+          [
+            -78.80881947262552,
+            35.78125112407582
+          ],
+          [
+            -78.80778777629504,
+            35.79234018982805
+          ],
+          [
+            -78.80959324487357,
+            35.792130976492615
+          ],
+          [
+            -78.79385987583387,
+            35.80028988840564
+          ]
+        ]
+      ]
+    }
+  }
+]
+
 export const PlainMapWithoutFeatures = () => (
   <Map
     setAddress={() => {}}
@@ -117,6 +166,38 @@ export const MapWithGeocoder = () => (
     hasFullScreen={false}
     hasMarkerPopup={false}
     hasMarkerMovable={false}
+    scrollZoom={true}
+    dragRotate={true}
+    dragPan={true}
+    keyboard={true}
+    doubleClickZoom={false}
+    touchZoomRotate={true}
+  />
+);
+
+export const MapWithInitFeatures = () => (
+  <Map
+    setAddress={() => {}}
+    setFeatures={() => {}}
+    setZoom={() => {}}
+    initFeatures={singlePolygonFeatures}
+    initWidth="400px"
+    initHeight="300px"
+    initAddress=""
+    // initLon={-80.16}
+    // initLat={37.75}
+    initStartZoom={10}
+    initMinZoom={5}
+    initMaxZoom={16}
+    hasSearchBar={true}
+    hasMarker={true}
+    hasNavigation={true}
+    hasCoordBar={true}
+    hasDrawing={true}
+    hasGeolocate={true}
+    hasFullScreen={true}
+    hasMarkerPopup={true}
+    hasMarkerMovable={true}
     scrollZoom={true}
     dragRotate={true}
     dragPan={true}
