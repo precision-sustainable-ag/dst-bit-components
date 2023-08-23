@@ -16,47 +16,9 @@ let selectedStateId = null;
 let boundaryData = null;
 
 const RegionSelectorMap = ({
-  selectorFunc = () => {},
-  selectedRegion = {
-    type: "Feature",
-    id: 32,
-    geometry: {
-      type: "Polygon",
-      coordinates: [
-        [
-          [-111.0524, 44.4784],
-          [-111.0546, 45.001],
-          [-110.7045, 44.9922],
-          [-109.1032, 45.0058],
-          [-108.3754, 44.9999],
-          [-106.5974, 44.9948],
-          [-105.9132, 45.0002],
-          [-104.5919, 44.9986],
-          [-104.0579, 44.9976],
-          [-104.0545, 44.1804],
-          [-104.053, 43.0006],
-          [-104.0529, 42.147],
-          [-104.0533, 41.0014],
-          [-104.8553, 40.998],
-          [-105.7044, 40.9969],
-          [-106.4539, 41.0021],
-          [-107.5006, 41.0023],
-          [-108.5619, 41],
-          [-109.05, 41.0007],
-          [-110.5051, 40.9948],
-          [-111.0468, 40.9979],
-          [-111.0467, 42.0017],
-          [-111.044, 43.2334],
-          [-111.0524, 44.4784],
-        ],
-      ],
-    },
-    properties: {
-      STATE_ID: 32,
-      STATE_NAME: "Wyoming",
-      STATE_ABBR: "WY",
-    },
-  },
+  selectorFunction = () => {},
+  selectedState = '',
+  availableStates = [],
   initWidth = "400px",
   initHeight = "400px",
   initLon = -95,
@@ -64,7 +26,7 @@ const RegionSelectorMap = ({
   initStartZoom = 2,
 }) => {
   const [hoveredStateName, setHoveredStateName] = useState("");
-  const [selectedRegionInit, setSelectedRegionInit] = useState(false);
+  const [selectedStateInit, setselectedStateInit] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
   const map = useRef();
   const mapContainer = useRef();
@@ -75,7 +37,10 @@ const RegionSelectorMap = ({
         .then((r) => r.text())
         .then((text) => {
           let json = JSON.parse(text);
-          boundaryData = json;
+          boundaryData = { ...json, 
+            features: json.features.filter((data) => 
+              availableStates.indexOf(data.properties.STATE_NAME) !== -1)
+            };
         });
     }
     //// MAP CREATE
@@ -104,7 +69,7 @@ const RegionSelectorMap = ({
       // Add a data source containing GeoJSON data.
       map.current.addSource("states", {
         type: "geojson",
-        data: boundaries,
+        data: boundaryData,
       });
 
       // The feature-state dependent fill-opacity expression will render the hover effect
@@ -140,21 +105,15 @@ const RegionSelectorMap = ({
         },
       });
 
-      // apply initial selected region as hoghlighted
-      if (selectedRegion.id && !selectedRegionInit) {
-        selectedStateId = selectedRegion.id;
-        setSelectedRegionInit(true);
-        map.current.setFeatureState(
-          { source: "states", id: selectedStateId },
-          { click: false }
-        );
-
+      // apply initial selected state as hoghlighted
+      if (selectedState && !selectedStateInit) {
+        setselectedStateInit(true);
         if (boundaryData && boundaryData.features) {
           let selectedFeature = boundaryData.features.filter(
-            (el) => el.id === selectedStateId
+            (el) => el.properties.STATE_NAME === selectedState
           );
-          if (selectedFeature.length > 0) selectedFeature = selectedFeature[0];
-          selectorFunc(selectedFeature);
+          if (selectedFeature.length > 0) selectedStateId = selectedFeature[0].id;
+          selectorFunction(selectedFeature);
         }
         map.current.setFeatureState(
           { source: "states", id: selectedStateId },
@@ -204,7 +163,7 @@ const RegionSelectorMap = ({
             (el) => el.id === selectedStateId
           );
           if (selectedFeature.length > 0) selectedFeature = selectedFeature[0];
-          selectorFunc(selectedFeature);
+          selectorFunction(selectedFeature);
         }
         map.current.setFeatureState(
           { source: "states", id: selectedStateId },
@@ -225,7 +184,7 @@ const RegionSelectorMap = ({
       // set the map loaded status
       if (!mapLoaded) setMapLoaded(true);
     });
-  }, [hoveredStateId, selectedStateId, hoveredStateName, selectedRegion]);
+  }, [hoveredStateId, selectedStateId, hoveredStateName, selectedState]);
 
   return (
     <>

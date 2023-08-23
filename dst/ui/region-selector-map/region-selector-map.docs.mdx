@@ -13,8 +13,9 @@ A Map component made using Mapbox GL.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| `selectorFunc` | function | callback function to set the selected region's object as its value |
-| `selectedRegion` | array | initial selected region object to highlight on the map |
+| `selectorFunction` | function | callback function to set the selected region's object as its value |
+| `selectedState` | string | initial selected state to highlight on the map |
+| `availableStates` | array | available states that will be rendered on map |
 | `initWidth` | string | map width in css format string |
 | `initHeight` | string | map height in css format string |
 | `initLon` | float | initial longitude of window center at the time of loading |
@@ -26,47 +27,9 @@ A Map component made using Mapbox GL.
 
 ```js
 <RegionSelectorMap
-  selectorFunc={() => {}}
-  selectedRegion={{
-      type: "Feature",
-      id: 33,
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [-111.0524, 44.4784],
-            [-111.0546, 45.001],
-            [-110.7045, 44.9922],
-            [-109.1032, 45.0058],
-            [-108.3754, 44.9999],
-            [-106.5974, 44.9948],
-            [-105.9132, 45.0002],
-            [-104.5919, 44.9986],
-            [-104.0579, 44.9976],
-            [-104.0545, 44.1804],
-            [-104.053, 43.0006],
-            [-104.0529, 42.147],
-            [-104.0533, 41.0014],
-            [-104.8553, 40.998],
-            [-105.7044, 40.9969],
-            [-106.4539, 41.0021],
-            [-107.5006, 41.0023],
-            [-108.5619, 41],
-            [-109.05, 41.0007],
-            [-110.5051, 40.9948],
-            [-111.0468, 40.9979],
-            [-111.0467, 42.0017],
-            [-111.044, 43.2334],
-            [-111.0524, 44.4784],
-          ],
-        ],
-      },
-      properties: {
-        STATE_ID: 33,
-        STATE_NAME: "Wyoming",
-        STATE_ABBR: "WY",
-      },
-    }}
+  selectorFunction={() => {}}
+  selectedState=""
+  availableStates={[]}
   initWidth="400px"
   initHeight="300px"
   initLon={-80.16}
@@ -81,8 +44,48 @@ Modify the text to see it change live:
 
 ```js live
 <RegionSelectorMap
-  selectorFunc={() => {}}
-  selectedRegion=""
+  selectorFunction={() => {}}
+  selectedState=""
+  availableStates={[
+    "Alabama",
+    "Arkansas",
+    "Connecticut",
+    "Delaware",
+    "Florida",
+    "Georgia",
+    "Illinois",
+    "Indiana",
+    "Iowa",
+    "Kansas",
+    "Kentucky",
+    "Louisiana",
+    "Maine",
+    "Maryland",
+    "Massachusetts",
+    "Michigan",
+    "Minnesota",
+    "Mississippi",
+    "Missouri",
+    "Nebraska",
+    "New Hampshire",
+    "New Jersey",
+    "New York",
+    "North Carolina",
+    "North Dakota",
+    "Ohio",
+    "Oklahoma",
+    "Ontario",
+    "Pennsylvania",
+    "Rhode Island",
+    "South Carolina",
+    "South Dakota",
+    "Tennessee",
+    "Texas",
+    "Vermont",
+    "Virginia",
+    "West Virginia",
+    "Wisconsin"
+  ]}
   initWidth="400px"
   initHeight="300px"
   initLon={-95}
