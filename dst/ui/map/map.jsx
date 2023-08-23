@@ -261,12 +261,6 @@ const Map = ({
     if (hasSearchBar) map.current.addControl(Geocoder, "top-left");
     if (hasMarker && !isDrawActive) Marker.addTo(map.current);
 
-    // if (!initAddress) {
-    //   Geocoder.setPlaceholder('Search Your Address ...');
-    // }
-
-    // console.log(initAddress);
-
     //// EVENTS
     Geolocate.on("geolocate", handleGeolocate);
     Geocoder.on("result", (e) => {
