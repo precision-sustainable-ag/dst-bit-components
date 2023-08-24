@@ -40,9 +40,17 @@ const RegionSelectorMap = ({
           boundaryData = { ...json, 
             features: json.features.filter((data) => 
               availableStates.indexOf(data.properties.STATE_NAME) !== -1)
-            };
+          };
         });
+    } else {
+      boundaryData = { ...boundaryData, 
+        features: boundaryData.features.filter((data) => 
+          availableStates.indexOf(data.properties.STATE_NAME) !== -1)
+      };
     }
+  }, [availableStates]);
+
+  useEffect(() => {
     //// MAP CREATE
     if (map.current) return; // initialize map only once
     var Map = new mapboxgl.Map({
@@ -112,7 +120,10 @@ const RegionSelectorMap = ({
           let selectedFeature = boundaryData.features.filter(
             (el) => el.properties.STATE_NAME === selectedState
           );
-          if (selectedFeature.length > 0) selectedStateId = selectedFeature[0].id;
+          if (selectedFeature.length > 0) {
+            selectedStateId = selectedFeature[0].id;
+            selectedFeature = selectedFeature[0];
+          }
           selectorFunction(selectedFeature);
         }
         map.current.setFeatureState(
