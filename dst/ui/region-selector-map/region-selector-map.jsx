@@ -26,7 +26,7 @@ const RegionSelectorMap = ({
   initStartZoom = 2,
 }) => {
   const [hoveredStateName, setHoveredStateName] = useState("");
-  const [selectedStateInit, setselectedStateInit] = useState(false);
+  // Deleted this line, to make the selectedState program controllable even after initialization
   const [mapLoaded, setMapLoaded] = useState(false);
   const map = useRef();
   const mapContainer = useRef();
@@ -41,18 +41,48 @@ const RegionSelectorMap = ({
             features: json.features.filter((data) => 
               availableStates.indexOf(data.properties.STATE_NAME) !== -1)
           };
+          // Do we need to add a new state, dataLoaded, to be a flag to show as the data is loaded?
+          // Since line 108 we just add the source, but we are not sure if the boundaryData is already loaded.
         });
     } else {
       boundaryData = { ...boundaryData, 
         features: boundaryData.features.filter((data) => 
           availableStates.indexOf(data.properties.STATE_NAME) !== -1)
       };
+      // use setData to set the source data of the map, in this way the change will reflected on the map
+      const source = map.current.getSource('states');
+      if (source) source.setData(boundaryData);
     }
   }, [availableStates]);
 
+  // Move the selectedState logic into useEffect, so now whenever you change the selectedState it will be reflected on map
+  useEffect(() => {
+    if (mapLoaded) {
+      map.current.setFeatureState(
+        { source: "states", id: selectedStateId },
+        { click: false }
+      );
+      if (boundaryData && boundaryData.features) {
+        let selectedFeature = boundaryData.features.filter(
+          (el) => el.properties.STATE_NAME === selectedState
+        );
+        if (selectedFeature.length > 0) {
+          selectedStateId = selectedFeature[0].id;
+          selectedFeature = selectedFeature[0];
+        }
+        selectorFunction(selectedFeature);
+      }
+      map.current.setFeatureState(
+        { source: "states", id: selectedStateId },
+        { click: true }
+      );
+    }
+    // add mapLoaded to dependency to make sure this useEffect would run after the map is loaded.
+  },[selectedState, mapLoaded]);
+
   useEffect(() => {
     //// MAP CREATE
-    if (map.current) return; // initialize map only once
+    // deleted this line because now the useEffect will only run one time
     var Map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v12",
@@ -112,25 +142,6 @@ const RegionSelectorMap = ({
           "line-width": 1,
         },
       });
-
-      // apply initial selected state as hoghlighted
-      if (selectedState && !selectedStateInit) {
-        setselectedStateInit(true);
-        if (boundaryData && boundaryData.features) {
-          let selectedFeature = boundaryData.features.filter(
-            (el) => el.properties.STATE_NAME === selectedState
-          );
-          if (selectedFeature.length > 0) {
-            selectedStateId = selectedFeature[0].id;
-            selectedFeature = selectedFeature[0];
-          }
-          selectorFunction(selectedFeature);
-        }
-        map.current.setFeatureState(
-          { source: "states", id: selectedStateId },
-          { click: true }
-        );
-      }
 
       // When the user moves their mouse over the state-fill layer, we'll update the
       // feature state for the feature under the mouse.
@@ -195,7 +206,12 @@ const RegionSelectorMap = ({
       // set the map loaded status
       if (!mapLoaded) setMapLoaded(true);
     });
-  }, [hoveredStateId, selectedStateId, hoveredStateName, selectedState]);
+    // clear the dependency array
+    // previously with the dependencies, the useEffect would do the initialization first, then
+    // when a dependency changes, it would just return after first line: if(map.current)return;
+    // also, in this useEffect the only thing is to initialize the map and add event listeners
+    // so I think the dependency values are not needed here.
+  }, []);
 
   return (
     <>
