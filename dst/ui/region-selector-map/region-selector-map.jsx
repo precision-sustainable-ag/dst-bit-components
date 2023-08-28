@@ -208,7 +208,6 @@ const RegionSelectorMap = ({
       if (!mapLoaded) setMapLoaded(true);
     });
     }
-    
   }, [dataLoaded]);
 
   return (

@@ -104,5 +104,4 @@ export const WithInitRegionMap = () => (
     initLat={40}
     initStartZoom={2}
   />
-  );
-  
+);
