@@ -14,6 +14,7 @@ mapboxgl.accessToken = MAPBOX_TOKEN;
 let hoveredStateId = null;
 let selectedStateId = null;
 let boundaryData = null;
+let availableData = null;
 
 const RegionSelectorMap = ({
   selectorFunction = () => {},
@@ -28,6 +29,7 @@ const RegionSelectorMap = ({
   const [hoveredStateName, setHoveredStateName] = useState("");
   // Deleted this line, to make the selectedState program controllable even after initialization
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const map = useRef();
   const mapContainer = useRef();
 
@@ -37,21 +39,23 @@ const RegionSelectorMap = ({
         .then((r) => r.text())
         .then((text) => {
           let json = JSON.parse(text);
-          boundaryData = { ...json, 
+          boundaryData = json;
+          availableData = { ...json, 
             features: json.features.filter((data) => 
               availableStates.indexOf(data.properties.STATE_NAME) !== -1)
           };
           // Do we need to add a new state, dataLoaded, to be a flag to show as the data is loaded?
           // Since line 108 we just add the source, but we are not sure if the boundaryData is already loaded.
-        });
+        })
+        .finally(setDataLoaded(true));
     } else {
-      boundaryData = { ...boundaryData, 
+      availableData = { ...boundaryData, 
         features: boundaryData.features.filter((data) => 
           availableStates.indexOf(data.properties.STATE_NAME) !== -1)
       };
       // use setData to set the source data of the map, in this way the change will reflected on the map
       const source = map.current.getSource('states');
-      if (source) source.setData(boundaryData);
+      if (source) source.setData(availableData);
     }
   }, [availableStates]);
 
@@ -83,6 +87,7 @@ const RegionSelectorMap = ({
   useEffect(() => {
     //// MAP CREATE
     // deleted this line because now the useEffect will only run one time
+    if (dataLoaded) {
     var Map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v12",
@@ -107,7 +112,7 @@ const RegionSelectorMap = ({
       // Add a data source containing GeoJSON data.
       map.current.addSource("states", {
         type: "geojson",
-        data: boundaryData,
+        data: availableData,
       });
 
       // The feature-state dependent fill-opacity expression will render the hover effect
@@ -206,12 +211,14 @@ const RegionSelectorMap = ({
       // set the map loaded status
       if (!mapLoaded) setMapLoaded(true);
     });
+    }
+    
     // clear the dependency array
     // previously with the dependencies, the useEffect would do the initialization first, then
     // when a dependency changes, it would just return after first line: if(map.current)return;
     // also, in this useEffect the only thing is to initialize the map and add event listeners
     // so I think the dependency values are not needed here.
-  }, []);
+  }, [dataLoaded]);
 
   return (
     <>
