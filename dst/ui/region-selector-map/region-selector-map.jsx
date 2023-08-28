@@ -27,7 +27,6 @@ const RegionSelectorMap = ({
   initStartZoom = 2,
 }) => {
   const [hoveredStateName, setHoveredStateName] = useState("");
-  // Deleted this line, to make the selectedState program controllable even after initialization
   const [mapLoaded, setMapLoaded] = useState(false);
   const [dataLoaded, setDataLoaded] = useState(false);
   const map = useRef();
@@ -35,6 +34,7 @@ const RegionSelectorMap = ({
 
   useEffect(() => {
     if (!boundaryData) {
+      // Fetch the data and sort based on availableStates prop
       fetch(boundaries)
         .then((r) => r.text())
         .then((text) => {
@@ -44,8 +44,6 @@ const RegionSelectorMap = ({
             features: json.features.filter((data) => 
               availableStates.indexOf(data.properties.STATE_NAME) !== -1)
           };
-          // Do we need to add a new state, dataLoaded, to be a flag to show as the data is loaded?
-          // Since line 108 we just add the source, but we are not sure if the boundaryData is already loaded.
         })
         .finally(setDataLoaded(true));
     } else {
@@ -53,15 +51,15 @@ const RegionSelectorMap = ({
         features: boundaryData.features.filter((data) => 
           availableStates.indexOf(data.properties.STATE_NAME) !== -1)
       };
-      // use setData to set the source data of the map, in this way the change will reflected on the map
       const source = map.current.getSource('states');
       if (source) source.setData(availableData);
     }
   }, [availableStates]);
 
-  // Move the selectedState logic into useEffect, so now whenever you change the selectedState it will be reflected on map
   useEffect(() => {
+    // Whenever the selectedState prop changed, automatically select it on the map.
     if (mapLoaded) {
+      // if there are selected states, unselect it first
       map.current.setFeatureState(
         { source: "states", id: selectedStateId },
         { click: false }
@@ -81,12 +79,10 @@ const RegionSelectorMap = ({
         { click: true }
       );
     }
-    // add mapLoaded to dependency to make sure this useEffect would run after the map is loaded.
   },[selectedState, mapLoaded]);
 
   useEffect(() => {
     //// MAP CREATE
-    // deleted this line because now the useEffect will only run one time
     if (dataLoaded) {
     var Map = new mapboxgl.Map({
       container: mapContainer.current,
@@ -213,11 +209,6 @@ const RegionSelectorMap = ({
     });
     }
     
-    // clear the dependency array
-    // previously with the dependencies, the useEffect would do the initialization first, then
-    // when a dependency changes, it would just return after first line: if(map.current)return;
-    // also, in this useEffect the only thing is to initialize the map and add event listeners
-    // so I think the dependency values are not needed here.
   }, [dataLoaded]);
 
   return (
