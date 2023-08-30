@@ -14,6 +14,7 @@ mapboxgl.accessToken = MAPBOX_TOKEN;
 let hoveredStateId = null;
 let selectedStateId = null;
 let boundaryData = null;
+let availableData = null;
 
 const RegionSelectorMap = ({
   selectorFunction = () => {},
@@ -26,33 +27,63 @@ const RegionSelectorMap = ({
   initStartZoom = 2,
 }) => {
   const [hoveredStateName, setHoveredStateName] = useState("");
-  const [selectedStateInit, setselectedStateInit] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const map = useRef();
   const mapContainer = useRef();
 
   useEffect(() => {
     if (!boundaryData) {
+      // Fetch the data and sort based on availableStates prop
       fetch(boundaries)
         .then((r) => r.text())
         .then((text) => {
           let json = JSON.parse(text);
-          boundaryData = { ...json, 
+          boundaryData = json;
+          availableData = { ...json, 
             features: json.features.filter((data) => 
               availableStates.indexOf(data.properties.STATE_NAME) !== -1)
           };
-        });
+        })
+        .finally(setDataLoaded(true));
     } else {
-      boundaryData = { ...boundaryData, 
+      availableData = { ...boundaryData, 
         features: boundaryData.features.filter((data) => 
           availableStates.indexOf(data.properties.STATE_NAME) !== -1)
       };
+      const source = map.current.getSource('states');
+      if (source) source.setData(availableData);
     }
   }, [availableStates]);
 
   useEffect(() => {
+    // Whenever the selectedState prop changed, automatically select it on the map.
+    if (mapLoaded) {
+      // if there are selected states, unselect it first
+      map.current.setFeatureState(
+        { source: "states", id: selectedStateId },
+        { click: false }
+      );
+      if (boundaryData && boundaryData.features) {
+        let selectedFeature = boundaryData.features.filter(
+          (el) => el.properties.STATE_NAME === selectedState
+        );
+        if (selectedFeature.length > 0) {
+          selectedStateId = selectedFeature[0].id;
+          selectedFeature = selectedFeature[0];
+        }
+        selectorFunction(selectedFeature);
+      }
+      map.current.setFeatureState(
+        { source: "states", id: selectedStateId },
+        { click: true }
+      );
+    }
+  },[selectedState, mapLoaded]);
+
+  useEffect(() => {
     //// MAP CREATE
-    if (map.current) return; // initialize map only once
+    if (dataLoaded) {
     var Map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v12",
@@ -77,7 +108,7 @@ const RegionSelectorMap = ({
       // Add a data source containing GeoJSON data.
       map.current.addSource("states", {
         type: "geojson",
-        data: boundaryData,
+        data: availableData,
       });
 
       // The feature-state dependent fill-opacity expression will render the hover effect
@@ -112,25 +143,6 @@ const RegionSelectorMap = ({
           "line-width": 1,
         },
       });
-
-      // apply initial selected state as hoghlighted
-      if (selectedState && !selectedStateInit) {
-        setselectedStateInit(true);
-        if (boundaryData && boundaryData.features) {
-          let selectedFeature = boundaryData.features.filter(
-            (el) => el.properties.STATE_NAME === selectedState
-          );
-          if (selectedFeature.length > 0) {
-            selectedStateId = selectedFeature[0].id;
-            selectedFeature = selectedFeature[0];
-          }
-          selectorFunction(selectedFeature);
-        }
-        map.current.setFeatureState(
-          { source: "states", id: selectedStateId },
-          { click: true }
-        );
-      }
 
       // When the user moves their mouse over the state-fill layer, we'll update the
       // feature state for the feature under the mouse.
@@ -195,7 +207,8 @@ const RegionSelectorMap = ({
       // set the map loaded status
       if (!mapLoaded) setMapLoaded(true);
     });
-  }, [hoveredStateId, selectedStateId, hoveredStateName, selectedState]);
+    }
+  }, [dataLoaded]);
 
   return (
     <>
