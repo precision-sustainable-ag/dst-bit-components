@@ -32,27 +32,39 @@ const RegionSelectorMap = ({
   const map = useRef();
   const mapContainer = useRef();
 
+  useEffect(() => () => {
+    hoveredStateId = null;
+    selectedStateId = null;
+    boundaryData = null;
+    availableData = null;
+  }, []);
+
   useEffect(() => {
     if (!boundaryData) {
       // Fetch the data and sort based on availableStates prop
       fetch(boundaries)
         .then((r) => r.text())
         .then((text) => {
-          let json = JSON.parse(text);
+          const json = JSON.parse(text);
           boundaryData = json;
-          availableData = { ...json, 
+          availableData = { 
+            ...json, 
             features: json.features.filter((data) => 
               availableStates.indexOf(data.properties.STATE_NAME) !== -1)
           };
+          setDataLoaded(true)
         })
-        .finally(setDataLoaded(true));
     } else {
-      availableData = { ...boundaryData, 
+      availableData = { 
+        ...boundaryData, 
         features: boundaryData.features.filter((data) => 
           availableStates.indexOf(data.properties.STATE_NAME) !== -1)
       };
-      const source = map.current.getSource('states');
-      if (source) source.setData(availableData);
+      if (map.current) {
+        const source = map.current.getSource('states');
+        if (source) source.setData(availableData);
+      }
+      setDataLoaded(true);
     }
   }, [availableStates]);
 
@@ -71,15 +83,18 @@ const RegionSelectorMap = ({
         if (selectedFeature.length > 0) {
           selectedStateId = selectedFeature[0].id;
           selectedFeature = selectedFeature[0];
+          selectorFunction(selectedFeature);
+        } else {
+          selectedStateId = null;
+          selectorFunction({});
         }
-        selectorFunction(selectedFeature);
       }
       map.current.setFeatureState(
         { source: "states", id: selectedStateId },
         { click: true }
       );
     }
-  },[selectedState, mapLoaded]);
+  }, [selectedState, mapLoaded]);
 
   useEffect(() => {
     //// MAP CREATE
