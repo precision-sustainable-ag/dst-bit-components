@@ -76,18 +76,16 @@ const RegionSelectorMap = ({
         { source: "states", id: selectedStateId },
         { click: false }
       );
-      if (boundaryData && boundaryData.features) {
-        let selectedFeature = boundaryData.features.filter(
-          (el) => el.properties.STATE_NAME === selectedState
-        );
-        if (selectedFeature.length > 0) {
-          selectedStateId = selectedFeature[0].id;
-          selectedFeature = selectedFeature[0];
-          selectorFunction(selectedFeature);
-        } else {
-          selectedStateId = null;
-          selectorFunction({});
-        }
+      let selectedFeature = boundaryData.features.filter(
+        (el) => el.properties.STATE_NAME === selectedState
+      );
+      if (selectedFeature.length > 0) {
+        selectedStateId = selectedFeature[0].id;
+        selectedFeature = selectedFeature[0];
+        selectorFunction(selectedFeature);
+      } else {
+        selectedStateId = null;
+        selectorFunction({});
       }
       map.current.setFeatureState(
         { source: "states", id: selectedStateId },
