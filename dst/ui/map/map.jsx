@@ -281,7 +281,9 @@ const Map = ({
           geocodeReverse({
             apiKey: MAPBOX_TOKEN,
             setterFunc: (address) => {
-              document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
+              if (hasSearchBar) {
+                document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
+              }
               // Geocoder.setPlaceholder(address().fullAddress);
               setAddress(address);
             },
@@ -314,7 +316,7 @@ const Map = ({
     });
     if (hasMarkerMovable) {
       map.current.on("dblclick", (e) => {
-        setMarker((prev) => ({
+        setMarker((prev) => ({hasMarkerPopup
           ...prev,
           longitude: e.lngLat.lng,
           latitude: e.lngLat.lat,
@@ -339,6 +341,9 @@ const Map = ({
       if (hasMarkerPopup) {
         markerRef.current.togglePopup();
         setTimeout(() => markerRef.current.togglePopup(), 2000);
+      }
+      else {
+        // map.current
       }
       if (
         drawerRef.current &&
@@ -391,7 +396,10 @@ const Map = ({
       apiKey: MAPBOX_TOKEN,
       setterFunc: (address) => {
         // console.log(address())
-        document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
+        if (hasSearchBar) {
+          document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
+        }
+        // not sure why setPlaceholder doen't work
         // Geocoder.setPlaceholder(address().fullAddress);
         setAddress(address);
       },
@@ -399,11 +407,6 @@ const Map = ({
       latitude: marker.latitude,
     });
 
-    setAddress((addr) => ({
-      ...addr,
-      longitude: marker.longitude,
-      latitude: marker.latitude,
-    }));
     if (markerRef.current) {
       const lngLat = [marker.longitude, marker.latitude];
       popupRef.current.setHTML(
