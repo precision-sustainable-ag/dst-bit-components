@@ -316,7 +316,7 @@ const Map = ({
     });
     if (hasMarkerMovable) {
       map.current.on("dblclick", (e) => {
-        setMarker((prev) => ({hasMarkerPopup
+        setMarker((prev) => ({
           ...prev,
           longitude: e.lngLat.lng,
           latitude: e.lngLat.lat,
@@ -341,9 +341,6 @@ const Map = ({
       if (hasMarkerPopup) {
         markerRef.current.togglePopup();
         setTimeout(() => markerRef.current.togglePopup(), 2000);
-      }
-      else {
-        // map.current
       }
       if (
         drawerRef.current &&
