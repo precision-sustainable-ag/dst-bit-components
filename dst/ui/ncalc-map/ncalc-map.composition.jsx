@@ -1,6 +1,11 @@
 import React from "react";
 import { NcalcMap } from "./ncalc-map";
 import sampleBiomassData from './response_1682931266838.json';
+import initRasterObject from './sample-response.json';
+
+
+const initLon = -76.9146
+const initLat = 39.0238
 
 var featuresSample = [
   {
@@ -45,13 +50,13 @@ export const PlainMapWithoutFeatures = () => (
     setZoom={() => { }}
     setMap={() => { }}
     onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
+    initRasterObject={initRasterObject}
     initFeatures={[]}
     initWidth="400px"
     initHeight="300px"
-    initLon={-101.6838}
-    initLat={41.0686}
-    initStartZoom={10}
+    initLon={initLon}
+    initLat={initLat}
+    initStartZoom={12}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={false}
@@ -79,13 +84,13 @@ export const MapWithMarker = () => (
     setZoom={() => { }}
     setMap={() => { }}
     onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
+    initRasterObject={initRasterObject}
     initFeatures={[]}
     initWidth="400px"
     initHeight="300px"
-    initLon={-101.6838}
-    initLat={41.0686}
-    initStartZoom={10}
+    initLon={initLon}
+    initLat={initLat}
+    initStartZoom={12}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={false}
@@ -113,12 +118,12 @@ export const MapWithGeocoder = () => (
     setZoom={() => { }}
     setMap={() => { }}
     onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
+    initRasterObject={initRasterObject}
     initFeatures={[]}
     initWidth="400px"
     initHeight="300px"
-    initLon={-101.6838}
-    initLat={41.0686}
+    initLon={initLon}
+    initLat={initLat}
     initStartZoom={12}
     initMinZoom={5}
     initMaxZoom={16}
@@ -147,14 +152,14 @@ export const MapWithAllFeatures = () => (
     setZoom={() => { }}
     setMap={() => { }}
     onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
+    initRasterObject={sampleBiomassData}
     initFeatures={featuresSample}
     initWidth="400px"
     initHeight="300px"
     initAddress=""
-    initLon={-101.6838}
-    initLat={41.0686}
-    initStartZoom={10}
+    initLon={initLon}
+    initLat={initLat}
+    initStartZoom={13}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={true}

@@ -40,6 +40,9 @@
     "policy": {
       "dependencies": {
         "@babel/runtime": "7.20.6",
+        "@emotion/react": "11.11.1",
+        "@emotion/styled": "11.11.0",
+        "@mui/material": "5.14.9",
         "@teambit/harmony": "0.4.6",
         "@types/jest": "^29.2.4",
         "@types/node": "latest",

@@ -2,9 +2,14 @@
   Handles reverse geocoding from lat lon to asci address
 */
 
-async function geocodeReverse({ apiKey, setterFunc, zoom, latitude, longitude }) {
+async function geocodeReverse({
+  apiKey,
+  setterFunc,
+  latitude,
+  longitude,
+}) {
   await fetch(
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude}%2C%20${latitude}.json?access_token=${apiKey}`
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude}%2C%20${latitude}.json?access_token=${apiKey}`,
   )
     .then((response) => response.json())
     .then((data) => {
@@ -13,7 +18,6 @@ async function geocodeReverse({ apiKey, setterFunc, zoom, latitude, longitude })
           const value = (parm) => (
             data.features.filter((feature) => feature.id.includes(parm))[0]
           );
-        
           const newVal = {
             ...prevVal,
             fullAddress: data.features[0].place_name,
@@ -23,8 +27,8 @@ async function geocodeReverse({ apiKey, setterFunc, zoom, latitude, longitude })
             county: value('district')?.text,
             state: value('region')?.text,
             stateAbbreviation: value('region')?.properties?.short_code.replace(/US-/, ''),
-          }
-          return newVal
+          };
+          return newVal;
         });
       }
     });
@@ -38,7 +42,7 @@ const coordinatesGeocoder = function (query) {
   // Match anything which looks like
   // decimal degrees coordinate pair.
   const matches = query.match(
-    /^[ ]*(?:Lat: )?(-?\d+\.?\d*)[, ]+(?:Lng: )?(-?\d+\.?\d*)[ ]*$/i
+    /^[ ]*(?:Lat: )?(-?\d+\.?\d*)[, ]+(?:Lng: )?(-?\d+\.?\d*)[ ]*$/i,
   );
   if (!matches) {
     return null;
@@ -51,6 +55,7 @@ const coordinatesGeocoder = function (query) {
         type: 'Point',
         coordinates: [lng, lat],
       },
+      // eslint-disable-next-line prefer-template
       place_name: 'Lat: ' + lat + ' Lng: ' + lng,
       place_type: ['coordinate'],
       properties: {},
