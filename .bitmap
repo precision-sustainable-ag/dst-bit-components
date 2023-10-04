@@ -9,21 +9,27 @@
  */
 
 {
+    "ui/info-tooltip": {
+        "scope": "psa.dst",
+        "version": "1a6f070540c411757e5daee8081344212c3198e3",
+        "mainFile": "index.js",
+        "rootDir": "dst/ui/info-tooltip"
+    },
     "ui/map": {
         "scope": "psa.dst",
-        "version": "0.0.56",
+        "version": "0.0.58",
         "mainFile": "index.js",
         "rootDir": "dst/ui/map"
     },
     "ui/ncalc-map": {
         "scope": "psa.dst",
-        "version": "0.0.12",
+        "version": "0.0.13",
         "mainFile": "index.js",
         "rootDir": "dst/ui/ncalc-map"
     },
     "ui/region-selector-map": {
         "scope": "psa.dst",
-        "version": "0.0.12",
+        "version": "0.0.16",
         "mainFile": "index.js",
         "rootDir": "dst/ui/region-selector-map"
     },

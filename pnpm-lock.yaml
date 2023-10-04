@@ -14,6 +14,7 @@ importers:
       '@emotion/styled': 11.11.0
       '@mapbox/mapbox-gl-draw': 1.3.0
       '@mapbox/mapbox-gl-geocoder': 5.0.1
+      '@mui/icons-material': ^5.11.16
       '@mui/material': 5.14.9
       '@psa/dst.envs.custom': 0.0.2
       '@teambit/harmony': 0.4.6
@@ -45,6 +46,7 @@ importers:
       '@emotion/styled': registry.npmjs.org/@emotion/styled/11.11.0_v32bgqottwqg63tzjjrlc3ejwm
       '@mapbox/mapbox-gl-draw': registry.npmjs.org/@mapbox/mapbox-gl-draw/1.3.0
       '@mapbox/mapbox-gl-geocoder': registry.npmjs.org/@mapbox/mapbox-gl-geocoder/5.0.1_mapbox-gl@2.11.1
+      '@mui/icons-material': registry.npmjs.org/@mui/icons-material/5.14.11_h4cy5g5cinize3g764667ezgz4
       '@mui/material': registry.npmjs.org/@mui/material/5.14.9_weyjzklcrsbw72kkgoqhuuvspe
       '@teambit/harmony': registry.npmjs.org/@teambit/harmony/0.4.6
       '@testing-library/react': registry.npmjs.org/@testing-library/react/14.0.0_biqbaboplfbrettd7655fr4n2y
@@ -73,6 +75,9 @@ importers:
       '@types/react': registry.npmjs.org/@types/react/17.0.53
       '@types/react-dom': registry.npmjs.org/@types/react-dom/17.0.19
       '@types/testing-library__jest-dom': registry.npmjs.org/@types/testing-library__jest-dom/5.9.5
+
+  dst/ui/info-tooltip:
+    specifiers: {}
 
   dst/ui/map:
     specifiers: {}
@@ -629,6 +634,30 @@ packages:
     resolution: {integrity: sha512-JAU/R5hM3l2zP1Q4KnioDRhq5V3vZ4mmjEZ+TwARDb2xFhg3p59McacQuzkSu0sUHJnH9aJos36+hU5sPQBcFQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.14.9.tgz}
     name: '@mui/core-downloads-tracker'
     version: 5.14.9
+    dev: false
+
+  registry.npmjs.org/@mui/icons-material/5.14.11_h4cy5g5cinize3g764667ezgz4:
+    resolution: {integrity: sha512-aHReLasBuS/+hhPzbZCgZ0eTcZ2QRnoC2WNK7XvdAf3l+LjC1flzjh6GWw1tZJ5NHnZ+bivdwtLFQ8XTR96JkA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.14.11.tgz}
+    id: registry.npmjs.org/@mui/icons-material/5.14.11
+    name: '@mui/icons-material'
+    version: 5.14.11
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@mui/material': '*'
+      '@types/react': '*'
+      react: '*'
+    peerDependenciesMeta:
+      '@mui/material':
+        optional: true
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.22.15
+      '@mui/material': registry.npmjs.org/@mui/material/5.14.9_weyjzklcrsbw72kkgoqhuuvspe
+      '@types/react': registry.npmjs.org/@types/react/17.0.53
+      react: registry.npmjs.org/react/18.2.0
     dev: false
 
   registry.npmjs.org/@mui/material/5.14.9_weyjzklcrsbw72kkgoqhuuvspe:

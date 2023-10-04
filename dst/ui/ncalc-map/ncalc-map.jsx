@@ -8,7 +8,6 @@ import centroid from "@turf/centroid";
 import turf from "turf";
 import chroma from "chroma-js";
 import { geocodeReverse, coordinatesGeocoder } from "./helpers";
-// import { Slider, Box, Tooltip, Typography } from '@mui/material';
 import RasterTools from './raster-tools';
 import InfoBox from "./info-box";
 
@@ -657,7 +656,7 @@ const NcalcMap = ({
         style={{ width: initWidth, height: initHeight }}
       />
       {hasCoordBar && cursorLoc.longitude && (
-        <InfoBox cursorLoc={cursorLoc} />
+        <InfoBox cursorLoc={cursorLoc} polygonArea={polygonArea} />
       )}
       {polygons && polygons.features.length > 0 && (
         <RasterTools map={map} colorStops={stops} />
