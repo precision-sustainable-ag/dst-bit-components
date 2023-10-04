@@ -9,12 +9,6 @@
  */
 
 {
-    "ui/info-tooltip": {
-        "scope": "psa.dst",
-        "version": "1a6f070540c411757e5daee8081344212c3198e3",
-        "mainFile": "index.js",
-        "rootDir": "dst/ui/info-tooltip"
-    },
     "ui/map": {
         "scope": "psa.dst",
         "version": "0.0.58",
@@ -32,12 +26,6 @@
         "version": "0.0.16",
         "mainFile": "index.js",
         "rootDir": "dst/ui/region-selector-map"
-    },
-    "ui/vpt-map": {
-        "scope": "psa.dst",
-        "version": "0.0.2",
-        "mainFile": "index.js",
-        "rootDir": "dst/ui/vpt-map"
     },
     "$schema-version": "15.0.0"
 }
