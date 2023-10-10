@@ -1,0 +1,46 @@
+---
+description: "An Alert component."
+labels: ["MUI", "UI", "components"]
+---
+
+import { Alert } from "./alert";
+
+## React Component for rendering an Alert
+
+A basic component that renders an Alert.
+
+### List of component properties:
+
+| Name        | Type    | Description                                                            |
+| ----------- | ------- | ---------------------------------------------------------------------- |
+| `showAlert` | boolean | controls whether to show the alert, default to true                    |
+| `variant`   | string  | controls the variant of the Alert component                            |
+| `severity`  | string  | defines the color and icon used                                        |
+| `action`    | node    | action to display, renders after the message, at the end of the alert. |
+| `message`   | node    | controls the message shows inside the component                        |
+
+### Component usage
+
+```js
+<Alert
+  showAlert={}
+  variant={}
+  severity={}
+  action={}
+  message={}
+/>
+```
+
+### Using props to customize the text
+
+Modify the text to see it change live:
+
+```js live
+<Alert
+  showAlert={true}
+  variant={"standard"}
+  severity={"error"}
+  action={<></>}
+  message={"This is an alert!"}
+/>
+```
