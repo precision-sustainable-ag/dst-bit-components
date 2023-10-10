@@ -1,16 +1,20 @@
 import React from "react";
-import "./spinner.scss";
+import styles from "./spinner.module.scss";
 
-export function Spinner({ size, color, backgroundColor }) {
+export function Spinner({
+  size = "50px",
+  color = "#3498db",
+  backgroundColor = "#f3f3f3",
+}) {
   const loaderStyle = {
-    width: size || "50px", // Default size is 50px
-    height: size || "50px",
-    border: `8px solid ${backgroundColor || "#f3f3f3"}`,
-    borderTop: `8px solid ${color || "#3498db"}`,
-    borderLeft: `8px solid ${color || "#3498db"}`,
-    borderRight: `8px solid ${color || "#3498db"}`,
+    width: size,
+    height: size,
+    border: `8px solid ${backgroundColor}`,
+    borderTop: `8px solid ${color}`,
+    borderLeft: `8px solid ${color}`,
+    borderRight: `8px solid ${color}`,
     borderRadius: "50%",
-    animation: "spin 2s linear infinite",
+    animation: `${styles.spin} 2s linear infinite`,
   };
 
   return <div style={loaderStyle}></div>;
