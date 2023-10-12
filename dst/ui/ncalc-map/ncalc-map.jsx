@@ -167,15 +167,11 @@ const NcalcMap = ({
       if (initRasterObject && initRasterObject.data_array) {
         flattenedBiomass = initRasterObject.data_array.flat(1).filter((el) => el !== 0);
       }
-      console.log('ex', flattenedBiomass)
-      console.log('ex', Math.min(...flattenedBiomass), Math.max(...flattenedBiomass))
       var colorSteps = chroma.scale(['#e71d36', '#086375'])
         .mode('lch').colors(NR_COLOR_STEPS)
       var colorValues = [];
       const biomassMax = Math.max(...flattenedBiomass)
       const biomassMin = Math.min(...flattenedBiomass)
-      console.log('biomassMin', biomassMin)
-      console.log('biomassMax', biomassMax)
       const step = (biomassMax - biomassMin) / (NR_COLOR_STEPS - 1);
       for (var i = biomassMin; i <= biomassMax; i = i + step) {
         colorValues.push(Math.round(i, 0));
@@ -183,7 +179,6 @@ const NcalcMap = ({
       var rasterColors = colorValues.map(function (e, i) {
         return [e, colorSteps[i]];
       });
-      console.log('rasterColors', rasterColors)
       setRasterColorSteps(rasterColors);
 
       // storing pixel polygons in mapbox source
