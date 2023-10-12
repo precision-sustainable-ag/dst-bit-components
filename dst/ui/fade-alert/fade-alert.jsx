@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert, Fade } from "@mui/material";
 
-export function Alert({
+export function FadeAlert({
   showAlert = true,
   variant = "standard",
   severity = "error",

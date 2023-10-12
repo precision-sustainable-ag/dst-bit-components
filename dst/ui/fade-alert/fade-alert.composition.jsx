@@ -1,26 +1,26 @@
 import React, { useState } from "react";
-import { Alert } from "./alert";
+import { FadeAlert } from "./fade-alert";
 import { Typography, Button } from "@mui/material";
 
 export const BasicAlert = () => (
   <>
-    <Alert severity={"error"} message={"This is an error alert!"} />
+    <FadeAlert severity={"error"} message={"This is an error alert!"} />
     <br />
-    <Alert severity={"warning"} message={"This is a warning alert!"} />
+    <FadeAlert severity={"warning"} message={"This is a warning alert!"} />
     <br />
-    <Alert severity={"info"} message={"This is an info alert!"} />
+    <FadeAlert severity={"info"} message={"This is an info alert!"} />
     <br />
-    <Alert severity={"success"} message={"This is a success alert!"} />
+    <FadeAlert severity={"success"} message={"This is a success alert!"} />
   </>
 );
 
 export const AlertWithDifferentVariant = () => (
   <>
-    <Alert variant={"standard"} message={"This is a standard alert!"} />
+    <FadeAlert variant={"standard"} message={"This is a standard alert!"} />
     <br />
-    <Alert variant={"outlined"} message={"This is an outlined alert!"} />
+    <FadeAlert variant={"outlined"} message={"This is an outlined alert!"} />
     <br />
-    <Alert variant={"filled"} message={"This is a filled alert!"} />
+    <FadeAlert variant={"filled"} message={"This is a filled alert!"} />
   </>
 );
 
@@ -29,7 +29,7 @@ export const CustomAlert = () => {
 
   return (
     <>
-      <Alert
+      <FadeAlert
         showAlert={showAlert}
         variant={"filled"}
         severity={"error"}

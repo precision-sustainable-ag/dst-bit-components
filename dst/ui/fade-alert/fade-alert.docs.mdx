@@ -1,9 +1,9 @@
 ---
-description: "An Alert component."
+description: "An Custom Alert component."
 labels: ["MUI", "UI", "components"]
 ---
 
-import { Alert } from "./alert";
+import { FadeAlert } from "./fade-alert";
 
 ## React Component for rendering an Alert
 
@@ -13,8 +13,8 @@ A basic component that renders an Alert.
 
 | Name        | Type    | Description                                                            |
 | ----------- | ------- | ---------------------------------------------------------------------- |
-| `showAlert` | boolean | controls whether to show the alert, default to true                    |
-| `variant`   | string  | controls the variant of the Alert component                            |
+| `showAlert` | boolean | controls whether to show the component, default to true                |
+| `variant`   | string  | controls the variant of the component                                  |
 | `severity`  | string  | defines the color and icon used                                        |
 | `action`    | node    | action to display, renders after the message, at the end of the alert. |
 | `message`   | node    | controls the message shows inside the component                        |
@@ -22,7 +22,7 @@ A basic component that renders an Alert.
 ### Component usage
 
 ```js
-<Alert
+<FadeAlert
   showAlert={}
   variant={}
   severity={}
@@ -36,11 +36,11 @@ A basic component that renders an Alert.
 Modify the text to see it change live:
 
 ```js live
-<Alert
+<FadeAlert
   showAlert={true}
   variant={"standard"}
   severity={"error"}
   action={<></>}
-  message={"This is an alert!"}
+  message={"This is an Alert!"}
 />
 ```

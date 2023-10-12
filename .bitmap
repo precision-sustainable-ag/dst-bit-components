@@ -9,12 +9,12 @@
  */
 
 {
-    "ui/alert": {
+    "ui/fade-alert": {
         "scope": "",
         "version": "",
         "defaultScope": "psa.dst",
         "mainFile": "index.js",
-        "rootDir": "dst/ui/alert",
+        "rootDir": "dst/ui/fade-alert",
         "config": {
             "teambit.react/react": {},
             "teambit.envs/envs": {
