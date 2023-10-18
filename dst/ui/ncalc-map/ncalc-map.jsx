@@ -8,6 +8,8 @@ import centroid from "@turf/centroid";
 import turf from "turf";
 import chroma from "chroma-js";
 import { geocodeReverse, coordinatesGeocoder } from "./helpers";
+import RasterTools from './raster-tools';
+import InfoBox from "./info-box";
 
 import styles from "./map.module.scss";
 import "./mapbox-gl.css";
@@ -17,12 +19,12 @@ import "./mapbox-gl-geocoder.css";
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWlsYWRueXUiLCJhIjoiY2xhNmhkZDVwMWxqODN4bWhkYXFnNjRrMCJ9.VWy3AxJ3ULhYNw8nmVdMew";
 mapboxgl.accessToken = MAPBOX_TOKEN;
+const NR_COLOR_STEPS = 10;
 
-// const bbox = [275370, 4547430, 277050, 4549110];
-// const bbox = [-80.25, 37.78, -80.0, 37.68];
-// const bbox = [-80.25, 37.7, -80.2, 37.68];
-const polygons = turf.featureCollection([]);
-let bbox, ndviData;
+const transpose = m => m[0].map((x, i) => m.map(x => x[i]))
+
+let polygons = turf.featureCollection([]);
+let bbox, biomassData;
 
 const acreDiv = 4046.856422;
 const fastFly = {
@@ -31,6 +33,15 @@ const fastFly = {
   curve: 5, // Change the speed at which it zooms out.
   easing: (t) => t ** 2,
 };
+
+let stops = [
+  [500, "#e71d36"],
+  [2000, "#f86624"],
+  [3000, "#f9c80e"],
+  [5000, "#affc41"],
+  [7000, "#1dd3b0"],
+  [10000, "#086375"],
+];
 
 const NcalcMap = ({
   setAddress = () => { },
@@ -88,6 +99,7 @@ const NcalcMap = ({
   const [isDrawActive, setIsDrawActive] = useState(false);
   const [geocodeResult, setGeocodeResult] = useState(undefined);
   const [popupOpen, setPopupOpen] = useState(true);
+  const [rasterColorSteps, setRasterColorSteps] = useState([]);
   const [flyToOptions, setFlyToOptions] = useState({});
 
   const map = useRef();
@@ -96,6 +108,7 @@ const NcalcMap = ({
   const markerRef = useRef();
   const popupRef = useRef();
   const geocoderRef = useRef();
+
 
   //// GEOCODER CONTROL
   const Geocoder = new MapboxGeocoder({
@@ -109,30 +122,32 @@ const NcalcMap = ({
     countries: "us",
   });
   geocoderRef.current = Geocoder;
-  // const bbox = [-80.35, 37.7895, -80.0, 40.6895];
-
   useEffect(() => {
+    // resetting pixel polygons in mapbox source
+    polygons = turf.featureCollection([]);
+    map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
+
     if (initRasterObject && Object.keys(initRasterObject).length > 0) {
-      const taskResults = JSON.parse(initRasterObject)
-      if (taskResults.data_array && taskResults.data_array.length > 0) {
-        ndviData = taskResults.data_array[0];
-        bbox = taskResults.bbox;
+      if (initRasterObject.data_array && initRasterObject.data_array.length > 0) {
+        biomassData = initRasterObject.data_array;
+        biomassData = transpose(biomassData);
+        bbox = initRasterObject.bbox;
       }
     }
-    if (ndviData && ndviData.length > 0) {
+    if (biomassData && biomassData.length > 0) {
       let scale = chroma.scale(["white", "red"]);
-      const w = ndviData.length;
-      const h = ndviData[0].length;
+      const w = biomassData.length;
+      const h = biomassData[0].length;
       const lon = bbox[0];
       const lat = bbox[1];
-      const dLon = (bbox[0] - bbox[2]) / w;
+      const dLon = (bbox[2] - bbox[0]) / w;
       const dLat = (bbox[1] - bbox[3]) / h;
-      for (let i = 0; i < h; i++) {
-        for (let j = 0; j < w; j++) {
-          const topLeftCorner = { lon: lon + i * dLon, lat: lat + j * dLat };
-          let ndviVal = ndviData[i][j] != -9999 ? ndviData[i][j] : null;
-          ndviVal &&
-            ndviVal > -9998 &&
+      for (let i = 0; i < w; i++) {
+        for (let j = 0; j < h; j++) {
+          const topLeftCorner = { lon: lon + i * dLon, lat: lat - j * dLat };
+          let biomassVal = biomassData[i][j] !== -9999 ? biomassData[i][j] : null;
+          biomassVal &&
+            biomassVal > -9998 &&
             polygons.features.push(
               turf.polygon([[
                 [topLeftCorner.lon, topLeftCorner.lat],
@@ -141,16 +156,36 @@ const NcalcMap = ({
                 [topLeftCorner.lon, topLeftCorner.lat - dLat],
                 [topLeftCorner.lon, topLeftCorner.lat],
               ]], {
-                value: ndviVal,
+                value: biomassVal,
               })
             );
-
         }
       }
-      map.current && map.current.getSource("biomassPolygons").setData(polygons);
+
+      // setting up color legend
+      let flattenedBiomass = [];
+      if (initRasterObject && initRasterObject.data_array) {
+        flattenedBiomass = initRasterObject.data_array.flat(1).filter((el) => el !== 0);
+      }
+      var colorSteps = chroma.scale(['#e71d36', '#086375'])
+        .mode('lch').colors(NR_COLOR_STEPS)
+      var colorValues = [];
+      const biomassMax = Math.max(...flattenedBiomass)
+      const biomassMin = Math.min(...flattenedBiomass)
+      const step = (biomassMax - biomassMin) / (NR_COLOR_STEPS - 1);
+      for (var i = biomassMin; i <= biomassMax; i = i + step) {
+        colorValues.push(Math.round(i, 0));
+      }
+      var rasterColors = colorValues.map(function (e, i) {
+        return [e, colorSteps[i]];
+      });
+      setRasterColorSteps(rasterColors);
+
+      // storing pixel polygons in mapbox source
+      map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
     }
 
-  }, []);
+  }, [initRasterObject]);
 
   // handle empty initFeature
   useEffect(() => {
@@ -172,8 +207,10 @@ const NcalcMap = ({
     geocodeReverse({
       apiKey: MAPBOX_TOKEN,
       setterFunc: (address) => {
-        document.querySelector(".mapboxgl-ctrl-geocoder--input").placeholder =
-          address().fullAddress;
+        if (document.querySelector(".mapboxgl-ctrl-geocoder--input")) {
+          document.querySelector(".mapboxgl-ctrl-geocoder--input").placeholder =
+            address().fullAddress;
+        };
         // Geocoder.setPlaceholder(address().fullAddress);
         setAddress(address);
       },
@@ -447,16 +484,10 @@ const NcalcMap = ({
         type: "fill",
         source: "biomassPolygons",
         paint: {
-          "fill-opacity": 0.1,
+          "fill-opacity": 0.5,
           "fill-color": {
             property: "value",
-            stops: [
-              [0, "#f3722c"],
-              [1000, "#f8961e"],
-              [2000, "#f9c74f"],
-              [3000, "#90be6d"],
-              [4000, "#43aa8b"],
-            ],
+            stops: stops,
           },
         },
       });
@@ -580,7 +611,7 @@ const NcalcMap = ({
       map.current.getCanvas().style.cursor = 'pointer';
       // Copy coordinates array.
       const coordinates = e.features[0].geometry.coordinates.slice();
-      const description = `<div>value: ${e.features[0].properties.value}</div>`
+      const description = `<div>biomass value: ${Math.round(e.features[0].properties.value, 0)} kg/ha</div>`
 
       // Ensure that if the map is zoomed out such that multiple
       // copies of the feature are visible, the popup appears
@@ -601,7 +632,7 @@ const NcalcMap = ({
     //   overlayPopup.remove();
     // })
 
-  }, [map]);
+  }, [map, rasterColorSteps]);
 
   useEffect(() => {
     map.current.on("zoom", () => {
@@ -620,15 +651,10 @@ const NcalcMap = ({
         style={{ width: initWidth, height: initHeight }}
       />
       {hasCoordBar && cursorLoc.longitude && (
-        <div className={styles.infobar}>
-          <ul>
-            <li>{`Longitude:${cursorLoc.longitude}`}</li>
-            <li>{`Latitude:${cursorLoc.latitude}`}</li>
-            {polygonArea > 0 && (
-              <li>{`Area ${polygonArea.toFixed(2)} acres`}</li>
-            )}
-          </ul>
-        </div>
+        <InfoBox cursorLoc={cursorLoc} polygonArea={polygonArea} />
+      )}
+      {polygons && polygons.features.length > 0 && (
+        <RasterTools map={map} colorStops={stops} />
       )}
     </div>
   );

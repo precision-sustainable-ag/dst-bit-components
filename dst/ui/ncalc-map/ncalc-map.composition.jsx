@@ -1,6 +1,13 @@
 import React from "react";
 import { NcalcMap } from "./ncalc-map";
-import sampleBiomassData from './response_1682931266838.json';
+import initRasterObject from './sample-response.json';
+
+const initLon = -76.913
+const initLat = 39.022
+const initHeight = '500px'
+const initWidth = '400px'
+// const initLon = -101.2906
+// const initLat = 40.9417
 
 var featuresSample = [
   {
@@ -45,12 +52,12 @@ export const PlainMapWithoutFeatures = () => (
     setZoom={() => { }}
     setMap={() => { }}
     onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
+    initRasterObject={initRasterObject}
     initFeatures={[]}
-    initWidth="400px"
-    initHeight="300px"
-    initLon={-101.6838}
-    initLat={41.0686}
+    initWidth={initWidth}
+    initHeight={initHeight}
+    initLon={initLon}
+    initLat={initLat}
     initStartZoom={10}
     initMinZoom={5}
     initMaxZoom={16}
@@ -79,13 +86,13 @@ export const MapWithMarker = () => (
     setZoom={() => { }}
     setMap={() => { }}
     onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
+    initRasterObject={initRasterObject}
     initFeatures={[]}
-    initWidth="400px"
-    initHeight="300px"
-    initLon={-101.6838}
-    initLat={41.0686}
-    initStartZoom={10}
+    initWidth={initWidth}
+    initHeight={initHeight}
+    initLon={initLon}
+    initLat={initLat}
+    initStartZoom={11}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={false}
@@ -113,13 +120,13 @@ export const MapWithGeocoder = () => (
     setZoom={() => { }}
     setMap={() => { }}
     onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
+    initRasterObject={initRasterObject}
     initFeatures={[]}
-    initWidth="400px"
-    initHeight="300px"
-    initLon={-101.6838}
-    initLat={41.0686}
-    initStartZoom={12}
+    initWidth={initWidth}
+    initHeight={initHeight}
+    initLon={initLon}
+    initLat={initLat}
+    initStartZoom={13}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={true}
@@ -147,14 +154,14 @@ export const MapWithAllFeatures = () => (
     setZoom={() => { }}
     setMap={() => { }}
     onDraw={() => { }}
-    initRasterObject={sampleBiomassData.task_result}
+    initRasterObject={initRasterObject}
     initFeatures={featuresSample}
-    initWidth="400px"
-    initHeight="300px"
+    initWidth={initWidth}
+    initHeight={initHeight}
     initAddress=""
-    initLon={-101.6838}
-    initLat={41.0686}
-    initStartZoom={10}
+    initLon={initLon}
+    initLat={initLat}
+    initStartZoom={11}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={true}
