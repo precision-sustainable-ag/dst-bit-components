@@ -9,6 +9,19 @@
  */
 
 {
+    "ui/fade-alert": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "psa.dst",
+        "mainFile": "index.js",
+        "rootDir": "dst/ui/fade-alert",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "ui/map": {
         "scope": "psa.dst",
         "version": "0.0.58",
@@ -27,5 +40,24 @@
         "mainFile": "index.js",
         "rootDir": "dst/ui/region-selector-map"
     },
-    "$schema-version": "15.0.0"
+    "ui/spinner": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "psa.dst",
+        "mainFile": "index.js",
+        "rootDir": "dst/ui/spinner",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "ui/vpt-map": {
+        "scope": "psa.dst",
+        "version": "0.0.2",
+        "mainFile": "index.js",
+        "rootDir": "dst/ui/vpt-map"
+    },
+    "$schema-version": "16.0.0"
 }
