@@ -10,15 +10,18 @@
 
 {
     "ui/fade-alert": {
-        "scope": "",
-        "version": "",
-        "defaultScope": "psa.dst",
+        "scope": "psa.dst",
+        "version": "0.0.1",
         "mainFile": "index.js",
         "rootDir": "dst/ui/fade-alert",
         "config": {
-            "teambit.react/react": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react"
+            "teambit.dependencies/dependency-resolver": {
+                "policy": {
+                    "peerDependencies": {
+                        "react-dom": "18.2.0",
+                        "react": "18.2.0"
+                    }
+                }
             }
         }
     },
@@ -41,23 +44,20 @@
         "rootDir": "dst/ui/region-selector-map"
     },
     "ui/spinner": {
-        "scope": "",
-        "version": "",
-        "defaultScope": "psa.dst",
+        "scope": "psa.dst",
+        "version": "0.0.1",
         "mainFile": "index.js",
         "rootDir": "dst/ui/spinner",
         "config": {
-            "teambit.react/react": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react"
+            "teambit.dependencies/dependency-resolver": {
+                "policy": {
+                    "peerDependencies": {
+                        "react": "18.2.0",
+                        "react-dom": "18.2.0"
+                    }
+                }
             }
         }
-    },
-    "ui/vpt-map": {
-        "scope": "psa.dst",
-        "version": "0.0.2",
-        "mainFile": "index.js",
-        "rootDir": "dst/ui/vpt-map"
     },
     "$schema-version": "16.0.0"
 }
