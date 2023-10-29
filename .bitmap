@@ -53,11 +53,5 @@
             }
         }
     },
-    "ui/vpt-map": {
-        "scope": "psa.dst",
-        "version": "0.0.2",
-        "mainFile": "index.js",
-        "rootDir": "dst/ui/vpt-map"
-    },
     "$schema-version": "16.0.0"
 }
