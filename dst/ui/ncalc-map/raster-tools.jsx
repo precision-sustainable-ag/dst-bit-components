@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './map.module.scss';
 
 const RasterTools = ({ map, colorStops }) => {
@@ -23,21 +23,21 @@ const RasterTools = ({ map, colorStops }) => {
 
   return (
     <div>
-      <div className={styles.rastertools}>
-        <div className={styles.rasterlegend}>
-          {colorStops.map((stop, i) => (
-            <div key={i} className={styles.rasterlegenditem}>
-              <div className={styles.rasterlegendcolor} style={{ backgroundColor: stop[1] }} />
-              <div className={styles.rasterlegendvalue}>{stop[0]}</div>
-            </div>
-          ))}
-        </div>
-        <div className={styles.opacityslider}>
-          {/* <div className={styles.slidecontainer}> */}
-            <input type="range" min="0" max="100" value={opacityValue} className={styles.slider} onChange={handleOpacityChange} id="myRange" />
-          {/* </div> */}
-        </div>
+      {/* <div className={styles.rastertools}> */}
+      <div className={styles.opacityslider}>
+        {/* <div className={styles.slidecontainer}> */}
+        <input type="range" min="0" max="100" value={opacityValue} className={styles.slider} onChange={handleOpacityChange} id="myRange" />
+        {/* </div> */}
       </div>
+      <div className={styles.rasterlegend}>
+        {colorStops.map((stop, i) => (
+          <div key={i} className={styles.rasterlegenditem}>
+            <div className={styles.rasterlegendcolor} style={{ backgroundColor: stop[1] }} />
+            <div className={styles.rasterlegendvalue}>{stop[0]}</div>
+          </div>
+        ))}
+      </div>
+      {/* </div> */}
     </div>
   );
 };

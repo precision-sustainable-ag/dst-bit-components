@@ -11,16 +11,10 @@
 {
     "ui/fade-alert": {
         "scope": "",
-        "version": "",
+        "version": "0.0.1",
         "defaultScope": "psa.dst",
         "mainFile": "index.js",
-        "rootDir": "dst/ui/fade-alert",
-        "config": {
-            "teambit.react/react": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react"
-            }
-        }
+        "rootDir": "dst/ui/fade-alert"
     },
     "ui/map": {
         "scope": "psa.dst",
@@ -30,7 +24,7 @@
     },
     "ui/ncalc-map": {
         "scope": "psa.dst",
-        "version": "0.0.13",
+        "version": "0.0.16",
         "mainFile": "index.js",
         "rootDir": "dst/ui/ncalc-map"
     },
@@ -42,22 +36,10 @@
     },
     "ui/spinner": {
         "scope": "",
-        "version": "",
+        "version": "0.0.1",
         "defaultScope": "psa.dst",
         "mainFile": "index.js",
-        "rootDir": "dst/ui/spinner",
-        "config": {
-            "teambit.react/react": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react"
-            }
-        }
-    },
-    "ui/vpt-map": {
-        "scope": "psa.dst",
-        "version": "0.0.2",
-        "mainFile": "index.js",
-        "rootDir": "dst/ui/vpt-map"
+        "rootDir": "dst/ui/spinner"
     },
     "$schema-version": "16.0.0"
 }
