@@ -25,48 +25,35 @@
   }
 }
 
-.rastertools {
-  background-color: transparent;
-  border-radius: 5px;
-  padding: 10px 10px;
-  position: absolute;
-  top: 50%;
-  left: 0%;
-  transform: translate(0%, -50%);
-  z-index: 2;
-  font-size: 10px;
-}
-
 .opacityslider {
-  background-color: white;
-  position: absolute;
-  bottom: 0%;
-  left: 0%;
-  border-radius: 5px;
-  padding: 0px 3px;
+  background-color: #eee;
+  border-radius: 15px;
   z-index: 2;
-  // width: 30px;
-  height: auto;
-  margin: 10px 0px;
-  transform: translate(-30%, 300%) rotate(-90deg); /* Equal to rotateZ(45deg) */
+  height: 25px;
+  padding-left: 10px;
+  padding-right: 10px;
+  transform: scaleY(0.6) scaleX(0.8) rotate(-90deg) translate(100px, -90px);
+  position: absolute;
+  bottom: 20px;
+  left: 0;
 }
 
 .rasterlegend {
-  background-color: white;
-  position: absolute;
-  bottom: 20%;
-  left: 0%;
+  background-color: #eee;
   border-radius: 5px;
-  padding: 10px 10px;
   z-index: 2;
   font-size: 10px;
-  transform: translate(10%, -50%);
+  padding: 5px;
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
 }
 
 .rasterlegendcolor {
-  width: 10px;
+  width: 15px;
   height: 10px;
   margin-right: 5px;
+  margin-top: 5px;
 }
 
 .rasterlegenditem {

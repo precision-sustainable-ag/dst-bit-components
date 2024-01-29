@@ -4,7 +4,7 @@ import initRasterObject from './sample-response.json';
 
 const initLon = -76.913
 const initLat = 39.022
-const initHeight = '500px'
+const initHeight = '450px'
 const initWidth = '400px'
 // const initLon = -101.2906
 // const initLat = 40.9417
