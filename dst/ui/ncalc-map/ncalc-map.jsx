@@ -19,7 +19,7 @@ import "./mapbox-gl-geocoder.css";
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWlsYWRueXUiLCJhIjoiY2xhNmhkZDVwMWxqODN4bWhkYXFnNjRrMCJ9.VWy3AxJ3ULhYNw8nmVdMew";
 mapboxgl.accessToken = MAPBOX_TOKEN;
-const NR_COLOR_STEPS = 10;
+const NR_COLOR_STEPS = 7;
 
 const transpose = m => m[0].map((x, i) => m.map(x => x[i]))
 
@@ -34,15 +34,6 @@ const fastFly = {
   easing: (t) => t ** 2,
 };
 
-let stops = [
-  [500, "#e71d36"],
-  [2000, "#f86624"],
-  [3000, "#f9c80e"],
-  [5000, "#affc41"],
-  [7000, "#1dd3b0"],
-  [10000, "#086375"],
-];
-
 const NcalcMap = ({
   setAddress = () => { },
   setFeatures = () => { },
@@ -53,6 +44,7 @@ const NcalcMap = ({
   initFeatures = [],
   initWidth = "400px",
   initHeight = "400px",
+  unit = "kg/ha",
   initAddress = "",
   initLon = -75,
   initLat = 40,
@@ -135,7 +127,22 @@ const NcalcMap = ({
       }
     }
     if (biomassData && biomassData.length > 0) {
-      let scale = chroma.scale(["white", "red"]);
+
+      /// setting up color legend
+      let flattenedBiomass = [];
+      if (initRasterObject && initRasterObject.data_array) {
+        flattenedBiomass = initRasterObject.data_array.flat(1).filter((el) => el !== 0);
+      }
+      var colorSteps = chroma.scale(['#e71d36', '#086375'])
+        .mode('lch').colors(NR_COLOR_STEPS)
+      var colorValues = [];
+      const f = unit === 'lb/ac' ? 0.892179 : 1;
+      const biomassMax = f * Math.max(...flattenedBiomass)
+      const biomassMin = f * Math.min(...flattenedBiomass)
+      const range = biomassMax - biomassMin;
+
+      /// setting up pixel polygons
+      let scale = chroma.scale(['red', 'orange', 'magenta', 'lime', 'green', 'white']);
       const w = biomassData.length;
       const h = biomassData[0].length;
       const lon = bbox[0];
@@ -145,7 +152,8 @@ const NcalcMap = ({
       for (let i = 0; i < w; i++) {
         for (let j = 0; j < h; j++) {
           const topLeftCorner = { lon: lon + i * dLon, lat: lat - j * dLat };
-          let biomassVal = biomassData[i][j] !== -9999 ? biomassData[i][j] : null;
+          let biomassVal = f * biomassData[i][j] !== -9999 ? f * biomassData[i][j] : null;
+          const normalizedBiomassVal = range ? (biomassVal - biomassMin) / range : null;
           biomassVal &&
             biomassVal > -9998 &&
             polygons.features.push(
@@ -157,27 +165,21 @@ const NcalcMap = ({
                 [topLeftCorner.lon, topLeftCorner.lat],
               ]], {
                 value: biomassVal,
+                color: range ? scale(normalizedBiomassVal).hex() : null,
               })
             );
         }
       }
 
-      // setting up color legend
-      let flattenedBiomass = [];
-      if (initRasterObject && initRasterObject.data_array) {
-        flattenedBiomass = initRasterObject.data_array.flat(1).filter((el) => el !== 0);
-      }
-      var colorSteps = chroma.scale(['#e71d36', '#086375'])
-        .mode('lch').colors(NR_COLOR_STEPS)
-      var colorValues = [];
-      const biomassMax = Math.max(...flattenedBiomass)
-      const biomassMin = Math.min(...flattenedBiomass)
+      /// setting up color legend
       const step = (biomassMax - biomassMin) / (NR_COLOR_STEPS - 1);
       for (var i = biomassMin; i <= biomassMax; i = i + step) {
-        colorValues.push(Math.round(i, 0));
+        colorValues.push(Math.round(i / 10, 0) * 10);
       }
       var rasterColors = colorValues.map(function (e, i) {
-        return [e, colorSteps[i]];
+        const normalizedBiomassVal = range ? (e - biomassMin) / range : null;
+        const colorV = range ? scale(normalizedBiomassVal).hex() : null
+        return [e, colorV];
       });
       setRasterColorSteps(rasterColors);
 
@@ -185,7 +187,7 @@ const NcalcMap = ({
       map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
     }
 
-  }, [initRasterObject]);
+  }, [initRasterObject, unit]);
 
   // handle empty initFeature
   useEffect(() => {
@@ -486,9 +488,13 @@ const NcalcMap = ({
         paint: {
           "fill-opacity": 0.5,
           "fill-color": {
-            property: "value",
-            stops: stops,
+            type: 'identity',
+            property: 'color',
           },
+          // "fill-color": {
+          //   property: "color",
+          //   stops: stops,
+          // },
         },
       });
 
@@ -611,7 +617,7 @@ const NcalcMap = ({
       map.current.getCanvas().style.cursor = 'pointer';
       // Copy coordinates array.
       const coordinates = e.features[0].geometry.coordinates.slice();
-      const description = `<div>biomass value: ${Math.round(e.features[0].properties.value, 0)} kg/ha</div>`
+      const description = `<div>biomass value: ${Math.round(e.features[0].properties.value, 0)} ${unit}</div>`
 
       // Ensure that if the map is zoomed out such that multiple
       // copies of the feature are visible, the popup appears
@@ -632,7 +638,7 @@ const NcalcMap = ({
     //   overlayPopup.remove();
     // })
 
-  }, [map, rasterColorSteps]);
+  }, [map, rasterColorSteps, unit]);
 
   useEffect(() => {
     map.current.on("zoom", () => {
@@ -654,7 +660,7 @@ const NcalcMap = ({
         <InfoBox cursorLoc={cursorLoc} polygonArea={polygonArea} />
       )}
       {polygons && polygons.features.length > 0 && (
-        <RasterTools map={map} colorStops={stops} />
+        <RasterTools map={map} colorStops={rasterColorSteps} unit={unit} />
       )}
     </div>
   );
