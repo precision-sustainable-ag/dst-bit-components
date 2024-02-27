@@ -41,6 +41,7 @@ const NcalcMap = ({
   setMap = () => { },
   onDraw = () => { },
   initRasterObject = {},
+  rasterColors = ['red', 'green'],
   initFeatures = [],
   initWidth = "400px",
   initHeight = "400px",
@@ -152,7 +153,7 @@ const NcalcMap = ({
       const range = biomassMax - biomassMin;
 
       /// setting up pixel polygons
-      let scale = chroma.scale(['red', 'orange', 'magenta', 'lime', 'green', 'white']);
+      let scale = chroma.scale(rasterColors);
       const w = biomassData.length;
       const h = biomassData[0].length;
       const lon = bbox[0];
@@ -186,12 +187,12 @@ const NcalcMap = ({
       for (var i = biomassMin; i <= biomassMax; i = i + step) {
         colorValues.push(Math.round(i / 10, 0) * 10);
       }
-      var rasterColors = colorValues.map(function (e, i) {
+      var rasterColorsVals = colorValues.map(function (e, i) {
         const normalizedBiomassVal = range ? (e - biomassMin) / range : null;
         const colorV = range ? scale(normalizedBiomassVal).hex() : null
         return [e, colorV];
       });
-      setRasterColorSteps(rasterColors);
+      setRasterColorSteps(rasterColorsVals);
 
       // storing pixel polygons in mapbox source
       map.current && map.current.getSource(`${material}Polygons`) && map.current.getSource(`${material}Polygons`).setData(polygons);
