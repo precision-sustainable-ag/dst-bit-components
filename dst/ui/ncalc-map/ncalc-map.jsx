@@ -132,13 +132,13 @@ const NcalcMap = ({
   useEffect(() => {
     // // resetting pixel polygons in mapbox source
     // polygons = turf.featureCollection([]);
-    // map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
+    // map.current && map.current.getSource(`${material}Polygons`) && map.current.getSource(`${material}Polygons`).setData(polygons);
 
     if (biomassData && biomassData.length > 0) {
 
       // resetting pixel polygons in mapbox source
       polygons = turf.featureCollection([]);
-      map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
+      map.current && map.current.getSource(`${material}Polygons`) && map.current.getSource(`${material}Polygons`).setData(polygons);
 
       /// setting up color legend
       let flattenedBiomass = [];
@@ -194,7 +194,7 @@ const NcalcMap = ({
       setRasterColorSteps(rasterColors);
 
       // storing pixel polygons in mapbox source
-      map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
+      map.current && map.current.getSource(`${material}Polygons`) && map.current.getSource(`${material}Polygons`).setData(polygons);
     }
 
   }, [initRasterObject, biomassData, unit]);
@@ -479,22 +479,22 @@ const NcalcMap = ({
 
     map.current.on("load", (e) => {
 
-      map.current.addSource("biomassPolygons", {
+      map.current.addSource(`${material}Polygons`, {
         type: "geojson",
         data: {
           type: "FeatureCollection",
           features: [],
         },
       });
-      map.current.getSource("biomassPolygons").setData(polygons);
+      map.current.getSource(`${material}Polygons`).setData(polygons);
       // add a layer that displays the data
-      if (map.current.getLayer("biomassPolygons")) {
-        map.removeLayer("biomassPolygons");
+      if (map.current.getLayer(`${material}Polygons`)) {
+        map.removeLayer(`${material}Polygons`);
       }
       map.current.addLayer({
-        id: "biomassPolygons",
+        id: `${material}Polygons`,
         type: "fill",
-        source: "biomassPolygons",
+        source: `${material}Polygons`,
         paint: {
           "fill-opacity": 0.5,
           "fill-color": {
@@ -621,7 +621,7 @@ const NcalcMap = ({
     Marker.on("dragend", onDragEnd);
 
     // Biomass layer listeners
-    map.current.on("click", "biomassPolygons", (e) => {
+    map.current.on("click", `${material}Polygons`, (e) => {
       e.preventDefault();
       // // Map overlay (Biomass) popup
       map.current.getCanvas().style.cursor = 'pointer';
