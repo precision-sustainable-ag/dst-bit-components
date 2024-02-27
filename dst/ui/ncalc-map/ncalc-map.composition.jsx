@@ -58,6 +58,8 @@ export const PlainMapWithoutFeatures = () => (
     initHeight={initHeight}
     initLon={initLon}
     initLat={initLat}
+    unit="kg/ha"
+    material="biomass"
     initStartZoom={10}
     initMinZoom={5}
     initMaxZoom={16}
@@ -92,6 +94,8 @@ export const MapWithMarker = () => (
     initHeight={initHeight}
     initLon={initLon}
     initLat={initLat}
+    unit="kg/ha"
+    material="biomass"
     initStartZoom={11}
     initMinZoom={5}
     initMaxZoom={16}
@@ -126,6 +130,8 @@ export const MapWithGeocoder = () => (
     initHeight={initHeight}
     initLon={initLon}
     initLat={initLat}
+    unit="kg/ha"
+    material="biomass"
     initStartZoom={13}
     initMinZoom={5}
     initMaxZoom={16}
@@ -159,6 +165,8 @@ export const MapWithAllFeatures = () => (
     initWidth={initWidth}
     initHeight={initHeight}
     initAddress=""
+    unit="kg/ha"
+    material="biomass"
     initLon={initLon}
     initLat={initLat}
     initStartZoom={11}

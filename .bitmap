@@ -24,7 +24,7 @@
     },
     "ui/ncalc-map": {
         "scope": "psa.dst",
-        "version": "0.0.18",
+        "version": "0.0.21",
         "mainFile": "index.js",
         "rootDir": "dst/ui/ncalc-map"
     },

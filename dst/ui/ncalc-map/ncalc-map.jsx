@@ -24,7 +24,7 @@ const NR_COLOR_STEPS = 7;
 const transpose = m => m[0].map((x, i) => m.map(x => x[i]))
 
 let polygons = turf.featureCollection([]);
-let bbox, biomassData;
+// let bbox, biomassData;
 
 const acreDiv = 4046.856422;
 const fastFly = {
@@ -45,6 +45,7 @@ const NcalcMap = ({
   initWidth = "400px",
   initHeight = "400px",
   unit = "kg/ha",
+  material = "biomass",
   initAddress = "",
   initLon = -75,
   initLat = 40,
@@ -90,9 +91,11 @@ const NcalcMap = ({
   const [polygonArea, setPolygonArea] = useState(0);
   const [isDrawActive, setIsDrawActive] = useState(false);
   const [geocodeResult, setGeocodeResult] = useState(undefined);
-  const [popupOpen, setPopupOpen] = useState(true);
+  // const [popupOpen, setPopupOpen] = useState(true);
   const [rasterColorSteps, setRasterColorSteps] = useState([]);
   const [flyToOptions, setFlyToOptions] = useState({});
+  const [biomassData, setBiomassData] = useState(null);
+  const [bbox, setBbox] = useState(null);
 
   const map = useRef();
   const mapContainer = useRef();
@@ -100,7 +103,6 @@ const NcalcMap = ({
   const markerRef = useRef();
   const popupRef = useRef();
   const geocoderRef = useRef();
-
 
   //// GEOCODER CONTROL
   const Geocoder = new MapboxGeocoder({
@@ -114,27 +116,35 @@ const NcalcMap = ({
     countries: "us",
   });
   geocoderRef.current = Geocoder;
-  useEffect(() => {
-    // resetting pixel polygons in mapbox source
-    polygons = turf.featureCollection([]);
-    map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
 
-    if (initRasterObject && Object.keys(initRasterObject).length > 0) {
-      if (initRasterObject.data_array && initRasterObject.data_array.length > 0) {
-        biomassData = initRasterObject.data_array;
-        biomassData = transpose(biomassData);
-        bbox = initRasterObject.bbox;
-      }
+  useEffect(() => {
+    if (
+      initRasterObject
+      && initRasterObject.data_array
+      && initRasterObject.data_array.length > 0
+      && !biomassData
+    ) {
+      setBiomassData(transpose(initRasterObject.data_array));
+      setBbox(initRasterObject.bbox);
     }
+  }, [initRasterObject, biomassData, bbox])
+
+  useEffect(() => {
+    // // resetting pixel polygons in mapbox source
+    // polygons = turf.featureCollection([]);
+    // map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
+
     if (biomassData && biomassData.length > 0) {
+
+      // resetting pixel polygons in mapbox source
+      polygons = turf.featureCollection([]);
+      map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
 
       /// setting up color legend
       let flattenedBiomass = [];
       if (initRasterObject && initRasterObject.data_array) {
-        flattenedBiomass = initRasterObject.data_array.flat(1).filter((el) => el !== 0);
+        flattenedBiomass = biomassData.flat(1).filter((el) => el !== 0);
       }
-      var colorSteps = chroma.scale(['#e71d36', '#086375'])
-        .mode('lch').colors(NR_COLOR_STEPS)
       var colorValues = [];
       const f = unit === 'lb/ac' ? 0.892179 : 1;
       const biomassMax = f * Math.max(...flattenedBiomass)
@@ -187,7 +197,7 @@ const NcalcMap = ({
       map.current && map.current.getSource("biomassPolygons") && map.current.getSource("biomassPolygons").setData(polygons);
     }
 
-  }, [initRasterObject, unit]);
+  }, [initRasterObject, biomassData, unit]);
 
   // handle empty initFeature
   useEffect(() => {
@@ -617,7 +627,7 @@ const NcalcMap = ({
       map.current.getCanvas().style.cursor = 'pointer';
       // Copy coordinates array.
       const coordinates = e.features[0].geometry.coordinates.slice();
-      const description = `<div>biomass value: ${Math.round(e.features[0].properties.value, 0)} ${unit}</div>`
+      const description = `<div>${material} value: ${Math.round(e.features[0].properties.value, 0)} ${unit}</div>`
 
       // Ensure that if the map is zoomed out such that multiple
       // copies of the feature are visible, the popup appears
