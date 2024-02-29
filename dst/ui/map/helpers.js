@@ -23,6 +23,8 @@ async function geocodeReverse({ apiKey, setterFunc, zoom, latitude, longitude })
             county: value('district'),
             state: value('region'),
             zoom,
+            latitude,
+            longitude,
           }
           return newVal
         });

@@ -98,57 +98,99 @@ const Map = ({
     countries: "us",
   });
   geocoderRef.current = Geocoder;
-    
-  // handle empty initFeature
-  useEffect(() => {
-    if (hasDrawing && drawerRef.current && initFeatures.length) {
-        drawerRef.current.add({
-            type: "FeatureCollection",
-            features: initFeatures,
-        });
-    }
-  }, [initFeatures]);
 
-  // delete all shapes after geocode search
-  useEffect(() => {
-    if (hasDrawing && drawerRef.current) drawerRef.current.deleteAll();
-  }, [geocodeResult]);
-
-  // upon marker move, find the address of this new location and set the state
-  useEffect(() => {
-    geocodeReverse({
-      apiKey: MAPBOX_TOKEN,
-      setterFunc: (address) => {
-        // console.log(address())
-        document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
-        // Geocoder.setPlaceholder(address().fullAddress);
-        setAddress(address);
-      },
-      longitude: marker.longitude,
-      latitude: marker.latitude,
-    });
-
-    setAddress((addr) => ({
-      ...addr,
-      longitude: marker.longitude,
-      latitude: marker.latitude,
+  //// FUNCTIONS
+  function onDragEnd(e) {
+    const lngLat = e.target.getLngLat();
+    // map.current.flyTo({
+    //   center: lngLat,
+    // });
+    setMarker((prev) => ({
+      ...prev,
+      longitude: lngLat.lng,
+      latitude: lngLat.lat,
     }));
-    if (markerRef.current) {
-      const lngLat = [marker.longitude, marker.latitude];
-      popupRef.current.setHTML(
-        `<span> click and drag </span>
-      <br />
-      <span>${marker.longitude.toFixed(4)}  ${marker.latitude.toFixed(
-          4
-        )}</span>`
-      );
-      markerRef.current.setLngLat(lngLat).setPopup(popupRef.current);
-      map.current.flyTo({
-        center: lngLat,
-        ...flyToOptions,
-      });
+  }
+  const handleGeolocate = (e) => {
+    const lngLat = e.target._userLocationDotMarker._lngLat;
+    setFlyToOptions(fastFly);
+
+    setMarker((prev) => ({
+      ...prev,
+      longitude: lngLat.lng,
+      latitude: lngLat.lat,
+    }));
+    setFlyToOptions({});
+
+    // clear all shapes after geolocating to user's location
+    if (hasDrawing && drawerRef.current) {
+      drawerRef.current.deleteAll();
+      setPolygonArea(0);
     }
-  }, [marker.longitude, marker.latitude]);
+  };
+
+  const handlePointFocus = (coords) => {
+    if (coords) {
+      setMarker((prev) => ({
+        ...prev,
+        longitude: coords[0],
+        latitude: coords[1],
+      }));
+  
+      setViewport((prev) => ({
+        ...prev,
+        longitude: coords[0],
+        latitude: coords[1],
+      }));
+    }
+  }
+
+  const handlePolyCentCalc = (geom) => {
+    if (geom) {
+      if (geom.features.length > 0) {
+        const coords = centroid(geom.features[0]).geometry.coordinates;
+
+        handlePointFocus(coords);
+      }
+    }
+  };
+
+  const handlePolyAreaCalc = (e) => {
+    if (e?.features?.length > 0) {
+      const a = area(e.features[0]) / acreDiv;
+      setPolygonArea(a);
+      handlePolyCentCalc(e);
+    } else {
+      setPolygonArea(0);
+    }
+  };
+
+  const handlePolyChange = (e) => {
+    if (e.features.length > 0) {
+      drawerRef.current.add({
+        type: "FeatureCollection",
+        features: e.features,
+      });
+      setFeatures(drawerRef.current.getAll());
+      handlePolyAreaCalc(e);
+    }
+  };
+
+  const handleDrawCreate = (e) => {
+    onDraw({mode: 'add', e: e})
+  };
+  const handleDrawDelete = (e) => {
+    setIsDrawActive(false);
+    onDraw({mode: 'delete', e: e})
+  };
+  const handleDrawUpdate = (e) => {
+    onDraw({mode: 'update', e: e})
+    handlePolyChange(e);
+  };
+  const handleDrawSelection = (e) => {
+    onDraw({mode: 'select', e: e})
+    handlePolyChange(e);
+  };
 
   useEffect(() => {
     //// MAP CREATE
@@ -225,88 +267,6 @@ const Map = ({
     if (hasSearchBar) map.current.addControl(Geocoder, "top-left");
     if (hasMarker && !isDrawActive) Marker.addTo(map.current);
 
-    // if (!initAddress) {
-    //   Geocoder.setPlaceholder('Search Your Address ...');
-    // }
-
-    // console.log(initAddress);
-
-    //// FUNCTIONS
-    function onDragEnd(e) {
-      const lngLat = e.target.getLngLat();
-      // map.current.flyTo({
-      //   center: lngLat,
-      // });
-      setMarker((prev) => ({
-        ...prev,
-        longitude: lngLat.lng,
-        latitude: lngLat.lat,
-      }));
-    }
-    const handleGeolocate = (e) => {
-      const lngLat = e.target._userLocationDotMarker._lngLat;
-      setFlyToOptions(fastFly);
-
-      setMarker((prev) => ({
-        ...prev,
-        longitude: lngLat.lng,
-        latitude: lngLat.lat,
-      }));
-      setFlyToOptions({});
-
-      // clear all shapes after geolocating to user's location
-      if (hasDrawing && drawerRef.current) {
-        drawerRef.current.deleteAll();
-        setPolygonArea(0);
-      }
-    };
-
-    const handlePolyCentCalc = (geom) => {
-      if (geom) {
-        if (geom.features.length > 0) {
-          const coords = centroid(geom.features[0]).geometry.coordinates;
-
-          setMarker((prev) => ({
-            ...prev,
-            longitude: coords[0],
-            latitude: coords[1],
-          }));
-          setViewport((prev) => ({
-            ...prev,
-            longitude: coords[0],
-            latitude: coords[1],
-          }));
-        }
-      }
-    };
-
-    const handlePolyAreaCalc = (e) => {
-      if (e.features.length > 0) {
-        const a = area(e.features[0]) / acreDiv;
-        setPolygonArea(a);
-        setFeatures(e.features);
-        handlePolyCentCalc(e);
-      } else {
-        setPolygonArea(0);
-      }
-    };
-
-    const handleDrawCreate = (e) => {
-      onDraw({mode: 'add', e: e})
-    };
-    const handleDrawDelete = (e) => {
-      setIsDrawActive(false);
-      onDraw({mode: 'delete', e: e})
-    };
-    const handleDrawUpdate = (e) => {
-      onDraw({mode: 'update', e: e})
-      handlePolyAreaCalc(e);
-    };
-    const handleDrawSelection = (e) => {
-      onDraw({mode: 'select', e: e})
-      handlePolyAreaCalc(e);
-    };
-
     //// EVENTS
     Geolocate.on("geolocate", handleGeolocate);
     Geocoder.on("result", (e) => {
@@ -321,7 +281,9 @@ const Map = ({
           geocodeReverse({
             apiKey: MAPBOX_TOKEN,
             setterFunc: (address) => {
-              document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
+              if (hasSearchBar) {
+                document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
+              }
               // Geocoder.setPlaceholder(address().fullAddress);
               setAddress(address);
             },
@@ -400,6 +362,64 @@ const Map = ({
     map.current.on("draw.selectionchange", handleDrawSelection);
     Marker.on("dragend", onDragEnd);
   }, [map]);
+
+  // handle empty initFeature
+  useEffect(() => {
+    if (hasDrawing && drawerRef.current && initFeatures.length) {
+      drawerRef.current.deleteAll()
+      drawerRef.current.add({
+          type: "FeatureCollection",
+          features: initFeatures,
+      });
+
+      if (initFeatures.length === 1) {
+        if (initFeatures[0]?.geometry?.type === 'Polygon') {
+          handlePolyAreaCalc({features: initFeatures});
+        } else if (initFeatures[0]?.geometry?.type === 'Point') {
+          handlePointFocus(initFeatures[0]?.geometry?.coordinates);
+        }
+      }
+    }
+  }, [initFeatures]);
+
+  // delete all shapes after geocode search
+  useEffect(() => {
+    if (hasDrawing && drawerRef.current) drawerRef.current.deleteAll();
+  }, [geocodeResult]);
+
+  // upon marker move, find the address of this new location and set the state
+  useEffect(() => {
+    geocodeReverse({
+      apiKey: MAPBOX_TOKEN,
+      setterFunc: (address) => {
+        // console.log(address())
+        if (hasSearchBar) {
+          document.querySelector('.mapboxgl-ctrl-geocoder--input').placeholder = address().fullAddress;
+        }
+        // not sure why setPlaceholder doen't work
+        // Geocoder.setPlaceholder(address().fullAddress);
+        setAddress(address);
+      },
+      longitude: marker.longitude,
+      latitude: marker.latitude,
+    });
+
+    if (markerRef.current) {
+      const lngLat = [marker.longitude, marker.latitude];
+      popupRef.current.setHTML(
+        `<span> click and drag </span>
+      <br />
+      <span>${marker.longitude.toFixed(4)}  ${marker.latitude.toFixed(
+          4
+        )}</span>`
+      );
+      markerRef.current.setLngLat(lngLat).setPopup(popupRef.current);
+      map.current.flyTo({
+        center: lngLat,
+        ...flyToOptions,
+      });
+    }
+  }, [marker.longitude, marker.latitude]);
 
   useEffect(() => {
     map.current.on("zoom", () => {

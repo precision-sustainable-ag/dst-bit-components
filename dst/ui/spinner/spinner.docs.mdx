@@ -1,0 +1,36 @@
+---
+description: "A Spinner component."
+labels: ["UI"]
+---
+
+import { Spinner } from "./spinner";
+
+## React Component for rendering a Spinner
+
+A basic div that renders a spinner.
+
+### List of component properties:
+
+| Name              | Type   | Description                                    |
+| ----------------- | ------ | ---------------------------------------------- |
+| `size`            | string | customize size for the spinner                 |
+| `color`           | string | customize the main color of the spinner        |
+| `backgroundColor` | string | customize the background color for the spinner |
+
+### Component usage
+
+```js
+<Spinner
+  size={}
+  color={}
+  backgroundColor={}
+/>
+```
+
+### Using props to customize the text
+
+Modify the text to see it change live:
+
+```js live
+<Spinner size={"50px"} color={"#3498db"} backgroundColor={"#f3f3f3"} />
+```

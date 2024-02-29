@@ -9,23 +9,37 @@
  */
 
 {
+    "ui/fade-alert": {
+        "scope": "",
+        "version": "0.0.1",
+        "defaultScope": "psa.dst",
+        "mainFile": "index.js",
+        "rootDir": "dst/ui/fade-alert"
+    },
     "ui/map": {
         "scope": "psa.dst",
-        "version": "0.0.55",
+        "version": "0.0.58",
         "mainFile": "index.js",
         "rootDir": "dst/ui/map"
     },
     "ui/ncalc-map": {
         "scope": "psa.dst",
-        "version": "0.0.2",
+        "version": "0.0.23",
         "mainFile": "index.js",
         "rootDir": "dst/ui/ncalc-map"
     },
     "ui/region-selector-map": {
         "scope": "psa.dst",
-        "version": "0.0.12",
+        "version": "0.0.16",
         "mainFile": "index.js",
         "rootDir": "dst/ui/region-selector-map"
     },
-    "$schema-version": "15.0.0"
+    "ui/spinner": {
+        "scope": "",
+        "version": "0.0.1",
+        "defaultScope": "psa.dst",
+        "mainFile": "index.js",
+        "rootDir": "dst/ui/spinner"
+    },
+    "$schema-version": "16.0.0"
 }

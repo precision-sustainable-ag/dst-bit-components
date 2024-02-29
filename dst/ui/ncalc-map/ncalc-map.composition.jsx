@@ -1,5 +1,13 @@
 import React from "react";
 import { NcalcMap } from "./ncalc-map";
+import initRasterObject from './sample-response.json';
+
+const initLon = -76.913
+const initLat = 39.022
+const initHeight = '450px'
+const initWidth = '400px'
+// const initLon = -101.2906
+// const initLat = 40.9417
 
 var featuresSample = [
   {
@@ -39,15 +47,20 @@ var featuresSample = [
 
 export const PlainMapWithoutFeatures = () => (
   <NcalcMap
-    setAddress={() => {}}
-    setFeatures={() => {}}
-    setZoom = {() => {}}
-    setMap = {() => {}}
-    onDraw = {() => {}}
-    initWidth="400px"
-    initHeight="300px"
-    initLon={-80.16}
-    initLat={37.75}
+    setAddress={() => { }}
+    setFeatures={() => { }}
+    setZoom={() => { }}
+    setMap={() => { }}
+    onDraw={() => { }}
+    initRasterObject={initRasterObject}
+    initFeatures={[]}
+    initWidth={initWidth}
+    initHeight={initHeight}
+    initLon={initLon}
+    initLat={initLat}
+    unit="kg/ha"
+    rasterColors={['cyan', 'green', 'white']}
+    material="biomass"
     initStartZoom={10}
     initMinZoom={5}
     initMaxZoom={16}
@@ -71,16 +84,21 @@ export const PlainMapWithoutFeatures = () => (
 
 export const MapWithMarker = () => (
   <NcalcMap
-    setAddress={() => {}}
-    setFeatures={() => {}}
-    setZoom = {() => {}}
-    setMap = {() => {}}
-    onDraw = {() => {}}
-    initWidth="400px"
-    initHeight="300px"
-    initLon={-80.16}
-    initLat={37.75}
-    initStartZoom={10}
+    setAddress={() => { }}
+    setFeatures={() => { }}
+    setZoom={() => { }}
+    setMap={() => { }}
+    onDraw={() => { }}
+    initRasterObject={initRasterObject}
+    initFeatures={[]}
+    initWidth={initWidth}
+    initHeight={initHeight}
+    initLon={initLon}
+    initLat={initLat}
+    unit="kg/ha"
+    rasterColors={['cyan', 'green', 'white']}
+    material="biomass"
+    initStartZoom={11}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={false}
@@ -103,16 +121,21 @@ export const MapWithMarker = () => (
 
 export const MapWithGeocoder = () => (
   <NcalcMap
-    setAddress={() => {}}
-    setFeatures={() => {}}
-    setZoom = {() => {}}
-    setMap = {() => {}}
-    onDraw = {() => {}}
-    initWidth="400px"
-    initHeight="300px"
-    initLon={-80.16}
-    initLat={37.75}
-    initStartZoom={10}
+    setAddress={() => { }}
+    setFeatures={() => { }}
+    setZoom={() => { }}
+    setMap={() => { }}
+    onDraw={() => { }}
+    initRasterObject={initRasterObject}
+    initFeatures={[]}
+    initWidth={initWidth}
+    initHeight={initHeight}
+    initLon={initLon}
+    initLat={initLat}
+    unit="kg/ha"
+    rasterColors={['cyan', 'green', 'white']}
+    material="biomass"
+    initStartZoom={13}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={true}
@@ -135,18 +158,22 @@ export const MapWithGeocoder = () => (
 
 export const MapWithAllFeatures = () => (
   <NcalcMap
-    setAddress={() => {}}
-    setFeatures={() => {}}
-    setZoom = {() => {}}
-    setMap = {() => {}}
-    onDraw = {() => {}}
+    setAddress={() => { }}
+    setFeatures={() => { }}
+    setZoom={() => { }}
+    setMap={() => { }}
+    onDraw={() => { }}
+    initRasterObject={initRasterObject}
     initFeatures={featuresSample}
-    initWidth="400px"
-    initHeight="300px"
+    initWidth={initWidth}
+    initHeight={initHeight}
     initAddress=""
-    initLon={-80.16}
-    initLat={37.75}
-    initStartZoom={10}
+    unit="kg/ha"
+    rasterColors={['cyan', 'green', 'white']}
+    material="biomass"
+    initLon={initLon}
+    initLat={initLat}
+    initStartZoom={11}
     initMinZoom={5}
     initMaxZoom={16}
     hasSearchBar={true}
