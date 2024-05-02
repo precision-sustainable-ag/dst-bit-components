@@ -515,10 +515,10 @@ const NcalcMap = ({
       if (!keyboard) map.current.keyboard.disable();
       if (!doubleClickZoom) map.current.doubleClickZoom.disable();
       if (!touchZoomRotate) map.current.touchZoomRotate.disable();
-      if (hasMarkerPopup) {
-        markerRef.current.togglePopup();
-        setTimeout(() => markerRef.current.togglePopup(), 2000);
-      }
+      // if (hasMarkerPopup) {
+      //   markerRef.current.togglePopup();
+      //   setTimeout(() => markerRef.current.togglePopup(), 2000);
+      // }
       if (
         drawerRef.current &&
         hasDrawing &&
