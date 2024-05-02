@@ -4,7 +4,7 @@ import initRasterObject from './sample-response.json';
 
 const initLon = -76.913
 const initLat = 39.022
-const initHeight = '500px'
+const initHeight = '450px'
 const initWidth = '400px'
 // const initLon = -101.2906
 // const initLat = 40.9417
@@ -58,6 +58,9 @@ export const PlainMapWithoutFeatures = () => (
     initHeight={initHeight}
     initLon={initLon}
     initLat={initLat}
+    unit="kg/ha"
+    rasterColors={['cyan', 'green', 'white']}
+    material="biomass"
     initStartZoom={10}
     initMinZoom={5}
     initMaxZoom={16}
@@ -92,6 +95,9 @@ export const MapWithMarker = () => (
     initHeight={initHeight}
     initLon={initLon}
     initLat={initLat}
+    unit="kg/ha"
+    rasterColors={['cyan', 'green', 'white']}
+    material="biomass"
     initStartZoom={11}
     initMinZoom={5}
     initMaxZoom={16}
@@ -126,6 +132,9 @@ export const MapWithGeocoder = () => (
     initHeight={initHeight}
     initLon={initLon}
     initLat={initLat}
+    unit="kg/ha"
+    rasterColors={['cyan', 'green', 'white']}
+    material="biomass"
     initStartZoom={13}
     initMinZoom={5}
     initMaxZoom={16}
@@ -159,6 +168,9 @@ export const MapWithAllFeatures = () => (
     initWidth={initWidth}
     initHeight={initHeight}
     initAddress=""
+    unit="kg/ha"
+    rasterColors={['cyan', 'green', 'white']}
+    material="biomass"
     initLon={initLon}
     initLat={initLat}
     initStartZoom={11}

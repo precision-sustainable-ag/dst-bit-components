@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './map.module.scss';
 
-const RasterTools = ({ map, colorStops }) => {
+const RasterTools = ({ map, colorStops, unit }) => {
   const [opacityValue, setOpacityValue] = React.useState(50);
 
   const handleOpacityChange = (event) => {
@@ -12,19 +12,19 @@ const RasterTools = ({ map, colorStops }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (map && map.current) {
-  //     map.current.setPaintProperty('biomassPolygons', 'fill-color', {
-  //       property: 'value',
-  //       stops: colorStops,
-  //     });
-  //   }
-  // }, [colorStops]);
-
   return (
-    <div>
-      <div className={styles.rastertools}>
+    colorStops && colorStops.length
+    && (
+      <div>
+        <div className={styles.opacityslider}>
+          <input type="range" min="0" max="100" value={opacityValue} className={styles.slider} onChange={handleOpacityChange} id="myRange" />
+        </div>
         <div className={styles.rasterlegend}>
+          <span className={styles.rastertitle}>
+            unit:
+            &nbsp;
+            {unit}
+          </span>
           {colorStops.map((stop, i) => (
             <div key={i} className={styles.rasterlegenditem}>
               <div className={styles.rasterlegendcolor} style={{ backgroundColor: stop[1] }} />
@@ -32,13 +32,8 @@ const RasterTools = ({ map, colorStops }) => {
             </div>
           ))}
         </div>
-        <div className={styles.opacityslider}>
-          {/* <div className={styles.slidecontainer}> */}
-            <input type="range" min="0" max="100" value={opacityValue} className={styles.slider} onChange={handleOpacityChange} id="myRange" />
-          {/* </div> */}
-        </div>
       </div>
-    </div>
+    )
   );
 };
 export default RasterTools;
