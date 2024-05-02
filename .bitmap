@@ -27,7 +27,7 @@
     },
     "ui/map": {
         "scope": "psa.dst",
-        "version": "0.0.58",
+        "version": "0.0.60",
         "mainFile": "index.js",
         "rootDir": "dst/ui/map"
     },
@@ -39,7 +39,7 @@
     },
     "ui/region-selector-map": {
         "scope": "psa.dst",
-        "version": "0.0.16",
+        "version": "0.0.19",
         "mainFile": "index.js",
         "rootDir": "dst/ui/region-selector-map"
     },
