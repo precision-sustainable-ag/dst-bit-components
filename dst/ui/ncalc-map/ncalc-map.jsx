@@ -17,7 +17,7 @@ import "./mapbox-gl-draw.css";
 import "./mapbox-gl-geocoder.css";
 
 const MAPBOX_TOKEN =
-  "pk.eyJ1IjoibWlsYWRueXUiLCJhIjoiY2xhNmhkZDVwMWxqODN4bWhkYXFnNjRrMCJ9.VWy3AxJ3ULhYNw8nmVdMew";
+  "pk.eyJ1IjoibWlrYWhwaW5lZ2FyIiwiYSI6ImNseHZ2NndjZDJrejMycXB4dWtlamo2eWYifQ.29yeP8CgZpO98jyzxYxU4Q";
 mapboxgl.accessToken = MAPBOX_TOKEN;
 const NR_COLOR_STEPS = 7;
 

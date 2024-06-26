@@ -11,53 +11,33 @@
 {
     "ui/fade-alert": {
         "scope": "psa.dst",
-        "version": "0.0.1",
+        "version": "0.0.4",
         "mainFile": "index.js",
-        "rootDir": "dst/ui/fade-alert",
-        "config": {
-            "teambit.dependencies/dependency-resolver": {
-                "policy": {
-                    "peerDependencies": {
-                        "react-dom": "18.2.0",
-                        "react": "18.2.0"
-                    }
-                }
-            }
-        }
+        "rootDir": "dst/ui/fade-alert"
     },
     "ui/map": {
         "scope": "psa.dst",
-        "version": "0.0.60",
+        "version": "0.0.61",
         "mainFile": "index.js",
         "rootDir": "dst/ui/map"
     },
     "ui/ncalc-map": {
         "scope": "psa.dst",
-        "version": "0.0.23",
+        "version": "0.0.25",
         "mainFile": "index.js",
         "rootDir": "dst/ui/ncalc-map"
     },
     "ui/region-selector-map": {
         "scope": "psa.dst",
-        "version": "0.0.19",
+        "version": "0.0.20",
         "mainFile": "index.js",
         "rootDir": "dst/ui/region-selector-map"
     },
     "ui/spinner": {
         "scope": "psa.dst",
-        "version": "0.0.1",
+        "version": "0.0.4",
         "mainFile": "index.js",
-        "rootDir": "dst/ui/spinner",
-        "config": {
-            "teambit.dependencies/dependency-resolver": {
-                "policy": {
-                    "peerDependencies": {
-                        "react": "18.2.0",
-                        "react-dom": "18.2.0"
-                    }
-                }
-            }
-        }
+        "rootDir": "dst/ui/spinner"
     },
     "$schema-version": "16.0.0"
 }
